@@ -15,7 +15,6 @@ const Dashboard = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch()
     const [dropdownShow, setDropdownShow] = useState(false)
-    const [dropdownShowUser, setDropdownShowUser] = useState(false)
 
     const language = [
         {
