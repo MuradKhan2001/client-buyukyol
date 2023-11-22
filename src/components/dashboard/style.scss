@@ -1,0 +1,295 @@
+$color: #047766;
+%d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+%button {
+  padding: 10px 25px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19.09px;
+  background-color: $color;
+  color: white;
+  border: 1px solid #EEF0F4;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #035247;
+  }
+}
+
+%input {
+  margin-top: 15px;
+  width: 100%;
+  height: 40px;
+  border: 1px solid #EEF0F4;
+  border-radius: 6px;
+  padding-left: 10px;
+}
+
+.dashboard-container {
+  @extend %d-flex;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+
+  .left-side {
+    width: 20%;
+    height: 100%;
+    border-right: 2px solid #EEF0F4;
+    padding: 16px;
+
+    .logo-box {
+      margin-left: 20px;
+
+      img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .name {
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 26px;
+        color: #002B48;
+      }
+    }
+
+    .menu-box {
+      margin-top: 30px;
+      width: 100%;
+
+      a {
+        text-decoration: none;
+      }
+
+      .menu-item {
+        margin-top: 20px;
+        @extend %d-flex;
+        justify-content: flex-start;
+        width: 100%;
+        height: 56px;
+        border-radius: 7px;
+        padding-left: 16px;
+        cursor: pointer;
+        transition: .3s;
+
+        .icon {
+          margin-right: 15px;
+
+          .icons {
+            width: 30px;
+            height: 30px;
+            mask: {
+              repeat: no-repeat;
+              size: 100%;
+              position: center center;
+            };
+            -webkit-mask: {
+              repeat: no-repeat;
+              size: 100%;
+              position: center center;
+            };
+          }
+
+          .house {
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            -webkit-mask-image: url(./icons/house.svg);
+            mask-image: url(./icons/house.svg);
+            background-color: #002B48;
+          }
+
+          .history {
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            -webkit-mask-image: url(./icons/history.svg);
+            mask-image: url(./icons/history.svg);
+            background-color: #002B48;
+          }
+
+          .settings {
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            -webkit-mask-image: url(./icons/setting.svg);
+            mask-image: url(./icons/setting.svg);
+            background-color: #002B48;
+            opacity: 0.5;
+          }
+
+          .profile {
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            -webkit-mask-image: url(./icons/person.svg);
+            mask-image: url(./icons/person.svg);
+            background-color: #002B48;
+          }
+        }
+
+        .name {
+          font-size: 16px;
+          line-height: 16px;
+          color: #002B48;
+        }
+
+        .name-disablet {
+          font-size: 16px;
+          line-height: 16px;
+          color: #002B48;
+          opacity: 0.5;
+        }
+
+        &:hover {
+          background-color: #F0F7F6;
+        }
+      }
+
+      .active {
+        background-color: #F0F7F6;
+
+        .icon {
+          .house {
+            background-color: $color;
+          }
+
+          .history {
+            background-color: $color;
+          }
+
+          .settings {
+            background-color: $color;
+          }
+
+          .profile {
+            background-color: $color;
+          }
+        }
+
+        .name {
+          color: $color;
+        }
+      }
+    }
+  }
+
+  .right-side {
+    width: 80%;
+    height: 100%;
+
+    .top-side {
+      width: 100%;
+      height: 80px;
+      border-bottom: 2px solid #EEF0F4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-right: 30px;
+
+      .top-box {
+        display: flex;
+        align-items: center;
+
+        .notification {
+          margin-right: 50px;
+          cursor: pointer;
+          @extend %d-flex;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          border: 1px solid #EEF0F4;
+          position: relative;
+
+          .count {
+            @extend %d-flex;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            border-radius: 50%;
+            background-color: $color;
+            top: -8px;
+            right: -8px;
+            font-size: 12px;
+            color: white;
+          }
+        }
+
+        .language {
+          margin-right: 40px;
+          height: 100%;
+
+          .dropdown {
+            position: relative;
+            height: 100%;
+
+            .dropdown-header {
+              font-weight: bold;
+              color: #002B48;
+              cursor: pointer;
+            }
+
+            .dropdown-menu {
+              box-shadow: 0px 2px 10px 0px #0000001A;
+              z-index: 90;
+              background-color: white;
+              border: 1px solid #EEF0F4;
+              padding: 6px 25px 6px 25px;
+              position: absolute;
+              bottom: -100px;
+              left: -25px;
+              width: auto;
+              height: auto;
+              border-radius: 5px;
+
+              .menu-item {
+                width: 100%;
+                color: #002B48;
+                cursor: pointer;
+                margin-top: 6px;
+                border-bottom: 2px solid transparent;
+                transition: 0.3s;
+
+                &:hover {
+                  border-bottom: 2px solid #002B48;
+                }
+              }
+            }
+          }
+        }
+
+        .log-out {
+          margin-left: 50px;
+          @extend %d-flex;
+          color: #002B48;
+          cursor: pointer;
+          margin-top: 6px;
+          transition: 0.3s;
+          padding: 10px;
+          border-radius: 6px;
+
+          &:hover {
+            background-color: #F0F7F6;
+          }
+
+          img {
+            margin-right: 5px;
+            width: 30px;
+          }
+        }
+
+
+      }
+
+
+    }
+    .bottom-side {
+      width: 100%;
+      height: calc(100% - 80px);
+      background-color: #F6F8FA;
+    }
+  }
+
+}

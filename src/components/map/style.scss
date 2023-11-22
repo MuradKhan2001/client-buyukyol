@@ -1,0 +1,85 @@
+$color: #047766;
+%button {
+  padding: 10px 25px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19.09px;
+  background-color: $color;
+  color: white;
+  border: 1px solid #EEF0F4;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #035247;
+  }
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+  background-color: #F6F8FA;
+  padding: 35px;
+  overflow-y: auto;
+
+  .header {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+
+    .title {
+      font-weight: bold;
+      color: #002B48;
+      font-size: 24px;
+    }
+
+    .icons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .icon-active-orders {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        height: 40px;
+        background-color: white;
+        border-radius: 6px;
+        box-shadow: 0px 2px 12px 0px #00000014;
+        position: relative;
+        margin-right: 25px;
+
+        .count {
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          width: 22px;
+          height: 22px;
+          background-color: $color;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+        }
+      }
+      .post-order {
+        margin-left: 30px;
+        @extend %button;
+      }
+    }
+  }
+
+  .map {
+    margin-top: 30px;
+    width: 100%;
+    height: calc(100% - 70px);
+    box-shadow: 0px 2px 10px 0px #0000001A;
+    border-radius: 8px;
+  }
+
+}
