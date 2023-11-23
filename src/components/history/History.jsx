@@ -1,19 +1,16 @@
 import {useEffect, useState} from "react";
-import axios from "axios";
 import "./style.scss"
 import Loader from "../loader/Loader";
 import {useTranslation} from "react-i18next";
 import {useSelector, useDispatch} from "react-redux";
 import {showModals} from "../../redux/ModalContent";
+import {getOrders} from "../../redux/Orders";
 
 const History = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch()
     const baseUrl = useSelector((store) => store.baseUrl.data)
-    const [ordersList, setOrdersList] = useState([])
     const [activeTab, setActiveTab] = useState("Active")
-    const [loading, setLoading] = useState(true)
-
     const tabs = [
         {
             status: "Active",
@@ -33,26 +30,10 @@ const History = () => {
         }
     ]
 
+    const ordersList = useSelector((store) => store.Orders.data)
+
     useEffect(() => {
-        const getOrder = () => {
-            axios.get(`${baseUrl}api/my-orders/`, {
-                headers: {
-                    "Authorization": `Token ${localStorage.getItem("token")}`
-                }
-            }).then((response) => {
-                setOrdersList(response.data);
-                setLoading(false)
-            }).catch((error) => {
-                if (error.response.statusText == "Unauthorized") {
-                    window.location.pathname = "/";
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("userId")
-                }
-            });
-        }
-        return () => {
-            getOrder()
-        }
+        dispatch(getOrders())
     }, [])
 
     const showModalContent = (order) => {
@@ -61,7 +42,7 @@ const History = () => {
 
     return <div className="history-container">
         {
-            loading ? <Loader/> :
+            !ordersList.length > 0 ? <Loader/> :
                 <>
                     <div className="title">
                         {t("nav-history")}

@@ -38,6 +38,7 @@
   "tariff4": "Heavy",
   "tariff5": "Very heavy",
   "tariff6": "Road hauler",
+  "trucks": "Trucks",
   "infoWaits4": "tonne",
   "infoTruck1": "Length",
   "infoTruck2": "Width",
@@ -94,5 +95,6 @@
   "changeNumber2": "Reenter information",
   "download": "Download",
   "map": "Map is loading...",
-  "timeCargo2": "Time of completed order: "
+  "timeCargo2": "Time of completed order: ",
+  "post-order": "Order"
 }

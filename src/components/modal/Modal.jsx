@@ -1,7 +1,7 @@
 import {useRef, useState} from "react";
 import {CSSTransition} from "react-transition-group";
 import {useSelector, useDispatch} from "react-redux";
-import {hideModal} from "../../redux/ModalContent"
+import {hideModal, showModals} from "../../redux/ModalContent"
 import "./style.scss"
 import {useTranslation} from "react-i18next";
 
@@ -9,6 +9,10 @@ const Modal = () => {
     const {t} = useTranslation();
     const nodeRef = useRef(null);
     const dispatch = useDispatch()
+    const [reason, setReason] = useState("");
+    const [add_reason, setAdd_Reason] = useState("");
+    const [cargoId, setCargoId] = useState("");
+    const [many, setMany] = useState(false);
     const modalContent = useSelector((store) => store.ModalContent.data)
 
     const logOut = () => {
@@ -18,6 +22,13 @@ const Modal = () => {
         window.location.pathname = "/"
     }
 
+    const showCancel = () => {
+        setCargoId(modalContent.order.id)
+        if (modalContent.order.number_cars > 1) {
+            dispatch(showModals({show: true, status: "cancel-order-reason"}))
+        } else dispatch(showModals({show: true, status: "cancel-order"}))
+    }
+
     return <CSSTransition
         in={modalContent.show}
         nodeRef={nodeRef}
@@ -25,7 +36,7 @@ const Modal = () => {
         classNames="alert"
         unmountOnExit
     >
-        <div className="modal-sloy">
+        <div className={`modal-sloy ${modalContent.status === "order" ? "align-none" : ""}`}>
 
             <div ref={nodeRef} className="modal-card">
 
@@ -157,14 +168,101 @@ const Modal = () => {
                         </div> : ""}
 
 
-
-
                         {modalContent.order.rejected_reason ? <div className="cancel-reason">
                             {modalContent.order.rejected_reason}
                         </div> : modalContent.order.status === "Delivered" ? "" :
-                            <div className="cancel-order">
+                            <div onClick={showCancel}
+                                 className="cancel-order">
                                 {t("button3")}
                             </div>}
+
+                    </div>
+                }
+
+                {modalContent.status === "cancel-order" &&
+                    <div className="cancel-order">
+                        <div className="cancel-btn">
+                            <img onClick={() => dispatch(hideModal({show: false}))} src="./images/x.png" alt=""/>
+                        </div>
+
+                        <div className="title">
+                            {t("reasonText")}
+                        </div>
+
+                        <div className="cancel-order-info">
+
+                            <div>
+                                <input onChange={(e) => {
+                                    setReason(e.target.value)
+                                }}
+                                       id="reason1" type="radio" name="money"
+                                       value={t("reason1")}/>
+                                <label htmlFor="reason1">{t("reason1")}</label>
+                            </div>
+
+                            <div>
+                                <input onChange={(e) => {
+                                    setReason(e.target.value)
+                                }} id="reason2" type="radio"
+                                       name="money"
+                                       value={t("reason2")}/>
+                                <label htmlFor="reason2">{t("reason2")}</label>
+                            </div>
+
+                            <div>
+                                <input onChange={(e) => {
+                                    setReason(e.target.value)
+                                }} id="reason3" type="radio"
+                                       name="money"
+                                       value={t("reason3")}/>
+                                <label htmlFor="reason3">{t("reason3")}</label>
+                            </div>
+
+                            <div>
+                                <input onChange={(e) => {
+                                    setReason(e.target.value)
+                                }} id="reason5" type="radio"
+                                       name="money"
+                                       value={add_reason}/>
+                                <label htmlFor="reason3">
+                                    <input placeholder={t("reason4")}
+                                           onChange={(e) => setAdd_Reason(e.target.value)} id="reason4"
+                                           type="text" name="money"/>
+                                </label>
+                            </div>
+
+                            <div className="cancel-btn">{t("button2")}
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+                {modalContent.status === "cancel-order-reason" &&
+                    <div className="cancel-order">
+                        <div className="cancel-btn">
+                            <img onClick={() => dispatch(hideModal({show: false}))} src="./images/x.png" alt=""/>
+                        </div>
+
+                        <div className="title-reason">
+                            {t("reasonText1")}
+                        </div>
+
+                        <div className="cancel-order-info">
+                            <div>
+                                <input onChange={() => setMany(true)} id="reasonYes" type="radio" name="reasons"/>
+                                <label htmlFor="reasonYes">{t("yes")}</label>
+                            </div>
+
+                            <div>
+                                <input checked={true} onChange={() => setMany(false)} id="reasonNo" type="radio"
+                                       name="reasons"/>
+                                <label htmlFor="reasonNo">{t("no")}</label>
+                            </div>
+
+                            <div onClick={() =>  dispatch(showModals({show: true, status: "cancel-order"}))} className="cancel-btn">{t("button2")}</div>
+                        </div>
 
                     </div>
                 }

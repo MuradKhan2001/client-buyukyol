@@ -9,6 +9,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.2",
+    "formik": "^2.4.5",
     "i18next": "^23.7.6",
     "react": "^18.2.0",
     "react-auth-code-input": "^3.2.1",
@@ -20,6 +21,7 @@
     "react-router-dom": "^6.19.0",
     "react-scripts": "5.0.1",
     "react-transition-group": "^4.4.5",
+    "react-web-share": "^2.0.2",
     "sass": "^1.69.5",
     "web-vitals": "^2.1.4"
   },

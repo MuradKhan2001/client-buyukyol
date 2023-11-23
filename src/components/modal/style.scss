@@ -63,7 +63,7 @@ $color: #047766;
   z-index: 100;
   display: flex;
   justify-content: center;
-
+  align-items: center;
   overflow-y: auto;
 
 
@@ -121,6 +121,13 @@ $color: #047766;
         img {
           cursor: pointer;
           width: 30px;
+          transition: 0.3s;
+        }
+
+        &:hover{
+          img{
+            transform: scale(1.2);
+          }
         }
       }
 
@@ -135,6 +142,7 @@ $color: #047766;
         justify-content: space-between;
         margin-top: 20px;
         font-size: 15px;
+
         .label-info {
           width: 40%;
 
@@ -175,6 +183,7 @@ $color: #047766;
       }
 
       .cancel-order {
+        cursor: pointer;
         font-size: 16px;
         border-radius: 5px;
         width: 90%;
@@ -185,6 +194,11 @@ $color: #047766;
         justify-content: center;
         align-items: center;
         margin: 30px auto;
+        transition: 0.3s;
+
+        &:hover {
+          background-color: #e1c4c4;
+        }
       }
 
       .cancel-reason {
@@ -196,5 +210,97 @@ $color: #047766;
         color: #FF0000;
       }
     }
+
+    .cancel-order {
+      margin: 30px;
+      .cancel-btn {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+
+        img {
+          cursor: pointer;
+          width: 30px;
+          transition: 0.3s;
+        }
+
+        &:hover{
+          img{
+            transform: scale(1.2);
+          }
+        }
+      }
+
+      .title {
+        margin-top: 10px;
+        text-align: center;
+        font-size: 24px;
+      }
+
+      .title-reason {
+        width: 300px;
+        margin-top: 10px;
+        text-align: center;
+        font-size: 24px;
+      }
+
+      .cancel-order-info {
+        width: 100%;
+        height: 100%;
+        margin-top: 5px;
+        border-radius: 5px;
+        padding: 10px;
+
+        div {
+          padding: 10px;
+          font-weight: 500;
+          margin-top: 15px;
+          display: flex;
+          align-items: center;
+          border: 1px solid #e5e5e8;
+          border-radius: 8px;
+          input {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+          }
+
+          #reason4 {
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            height: 35px;
+            padding-left: 10px;
+            &:focus{
+              outline: none;
+            }
+          }
+
+        }
+
+        .cancel-btn {
+          margin: 20px auto 0px auto;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 15px 25px 15px 25px;
+          background-color: #FFE6E6;
+          color: #FF0000;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: 0.4s;
+          font-size: 14px;
+
+          &:hover {
+            background-color: #e1c4c4;
+          }
+        }
+      }
+    }
   }
+}
+
+.align-none {
+  align-items: flex-start;
 }

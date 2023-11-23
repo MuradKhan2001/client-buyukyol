@@ -38,6 +38,7 @@
   "tariff4": "O'g'ir",
   "tariff5": "O'ta og'ir",
   "tariff6": "Avto tashuvchi",
+  "trucks": "Yuk mashinalari",
   "infoTruck1": "Uzunligi",
   "infoTruck2": "Kengligi",
   "infoTruck3": "Balandligi",
@@ -93,5 +94,6 @@
   "changeNumber2": "Ma'lumotlarni qayta kiritish",
   "download": "Yuklash",
   "map": "Xarita yuklanmoqda...",
-  "timeCargo2": "Buyurtma yakunlangan vaqt"
+  "timeCargo2": "Buyurtma yakunlangan vaqt",
+  "post-order": "Buyurtma berish"
 }
