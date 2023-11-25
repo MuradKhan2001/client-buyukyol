@@ -30,7 +30,9 @@
   "direction2": "Between provinces",
   "direction3": "Across the city.",
   "loc1": "Where",
+  "loc2": "Select the cargo pickup location on the map!",
   "loc3": "Where",
+  "loc4": "Please indicate your delivery address!",
   "tariff": "Types of definitions",
   "tariff1": "Mini",
   "tariff2": "Easy",
@@ -39,7 +41,6 @@
   "tariff5": "Very heavy",
   "tariff6": "Road hauler",
   "trucks": "Trucks",
-  "infoWaits4": "tonne",
   "infoTruck1": "Length",
   "infoTruck2": "Width",
   "infoTruck3": "Height",
@@ -96,5 +97,7 @@
   "download": "Download",
   "map": "Map is loading...",
   "timeCargo2": "Time of completed order: ",
-  "post-order": "Order"
+  "post-order": "Order",
+  "payment3": "Transfer",
+  "button7": "Back"
 }

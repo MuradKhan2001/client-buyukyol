@@ -1,13 +1,14 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {url} from "./url"
+import {url} from "./url";
 
 export const getUser = createAsyncThunk("getUser", async (payload) => {
     return fetch(`${url}api/client/`, {
         headers: {
             "Authorization": `Token ${localStorage.getItem("token")}`
         }
-    }).then((res) => res.json())
-
+    }).then(res => {
+        res.json()
+    })
 })
 
 export const userSlice = createSlice({

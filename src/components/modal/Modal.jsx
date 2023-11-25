@@ -95,6 +95,11 @@ const Modal = () => {
                         </div>
 
                         <div className="info">
+                            <div className="label-info"> {t("info10")}</div>
+                            <div className="value-info">{modalContent.order.payment_type}</div>
+                        </div>
+
+                        <div className="info">
                             <div className="label-info"> {t("info8")}</div>
                             <div className="value-info">{modalContent.order.price} {modalContent.order.currency}</div>
                         </div>

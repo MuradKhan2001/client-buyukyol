@@ -124,6 +124,7 @@ $color: #047766;
       .cards {
         display: flex;
         align-items: center;
+
         .bottom-side-order {
           cursor: pointer;
           margin-top: 20px;
@@ -146,6 +147,7 @@ $color: #047766;
             align-items: center;
             background-color: #F6F8FA;
             margin-right: 20px;
+            overflow: hidden;
 
             img {
               width: 90%;
@@ -194,11 +196,16 @@ $color: #047766;
           }
         }
 
-        .line{
+        .line {
           margin-top: 20px;
           width: 35px;
           height: 5px;
           background-color: #E7EAF1;
+        }
+
+        a {
+          text-decoration: none;
+          color: #100029;
         }
 
         .bottom-side-driver {
@@ -223,10 +230,12 @@ $color: #047766;
             align-items: center;
             background-color: #F6F8FA;
             margin-right: 20px;
+            overflow: hidden;
 
             img {
+              border-radius: 50%;
               object-fit: cover;
-              width: 90%;
+              width: 100%;
             }
           }
 

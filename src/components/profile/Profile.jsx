@@ -1,18 +1,33 @@
 import "./style.scss";
 import {useTranslation} from "react-i18next";
-import {useEffect} from "react";
-import {useSelector, useDispatch} from "react-redux";
-import {getUser} from "../../redux/User";
+import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+import axios from "axios";
 import { RWebShare } from "react-web-share";
 
 
 const Profile = () => {
+    const baseUrl = useSelector((store) => store.baseUrl.data)
     const {t} = useTranslation();
-    const dispatch = useDispatch()
-    const user = useSelector((store) => store.User.data)
+    const [user, setUser] = useState("")
 
     useEffect(() => {
-        dispatch(getUser())
+        axios.get(`${baseUrl}api/client/`, {
+                headers: {
+                    "Authorization": `Token ${localStorage.getItem("token")}`
+                }
+            }
+        ).then((response) => {
+            setUser(response.data);
+        }).catch((error) => {
+            if (error.response.statusText == "Unauthorized") {
+                window.location.pathname = "/";
+                localStorage.removeItem("token");
+                localStorage.removeItem("userId");
+            }
+        });
+
+
     }, [])
 
     return <div className="profile-container">

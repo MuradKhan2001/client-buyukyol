@@ -118,33 +118,36 @@ const History = () => {
 
                                             {
                                                 item.status === "Delivering" ?
-                                                    <div onClick={() => showModalContent(item)}
-                                                         className="bottom-side-driver">
+                                                    <a href={`tel:${item.phone}`}  className="bottom-side-driver">
 
                                                         <div className="photo">
-                                                            <img src="./images/driver.png" alt=""/>
+                                                            <img src={baseUrl+item.driver.image} alt=""/>
                                                         </div>
 
                                                         <div className="content">
                                                             <div className="title">
-                                                                Malikov Murodxon
+                                                                {item.driver.name}
                                                             </div>
                                                             <div className="text">
                                                                 <img src="./images/truck2.png" alt=""/>
                                                                 <div className="info">
-                                                                    <div className="label">MAN</div>
-                                                                    <div className="content">30L288SA</div>
+                                                                    <div className="label">
+                                                                        {item.driver.car_name}
+                                                                    </div>
+                                                                    <div className="content">
+                                                                        {item.driver.car_number}
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div className="text">
                                                                 <img src="./images/phone.png" alt=""/>
                                                                 <div className="info">
-                                                                    <div className="label">+998941882001</div>
+                                                                    <div className="label">{item.driver.phone}</div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                    </div> : ""
+                                                    </a> : ""
                                             }
                                         </div>
 
