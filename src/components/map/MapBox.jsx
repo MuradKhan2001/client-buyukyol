@@ -9,6 +9,7 @@ import {useTranslation} from "react-i18next";
 import {useSelector, useDispatch} from "react-redux";
 import {addAlert, delAlert} from "../../redux/AlertsBox";
 import axios from "axios";
+import {showModals} from "../../redux/ModalContent";
 
 const libraries = ['places'];
 const MapBox = () => {
@@ -75,18 +76,21 @@ const MapBox = () => {
     return <div className="map-container">
 
         <div className="header">
-            <div className="title">
+            <div onClick={()=>dispatch(showModals({show: true, status: "active-driver"}))} className="title">
                 {t("nav-home")}
             </div>
 
             <div className="icons">
-                <div className="icon-active-orders">
+
+                <div onClick={()=>dispatch(showModals({show: true, status: "drivers"}))} className="icon-active-orders">
                     <img src="./images/truck.png" alt="truck"/>
                     <div className="count">
                         2
                     </div>
                 </div>
-                <div className="icon-active-orders">
+
+
+                <div onClick={()=>dispatch(showModals({show: true, status: "active-orders"}))} className="icon-active-orders">
                     <img src="./images/box.png" alt="truck"/>
                     <div className="count">
                         3

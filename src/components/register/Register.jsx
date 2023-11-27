@@ -82,7 +82,7 @@ const Register = () => {
 
     };
 
-    useOnKeyPress(checkCode ? CheckCode : HandleLogin, 'Enter');
+    // useOnKeyPress(checkCode ? CheckCode : HandleLogin, 'Enter');
 
     return <div className="register-container">
         <div className="left">

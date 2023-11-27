@@ -6,6 +6,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {showModals} from "../../redux/ModalContent";
 import {getOrders} from "../../redux/Orders";
 
+
 const History = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch()
@@ -29,7 +30,6 @@ const History = () => {
             name: t("cargoLabel4")
         }
     ]
-
     const ordersList = useSelector((store) => store.Orders.data)
 
     useEffect(() => {

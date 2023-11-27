@@ -1,14 +1,18 @@
 import {useRef, useState} from "react";
 import {CSSTransition} from "react-transition-group";
 import {useSelector, useDispatch} from "react-redux";
+import ReactStars from 'react-stars'
 import {hideModal, showModals} from "../../redux/ModalContent"
 import "./style.scss"
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
 
 const Modal = () => {
+    const navigate = useNavigate();
     const {t} = useTranslation();
     const nodeRef = useRef(null);
     const dispatch = useDispatch()
+    const [radiCount, setRaidCount] = useState()
     const [reason, setReason] = useState("");
     const [add_reason, setAdd_Reason] = useState("");
     const [cargoId, setCargoId] = useState("");
@@ -266,11 +270,330 @@ const Modal = () => {
                                 <label htmlFor="reasonNo">{t("no")}</label>
                             </div>
 
-                            <div onClick={() =>  dispatch(showModals({show: true, status: "cancel-order"}))} className="cancel-btn">{t("button2")}</div>
+                            <div onClick={() => dispatch(showModals({show: true, status: "cancel-order"}))}
+                                 className="cancel-btn">{t("button2")}</div>
                         </div>
 
                     </div>
                 }
+
+                {modalContent.status === "drivers" &&
+                    <div className="drivers-list">
+                        <div className="cancel-btn">
+                            <img onClick={() => dispatch(hideModal({show: false}))} src="./images/x.png" alt=""/>
+                        </div>
+
+                        <div className="title">
+                            {t("driver")}
+                        </div>
+
+                        <div className="drivers-info">
+                            <div onClick={() => {
+                                navigate("/history")
+                                dispatch(hideModal({show: false}))
+                            }} className="bottom-side-driver">
+                                <div className="photo">
+                                    <img src="./images/driver.png" alt=""/>
+                                </div>
+
+                                <div className="content">
+                                    <div className="title">
+                                        Malikov Murodxon
+                                    </div>
+                                    <div className="text">
+                                        <img src="./images/truck2.png" alt=""/>
+                                        <div className="info">
+                                            <div className="label">
+                                                MAN
+                                            </div>
+                                            <div className="content">
+                                                L288SA
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="text">
+                                        <img src="./images/phone.png" alt=""/>
+                                        <div className="info">
+                                            <div className="label">+998941882001</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div onClick={() => {
+                                navigate("/history")
+                                dispatch(hideModal({show: false}))
+                            }} className="bottom-side-driver">
+                                <div className="photo">
+                                    <img src="./images/driver.png" alt=""/>
+                                </div>
+
+                                <div className="content">
+                                    <div className="title">
+                                        Malikov Murodxon
+                                    </div>
+                                    <div className="text">
+                                        <img src="./images/truck2.png" alt=""/>
+                                        <div className="info">
+                                            <div className="label">
+                                                MAN
+                                            </div>
+                                            <div className="content">
+                                                L288SA
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="text">
+                                        <img src="./images/phone.png" alt=""/>
+                                        <div className="info">
+                                            <div className="label">+998941882001</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+                {modalContent.status === "active-orders" &&
+                    <div className="active-orders-list">
+                        <div className="cancel-btn">
+                            <img onClick={() => dispatch(hideModal({show: false}))} src="./images/x.png" alt=""/>
+                        </div>
+
+                        <div className="title">
+                            {t("cargoLabel1")}
+                        </div>
+
+                        <div className="orders-info">
+                            <div onClick={() => {
+                                navigate("/history")
+                                dispatch(hideModal({show: false}))
+                            }} className="bottom-side-order">
+
+                                <div className="photo">
+                                    <img src="./images/car.png" alt=""/>
+                                </div>
+
+                                <div className="content">
+                                    <div className="title">
+                                        Toshkent- Samarqandddddddddddddddddddddddddsssssssssssssssssss
+                                    </div>
+                                    <div className="text">
+                                        <img src="./images/location.png" alt=""/>
+                                        <div className="info">
+                                            <div className="label">{t("info7")}</div>
+                                            <div className="content">23 km</div>
+                                        </div>
+                                    </div>
+                                    <div className="text">
+                                        <img src="./images/price.png" alt=""/>
+                                        <div className="info">
+                                            <div className="label">{t("info14")}</div>
+                                            <div className="content">333 UZS</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div onClick={() => {
+                                navigate("/history")
+                                dispatch(hideModal({show: false}))
+                            }} className="bottom-side-order">
+
+                                <div className="photo">
+                                    <img src="./images/car.png" alt=""/>
+                                </div>
+
+                                <div className="content">
+                                    <div className="title">
+                                        Toshkent- Samarqandddddddddddddddddddddddddsssssssssssssssssss
+                                    </div>
+                                    <div className="text">
+                                        <img src="./images/location.png" alt=""/>
+                                        <div className="info">
+                                            <div className="label">{t("info7")}</div>
+                                            <div className="content">23 km</div>
+                                        </div>
+                                    </div>
+                                    <div className="text">
+                                        <img src="./images/price.png" alt=""/>
+                                        <div className="info">
+                                            <div className="label">{t("info14")}</div>
+                                            <div className="content">333 UZS</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div onClick={() => {
+                                navigate("/history")
+                                dispatch(hideModal({show: false}))
+                            }} className="bottom-side-order">
+
+                                <div className="photo">
+                                    <img src="./images/car.png" alt=""/>
+                                </div>
+
+                                <div className="content">
+                                    <div className="title">
+                                        Toshkent- Samarqandddddddddddddddddddddddddsssssssssssssssssss
+                                    </div>
+                                    <div className="text">
+                                        <img src="./images/location.png" alt=""/>
+                                        <div className="info">
+                                            <div className="label">{t("info7")}</div>
+                                            <div className="content">23 km</div>
+                                        </div>
+                                    </div>
+                                    <div className="text">
+                                        <img src="./images/price.png" alt=""/>
+                                        <div className="info">
+                                            <div className="label">{t("info14")}</div>
+                                            <div className="content">333 UZS</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+                {modalContent.status === "driver-raid" &&
+                    <div className="driver-raid">
+                        <div className="cancel-btn">
+                            <img onClick={() => dispatch(hideModal({show: false}))} src="./images/x.png" alt=""/>
+                        </div>
+
+                        <div className="photo-driver">
+                            <img src="./images/driver.png" alt=""/>
+                        </div>
+
+                        <div className="title">
+                            Buyurtmangiz yakunlandi. Haydovchini baholang.
+                        </div>
+
+                        <div className="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, ducimus?
+                        </div>
+
+                        <div className="stars">
+                            <ReactStars
+                                count={5}
+                                onChange={(e) => {
+                                    setRaidCount(e)
+                                }} size={50}
+                                color2={'#047766'}
+                                half={false}/>
+                        </div>
+
+                        <div className="buttons">
+                            <button onClick={() => dispatch(hideModal({show: false}))}
+                                    className="cancel-btn">{t("button3")}</button>
+
+                            <button className="next-btn ">{t("button2")}</button>
+                        </div>
+                    </div>
+                }
+
+                {modalContent.status === "active-driver" &&
+                    <div className="active-driver-list">
+                        <div className="cancel-btn">
+                            <img onClick={() => dispatch(hideModal({show: false}))} src="./images/x.png" alt=""/>
+                        </div>
+
+                        <div className="title">
+                            Buyurtma
+                        </div>
+
+                        <div className="drivers-info">
+                            <div onClick={() => {
+                                navigate("/history")
+                                dispatch(hideModal({show: false}))
+                            }} className="bottom-side-driver">
+                                <div className="photo">
+                                    <img src="./images/driver.png" alt=""/>
+                                </div>
+
+                                <div className="content">
+                                    <div className="title">
+                                        Malikov Murodxon
+                                    </div>
+                                    <div className="text">
+                                        <img src="./images/truck2.png" alt=""/>
+                                        <div className="info">
+                                            <div className="label">
+                                                MAN
+                                            </div>
+                                            <div className="content">
+                                                L288SA
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="text">
+                                        <img src="./images/phone.png" alt=""/>
+                                        <div className="info">
+                                            <div className="label">+998941882001</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="information-cargo">
+                                <div className="label-info">
+                                    {t("loc1")}
+                                </div>
+                                <div className="info">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, tenetur!
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, tenetur!
+                                </div>
+                            </div>
+
+                            <div className="information-cargo">
+                                <div className="label-info">
+                                    {t("loc3")}
+                                </div>
+                                <div className="info">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, tenetur!
+                                </div>
+                            </div>
+
+                            <div className="information-cargo">
+                                <div className="label-info">
+                                    {t("info2")}
+                                </div>
+                                <div className="info">
+                                   Mevalar
+                                </div>
+                            </div>
+
+                            <div className="information-cargo">
+                                <div className="label-info">
+                                    {t("info4")}
+                                </div>
+                                <div className="info">
+                                    10 tonna
+                                </div>
+                            </div>
+
+                            <div className="information-cargo">
+                                <div className="label-info">
+                                    {t("info8")}
+                                </div>
+                                <div className="info">
+                                    1000 dolor
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
 
             </div>
 
