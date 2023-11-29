@@ -334,6 +334,11 @@ $color: #047766;
         overflow-y: auto;
         padding: 25px;
 
+        a{
+          text-decoration: none;
+          color: #100029;
+        }
+
         .bottom-side-driver {
           cursor: pointer;
           margin-top: 20px;

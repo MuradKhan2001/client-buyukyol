@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useEffect, createContext} from "react";
 import {Route, Routes, NavLink} from "react-router-dom";
 import {userPageRoutes} from "../../routes/Routes";
 import i18next from "i18next";
@@ -9,13 +9,33 @@ import {useSelector, useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {showModals, hideModal} from "../../redux/ModalContent"
 import Alerts from "../alerts/Alerts";
+import {delAlert, addAlert} from "../../redux/AlertsBox"
+import {getOrders} from "../../redux/Orders";
+import {getDistance} from "../../redux/distance";
+import {getPrice} from "../../redux/Price";
+import {updateDriver, addDriver} from "../../redux/driversList";
+
+
+let websocket = null
+let location
+navigator.geolocation.getCurrentPosition(position => {
+    const {latitude, longitude} = position.coords;
+    location = `${latitude}/${longitude}`
+    websocket = new WebSocket(`wss://api.buyukyol.uz/ws/orders/${location}/?token=${localStorage.getItem('token')}`);
+
+});
+
+
+export const webSockedContext = createContext();
 
 const Dashboard = () => {
     const navigate = useNavigate();
     const {t} = useTranslation();
     const dispatch = useDispatch()
     const [dropdownShow, setDropdownShow] = useState(false)
-
+    const [sockedContext, setSockedContext] = useState(null)
+    const drivers = useSelector((store) => store.DriversList.data)
+   
     const language = [
         {
             code: 'uz',
@@ -42,8 +62,130 @@ const Dashboard = () => {
     const showModalContent = () => {
         dispatch(showModals({show: true, status: "log-out"}))
     }
+    
+    useEffect(() => {
 
-    return <div className="dashboard-container">
+        if (websocket && localStorage.getItem("token")) {
+
+            websocket.onclose = () => {
+                window.location.reload()
+            }
+
+            setSockedContext(websocket)
+
+            websocket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+
+                if (!('status' in data.message)) {
+                    let driver = data.message.filter((item) => (item.status !== "Delivered"))
+                    dispatch(updateDriver(driver))
+                }
+
+                if (data.message.status) {
+
+                    if (data.message.status === "distance") {
+                        dispatch(getDistance(data.message.distance))
+                    }
+
+                    if (data.message.status === "Price") {
+                        dispatch(getPrice(data.message))
+                    }
+
+                    if(data.message.status === "confirmed" || data.message.status === "Added"){
+                        let idAlert = Date.now()
+                        let alert = {
+                            id: idAlert,
+                            text: "Buyurtmangiz qabul qilindi!",
+                            img: "./images/green.png"
+                        }
+                        dispatch(addAlert(alert))
+                        setTimeout(() => {
+                            dispatch(delAlert(idAlert))
+                        }, 5000)
+
+                        dispatch(getOrders())
+                    }
+
+                    if (data.message.status === "canceled") {
+                        let idAlert = Date.now()
+                        let alert = {
+                            id: idAlert,
+                            text: "Buyurtmangiz bekor qilindi!",
+                            img: "./images/red.png"
+                        }
+                        dispatch(addAlert(alert))
+                        setTimeout(() => {
+                            dispatch(delAlert(idAlert))
+                        }, 5000)
+
+                        dispatch(getOrders())
+                        dispatch(hideModal({show: false}))
+
+                        let driver = drivers.filter((item) => (item.order_id !== data.message.order_id))
+                         dispatch(updateDriver(driver))
+                    
+                    }
+
+                    if (data.message.status === "Accepted") {
+
+                        let idAlert = Date.now()
+                        let alert = {
+                            id: idAlert,
+                            text:  t("alert8"),
+                            img: "./images/green.png"
+                        }
+                        dispatch(addAlert(alert))
+                        setTimeout(() => {
+                            dispatch(delAlert(idAlert))
+                        }, 10000)
+
+                        dispatch(addDriver(data.message))
+                        dispatch(getOrders())
+                    
+                    }
+
+                    if (data.message.status === "delivering") {
+                        let idAlert = Date.now()
+                        let alert = {
+                            id: idAlert,
+                            text:  t("alert9"),
+                            img: "./images/green.png"
+                        }
+                        dispatch(addAlert(alert))
+                        setTimeout(() => {
+                            dispatch(delAlert(idAlert))
+                        }, 5000)
+                    }
+
+                } else console.log(data.message)
+
+                if (data.message.status === false) {
+                    if (data.message === "invalid token") {
+                        window.location.pathname = "/";
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("userId");
+                    }
+                }
+            };
+        }
+
+    }, []);
+
+    useEffect(() => {
+        const web = new WebSocket(`wss://api.buyukyol.uz/ws/orders/${location}/?token=${localStorage.getItem('token')}`)
+        if (web) {
+            web.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (!('status' in data.message)) {
+                    let driver = data.message.filter((item) => (item.status !== "Delivered"))
+                    dispatch(updateDriver(driver))
+                }
+            }
+        }
+    }, []);
+
+    return <webSockedContext.Provider value={sockedContext}>
+    <div className="dashboard-container">
         <Modal/>
         <Alerts/>
         <div className="left-side">
@@ -140,6 +282,7 @@ const Dashboard = () => {
             </div>
         </div>
     </div>
+     </webSockedContext.Provider>
 }
 
 export default Dashboard

@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState, useMemo} from "react";
+import {useEffect, useRef, useState, useMemo, useContext} from "react";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {useSelector, useDispatch} from "react-redux";
@@ -14,6 +14,7 @@ import {useFormik} from 'formik';
 import {CSSTransition} from "react-transition-group";
 import {GoogleMap, InfoWindow, Marker, useLoadScript} from "@react-google-maps/api";
 import {GOOGLE_MAPS_API_KEY} from './googleMapsApi';
+import {webSockedContext} from "../dashboard/Dashboard";
 import usePlacesAutocomplete, {
     getGeocode, getLatLng,
 } from "use-places-autocomplete";
@@ -21,12 +22,16 @@ import {
     Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
+import {getDistance} from "../../redux/distance";
 
 
 const libraries = ['places'];
 
 const PostOrder = () => {
+    let webSocked = useContext(webSockedContext);
     const baseUrl = useSelector((store) => store.baseUrl.data)
+    const distance = useSelector((store) => store.Distance.data)
+    const price = useSelector((store) => store.Price.data)
     const {t} = useTranslation();
     const navigate = useNavigate();
     const nodeRef = useRef(null);
@@ -40,7 +45,8 @@ const PostOrder = () => {
 
     const [nextPage, setNextPage] = useState(false)
 
-    const [cargoInfo, setCargoInfo] = useState("")
+    const [cargoInfo, setCargoInfo] = useState({})
+    const [cargoInfoAll, setCargoInfoAll] = useState({})
     const [unit, setUnit] = useState(t("infoWaits1"))
     const [payment_type, setPayment_type] = useState(t("payment1"))
     const [currency, setCurrency] = useState("UZS")
@@ -56,7 +62,8 @@ const PostOrder = () => {
     const [locationToAddress, setLocationToAddress] = useState("")
     const [searchLocationAddress, setSearchLocationAddress] = useState("")
     const [selected, setSelected] = useState(null);
-    const [validateLocation, setValidateLocation] = useState(null);
+    const [validateLocationFrom, setValidateLocationFrom] = useState(false);
+    const [validateLocationTo, setValidateLocationTo] = useState(false);
 
 
     const validate = values => {
@@ -72,8 +79,8 @@ const PostOrder = () => {
             errors.capacity = 'Required';
         } else if (values.capacity.length > 5) {
             errors.capacity = "Yuk vazni 5 xonali raqamdan iborat bo'lishi kerak!";
-        } else if (isNaN(Number(values.capacity))) {
-            errors.capacity = "Yuk vazni sondan iborat bo'lishi kerak!";
+        } else if (isNaN(Number(values.capacity)) || Number(values.capacity) < 0) {
+            errors.capacity = "Yuk vazni musbat raqamlardan iborat bo'lishi kerak!";
         }
 
         if (!values.price && direction === "Abroad") {
@@ -82,27 +89,34 @@ const PostOrder = () => {
             errors.price = 'Narx raqamda kiriting!';
         } else if (values.price.length >= 10) {
             errors.price = "Narxda raqamlar soni ko'p";
+        } else if (Number(values.price) < 0) {
+            errors.price = "Narx musbatda kiritilsin";
         }
 
         if (isNaN(Number(values.number_cars))) {
             errors.number_cars = "Moshinalar soni raqamda bo'lishi kerak!";
-        } else if (values.number_cars > 20) {
+        } else if (Number(values.number_cars) > 20) {
             errors.number_cars = "Moshinalar soni 20 tadan ko'p kirtilgan!";
+        } if (Number(values.number_cars) < 0) {
+            errors.number_cars = "Moshinalar soni musbatda kiritilsin!";
         }
 
 
         if (isNaN(Number(values.wait_cost))) {
             errors.wait_cost = 'Narxni raqamda kiriting!';
-        } else if (values.price <= values.wait_cost) {
+        } else if (Number(values.price) <= Number(values.wait_cost) && direction === "Abroad") {
             errors.wait_cost = "Kutish uchun kiritilgan narx asosiy narxdan ko'p!";
+        } else if (Number(values.wait_cost) < 0) {
+            errors.wait_cost = "Narx musbatda kiritilsin!";
         }
 
-        if ( isNaN(Number(values.avans)) ) {
+        if ( isNaN(Number(values.avans))) {
             errors.avans = 'Narxni raqamda kiriting!';
-        } else if (values.price <= values.avans) {
+        } else if (Number(values.price) <= Number(values.avans) && direction === "Abroad") {
             errors.avans = "Avans uchun kiritilgan narx asosiy narxdan ko'p!";
+        } else if (Number(values.avans) < 0) {
+            errors.avans = "Narx musbatda kiritilsin!";
         }
-
 
         return errors;
     };
@@ -119,7 +133,7 @@ const PostOrder = () => {
         address_to: "",
         latitude_to: "",
         longitude_to: "",
-        payment_type: "",
+        payment_type: t("payment1"),
         unit: t("infoWaits1"),
         currency: "UZS",
         wait_type: t("waitCount1"),
@@ -138,8 +152,27 @@ const PostOrder = () => {
         },
         validate,
         onSubmit: values => {
-            setCargoInfo(prevState => prevState = values)
-            showModalForm("order", true)
+            if(locationFromAddress && locationToAddress){
+                setCargoInfo(prevState => prevState = values)
+                showModalForm("order", true)
+
+                if(direction !== "Abroad"){
+                    SendOrder("new_order")
+                }
+
+                
+                
+            } else if (locationFromAddress === "" && locationToAddress === ""){
+
+                setValidateLocationFrom(true)
+                setValidateLocationTo(true)
+
+            } else if (locationFromAddress === ""){
+
+                setValidateLocationFrom(true)
+
+            } else if (locationToAddress === "")  setValidateLocationTo(true)
+           
         },
 
     });
@@ -155,6 +188,7 @@ const PostOrder = () => {
             getCategory()
         }
     }, [])
+
     const getTrucks = (categoryId) => {
         cargo.car_category = categoryId
         setCategory(categoryId)
@@ -163,10 +197,12 @@ const PostOrder = () => {
             setTrucks(re);
         })
     }
+
     const getDirection = (direction) => {
         cargo.type = direction
         setDirection(direction)
     }
+
     const showModalForm = (status, show) => {
         let modal = {
             show,
@@ -176,6 +212,7 @@ const PostOrder = () => {
     }
 
     const selectAddressIcon = {url: './images/address.png', scaledSize: {width: 28, height: 40}};
+
     const PlacesAutocomplete = ({setSelected}) => {
         const {
             ready, value, setValue, suggestions: {status, data}, clearSuggestions,
@@ -213,6 +250,7 @@ const PostOrder = () => {
             </div>
         </Combobox>);
     };
+
     const getAddressLocation = () => {
         if (locationFrom) {
             if (searchLocationAddress && selected) {
@@ -225,6 +263,7 @@ const PostOrder = () => {
                 cargo.longitude_from = Number(selected.lng.toString().slice(0, 9))
                 onloadMap()
                 showModalForm("", false)
+                setValidateLocationFrom(false)
             } else {
                 let idAlert = Date.now()
                 let alert = {
@@ -251,6 +290,7 @@ const PostOrder = () => {
                 cargo.longitude_to = Number(selected.lng.toString().slice(0, 9))
                 onloadMap()
                 showModalForm("", false)
+                setValidateLocationTo(false)
             } else {
                 let idAlert = Date.now()
                 let alert = {
@@ -265,16 +305,16 @@ const PostOrder = () => {
             }
         }
 
-        // if (cargo.address_from && cargo.address_to && direction === "Abroad") {
-        //     let distance = {
-        //         command: "getdistance",
-        //         latitude_from: cargo.latitude_from,
-        //         longitude_from: cargo.longitude_from,
-        //         latitude_to: cargo.latitude_to,
-        //         longitude_to: cargo.longitude_to
-        //     }
-        //     websocket.send(JSON.stringify(distance));
-        // }
+        if (cargo.address_from && cargo.address_to && direction === "Abroad") {
+            let distance = {
+                command: "getdistance",
+                latitude_from: cargo.latitude_from,
+                longitude_from: cargo.longitude_from,
+                latitude_to: cargo.latitude_to,
+                longitude_to: cargo.longitude_to
+            }
+            webSocked.send(JSON.stringify(distance));
+        }
     }
     const ClicklLocation = (e) => {
         let latitude = e.latLng.lat()
@@ -307,6 +347,7 @@ const PostOrder = () => {
     const {isLoaded} = useLoadScript({
         googleMapsApiKey: GOOGLE_MAPS_API_KEY, libraries: libraries, language: i18next.language
     });
+
     const onloadMap = () => {
         navigator.geolocation.getCurrentPosition(position => {
             const {latitude, longitude} = position.coords;
@@ -318,6 +359,50 @@ const PostOrder = () => {
     const options = useMemo(() => ({
         disableDefaultUI: false, clickableIcons: false
     }), []);
+
+    const SendOrder = (command) => {
+        let cargoInfoAll = {...formik.values, ...cargo} 
+       
+        if (command === "new_order") {
+            webSocked.send(JSON.stringify(cargoInfoAll));
+        } else if (command === "cancel_order") {
+            let order = {
+                command: command, id: price.id
+            };
+            webSocked.send(JSON.stringify(order));
+        } else if (command === "confirm_order") {
+            let order = {
+                command: command, id: price.id
+            };
+            webSocked.send(JSON.stringify(order));
+        }
+
+    };
+
+    const ConfirmOrder = () =>{
+
+        if(direction !== "Abroad"){
+            SendOrder("confirm_order")
+        } else {
+            cargo.distance = distance
+            SendOrder("new_order")
+        }
+
+        showModalForm("", false)
+        formik.resetForm()
+        setLocationFromAddress("")
+        setLocationToAddress("")
+        dispatch(getDistance(""))
+        setDirection("")
+        setCategory("")
+        setNextPage(false)
+        setInfoTruck("")
+    }
+
+    const CancelOrder = () =>{
+        direction !== "Abroad" ? SendOrder("cancel_order") : showModalForm("", false)
+        showModalForm("", false)
+    }
 
     if (!isLoaded) return <Loader/>
     return <div className="post-order-container">
@@ -576,7 +661,9 @@ const PostOrder = () => {
 
                             <div className="info">
                                 <div className="label-info">  {t("info7")}</div>
-                                <div className="value-info">  {cargo.distance} km</div>
+                                <div className="value-info">  
+                                {direction !== "Abroad" ? price.distance : distance} km
+                                </div>
                             </div>
 
                             <div className="info">
@@ -586,7 +673,10 @@ const PostOrder = () => {
 
                             <div className="info">
                                 <div className="label-info"> {t("info8")}</div>
-                                <div className="value-info">{cargoInfo.price} {cargo.currency}</div>
+                                <div className="value-info">
+                                {cargoInfo.price ? cargoInfo.price : price.price} 
+                                {cargo.currency}
+                                    </div>
                             </div>
 
                             <div className="info">
@@ -602,10 +692,18 @@ const PostOrder = () => {
                             <div className="info">
                                 <div className="label-info">{t("info5")}</div>
                                 <div className="value-info">
+
                                     {categories.map((item, index) => {
                                         if (item.id === cargo.car_category) {
                                             return <div key={index}>
-                                                {item.min_weight} - {item.max_weight} {t("infoWaits4")},
+
+                                                {
+                                                    item.name !== "Авто Ташувчи" ? 
+                                                    <>
+                                                {item.min_weight} - {item.max_weight} {t("infoWaits4")}, 
+                                                </> :""
+                                                }
+
                                                 {item.name === "Мини" && t("tariff1")}
                                                 {item.name === "Енгил" && t("tariff2")}
                                                 {item.name === "Ўрта" && t("tariff3")}
@@ -615,6 +713,7 @@ const PostOrder = () => {
                                             </div>
                                         }
                                     })}
+
                                 </div>
                             </div>
 
@@ -663,11 +762,10 @@ const PostOrder = () => {
                             </div> : ""}
 
                             <div className="buttons">
-                                <button onClick={() => showModalForm("", false)}
+                                <button onClick={CancelOrder}
                                         className="cancel-btn">{t("button3")}</button>
-                                <button onClick={()=>{
-                                    console.log(cargo)
-                                }} className="next-btn ">{t("button2")}</button>
+
+                                <button onClick={ConfirmOrder} className="next-btn ">{t("button2")}</button>
                             </div>
                         </div>
                     }
@@ -904,7 +1002,7 @@ const PostOrder = () => {
                                 setLocationTo(false)
                             }} className="form-box">
                                 <label htmlFor="cargo">{t("loc1")}</label>
-                                <div className={`input-box ${validateLocation === "locFrom" || validateLocation === "all" ? "input-box-required" : ""}`}>
+                                <div className={`input-box ${validateLocationFrom ? "input-box-required" : ""}`}>
                                     <div className="icon">
                                         <img src="./images/location.png" alt="cargo"/>
                                     </div>
@@ -914,13 +1012,13 @@ const PostOrder = () => {
                                 </div>
                             </div>
 
-                            {direction === "Abroad" &&
+                            {direction === "Abroad" && distance &&
                                 <div className="distance">
                                     <div className="label-distance">
                                         {t("info7")}
                                     </div>
                                     <div className="count">
-                                        1 100 km
+                                        {distance} km
                                     </div>
                                 </div>
                             }
@@ -978,7 +1076,7 @@ const PostOrder = () => {
                                     showModalForm("getLocation", true)
                                     setLocationTo(true)
                                     setLocationFrom(false)
-                                }} className={`input-box ${validateLocation === "locTo" || validateLocation === "all" ? "input-box-required" : ""}`}>
+                                }} className={`input-box ${validateLocationTo ? "input-box-required" : ""}`}>
                                     <div className="icon">
                                         <img src="./images/location.png" alt="cargo"/>
                                     </div>

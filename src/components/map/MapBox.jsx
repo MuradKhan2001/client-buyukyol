@@ -10,6 +10,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {addAlert, delAlert} from "../../redux/AlertsBox";
 import axios from "axios";
 import {showModals} from "../../redux/ModalContent";
+import {getOrders} from "../../redux/Orders";
 
 const libraries = ['places'];
 const MapBox = () => {
@@ -19,8 +20,12 @@ const MapBox = () => {
     const [center, setCenter] = useState()
     const [user, setUser] = useState("")
     const dispatch = useDispatch()
+    const activeOrders = useSelector((store) => store.Orders.activeOrders)
+    const drivers = useSelector((store) => store.DriversList.data)
 
     useEffect(() => {
+
+        dispatch(getOrders())
 
         axios.get(`${baseUrl}api/client/`, {
                 headers: {
@@ -36,7 +41,6 @@ const MapBox = () => {
                 localStorage.removeItem("userId");
             }
         });
-
 
     }, [])
 
@@ -71,6 +75,14 @@ const MapBox = () => {
         } else navigate("/post-order")
     }
 
+    const showInfo = (status)=>{
+        if(drivers.length > 0 && status === "drivers")
+        dispatch(showModals({show: true, status: status}))
+
+        if(activeOrders.length > 0 && status === "active-orders")
+        dispatch(showModals({show: true, status: "active-orders"}))
+    }
+
 
     if (!isLoaded) return <Loader/>;
     return <div className="map-container">
@@ -82,18 +94,18 @@ const MapBox = () => {
 
             <div className="icons">
 
-                <div onClick={()=>dispatch(showModals({show: true, status: "drivers"}))} className="icon-active-orders">
+                <div onClick={()=>showInfo("drivers")} className="icon-active-orders">
                     <img src="./images/truck.png" alt="truck"/>
                     <div className="count">
-                        2
+                        {drivers.length}
                     </div>
                 </div>
 
 
-                <div onClick={()=>dispatch(showModals({show: true, status: "active-orders"}))} className="icon-active-orders">
+                <div onClick={()=>showInfo("active-orders")} className="icon-active-orders">
                     <img src="./images/box.png" alt="truck"/>
                     <div className="count">
-                        3
+                        {activeOrders.length}
                     </div>
                 </div>
 

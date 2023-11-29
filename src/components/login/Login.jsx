@@ -120,7 +120,7 @@ const Login = () => {
 
     };
 
-    // useOnKeyPress(checkCode ? CheckCode : HandleLogin, 'Enter');
+    useOnKeyPress(checkCode ? CheckCode : HandleLogin, 'Enter');
 
     return <div className="login-container">
         <Alerts/>

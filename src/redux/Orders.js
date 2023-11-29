@@ -11,7 +11,7 @@ export const getOrders = createAsyncThunk("getOrders", async (payload) => {
 })
 
 export const orderSlice = createSlice({
-    name: "Orders", initialState: {data: [], status: ""}, reducers: {}, extraReducers: (builder) => {
+    name: "Orders", initialState: {data: [], status: "", activeOrders: ""}, reducers: {}, extraReducers: (builder) => {
         builder
             .addMatcher(getOrders, (state, {payload}) => {
                 state.status = "pending"
@@ -23,7 +23,8 @@ export const orderSlice = createSlice({
 
             .addMatcher((action) => action.type.endsWith('/fulfilled'), (state, {payload}) => {
                 state.status = "success";
-                state.data = payload
+                state.data = payload;
+                state.activeOrders = payload.filter((item)=> item.status === "Active");
             })
     }
 })

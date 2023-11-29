@@ -28,6 +28,7 @@ export default i18next
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<React.StrictMode>
+
     <Provider store={store}>
         <React.Suspense fallback={<Loader/>}>
             <Router>
@@ -35,4 +36,5 @@ root.render(<React.StrictMode>
             </Router>
         </React.Suspense>
     </Provider>
+
 </React.StrictMode>);

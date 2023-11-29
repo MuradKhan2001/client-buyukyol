@@ -23,10 +23,12 @@
     "react-scripts": "5.0.1",
     "react-stars": "^2.2.5",
     "react-transition-group": "^4.4.5",
+    "react-use-websocket": "^4.5.0",
     "react-web-share": "^2.0.2",
     "sass": "^1.69.5",
     "use-places-autocomplete": "^4.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "websocket": "^1.0.34"
   },
   "scripts": {
     "start": "react-scripts start",
