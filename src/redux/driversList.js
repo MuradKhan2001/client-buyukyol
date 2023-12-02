@@ -15,5 +15,5 @@ export const DriversList = createSlice({
     }
 })
 
-export const {addDriver, updateDriver, delDriver,updateDriverList} = DriversList.actions
+export const {addDriver, updateDriver} = DriversList.actions
 export default DriversList.reducer

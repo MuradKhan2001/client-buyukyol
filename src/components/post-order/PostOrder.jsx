@@ -211,7 +211,7 @@ const PostOrder = () => {
         setModalShow(modal)
     }
 
-    const selectAddressIcon = {url: './images/address.png', scaledSize: {width: 28, height: 40}};
+    const selectAddressIcon = {url: './images/address.png', scaledSize: {width: 45, height: 50}};
 
     const PlacesAutocomplete = ({setSelected}) => {
         const {

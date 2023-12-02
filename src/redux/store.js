@@ -6,6 +6,8 @@ import Orders from "./Orders";
 import DriversList from "./driversList";
 import Distance from "./distance";
 import Price from "./Price";
+import RaidDriver from "./RaidDriver";
+import ActiveDriversList from "./ActiveDriversList";
 
 export const store = configureStore({
     reducer: {
@@ -15,7 +17,9 @@ export const store = configureStore({
         Orders,
         DriversList,
         Distance,
-        Price
+        Price,
+        RaidDriver,
+        ActiveDriversList
 
     }
 })

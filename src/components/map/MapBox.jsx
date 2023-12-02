@@ -22,11 +22,11 @@ const MapBox = () => {
     const dispatch = useDispatch()
     const activeOrders = useSelector((store) => store.Orders.activeOrders)
     const drivers = useSelector((store) => store.DriversList.data)
+    const Activedrivers = useSelector((store) => store.ActiveDriversList.data)
+   
 
     useEffect(() => {
-
         dispatch(getOrders())
-
         axios.get(`${baseUrl}api/client/`, {
                 headers: {
                     "Authorization": `Token ${localStorage.getItem("token")}`
@@ -52,6 +52,7 @@ const MapBox = () => {
     }), []);
 
     const onloadMap = () => {
+       
         navigator.geolocation.getCurrentPosition(position => {
             const {latitude, longitude} = position.coords;
             let locMy = {lat: latitude, lng: longitude}
@@ -83,6 +84,7 @@ const MapBox = () => {
         dispatch(showModals({show: true, status: "active-orders"}))
     }
 
+    const truckIcon = {url: './images/location-pin-truck.png', scaledSize: {width: 70, height: 70}};
 
     if (!isLoaded) return <Loader/>;
     return <div className="map-container">
@@ -121,6 +123,19 @@ const MapBox = () => {
             center={center}
             options={options}
             mapContainerClassName="map">
+
+            {Activedrivers.length >= 0 ?
+            <>
+                    {Activedrivers.map((item) => {
+                    return <Marker
+                        key={item.driver}
+                        icon={truckIcon}
+                        position={{lat: Number(item.latitude), lng: Number(item.longitude)}}
+                        onClick={() =>  dispatch(showModals({show: true, status: "active-driver",item}))}
+                    />
+                })}
+
+            </>: ""}
 
         </GoogleMap>
 
