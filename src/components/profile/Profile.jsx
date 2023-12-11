@@ -63,7 +63,9 @@ const Profile = () => {
                             <div className="icon">
                                 <img src="./images/Vector.png" alt="Vector"/>
                             </div>
-                            <div className="name">Ulashish</div>
+                            <div className="name">
+                                {t("share")}
+                            </div>
                         </div>
                         <div className="right">
                             <img src="./images/Stroke.png" alt="Stroke"/>
@@ -77,7 +79,9 @@ const Profile = () => {
                     <div className="icon">
                         <img src="./images/help.png" alt="Vector"/>
                     </div>
-                    <div className="name">Baholash</div>
+                    <div className="name">
+                        {t("grade")}
+                    </div>
                 </div>
                 <div className="right">
                     <img src="./images/Stroke.png" alt="Stroke"/>
@@ -89,7 +93,9 @@ const Profile = () => {
                     <div className="icon">
                         <img src="./images/sms.png" alt="Vector"/>
                     </div>
-                    <div className="name">Biz bilan bog’lanish</div>
+                    <div className="name">
+                        {t("contact")}
+                    </div>
                 </div>
                 <div className="right">
                     <img src="./images/Stroke.png" alt="Stroke"/>

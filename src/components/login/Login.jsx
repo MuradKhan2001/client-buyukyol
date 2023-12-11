@@ -8,9 +8,11 @@ import "./style.scss"
 import Alerts from "../alerts/Alerts";
 import {useSelector, useDispatch} from "react-redux";
 import {delAlert, addAlert} from "../../redux/AlertsBox"
+import {useTranslation} from "react-i18next";
 
 
 const Login = () => {
+    const {t} = useTranslation();
     const baseUrl = useSelector((store) => store.baseUrl.data)
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -22,6 +24,7 @@ const Login = () => {
         setCode(e)
     }
     const HandleLogin = () => {
+
         if (phone.trim().length > 4) {
             let user = {
                 phone: phone, user_type: "Client"
@@ -36,7 +39,7 @@ const Login = () => {
                     let idAlert = Date.now()
                     let alert = {
                         id: idAlert,
-                        text: "Bu raqamga sms jo'natib bo'lmaydi!",
+                        text: t("alert4"),
                         img: "./images/alert-warning.png"
                     }
                     dispatch(addAlert(alert))
@@ -47,11 +50,10 @@ const Login = () => {
 
             }).catch((error) => {
                 if (error.response.status === 404) {
-
                     let idAlert = Date.now()
                     let alert = {
                         id: idAlert,
-                        text: "Bu raqamga sms jo'natib bo'lmaydi!",
+                        text: t("alert4"),
                         img: "./images/alert-warning.png"
                     }
                     dispatch(addAlert(alert))
@@ -60,12 +62,10 @@ const Login = () => {
                     }, 5000)
                 }
             });
-
         } else {
-
             let idAlert = Date.now()
             let alert = {
-                id: idAlert, text: "Telefon raqam kiriting!", img: "./images/alert-warning.png"
+                id: idAlert, text: t("alert11"), img: "./images/alert-warning.png"
             }
             dispatch(addAlert(alert))
             setTimeout(() => {
@@ -74,7 +74,6 @@ const Login = () => {
 
         }
     };
-
     const CheckCode = () => {
 
         if (code.trim().length === 5) {
@@ -88,13 +87,12 @@ const Login = () => {
                 window.location.reload()
 
             }).catch((error) => {
-
                 if (error.response.status === 404) {
 
                     let idAlert = Date.now()
                     let alert = {
                         id: idAlert,
-                        text: "Tasdiqlash ko'di xato!",
+                        text: t("alert5"),
                         img: "./images/alert-warning.png"
                     }
                     dispatch(addAlert(alert))
@@ -102,14 +100,13 @@ const Login = () => {
                         dispatch(delAlert(idAlert))
                     }, 5000)
                 }
-
             });
 
         } else {
             let idAlert = Date.now()
             let alert = {
                 id: idAlert,
-                text: "Tasdiqlash ko'dini to'liq kiriting!",
+                text: t("alert12"),
                 img: "./images/alert-warning.png"
             }
             dispatch(addAlert(alert))
@@ -126,18 +123,18 @@ const Login = () => {
         <Alerts/>
         <div className="left">
             <div className="sloy">
-                <img src="./images/white-logo.svg" alt="white-logo"/>
+                <img src="./images/white-logo.png" alt="white-logo"/>
             </div>
-
         </div>
         <div className="right">
             <div className="title-login">
-                Kirish
+                {t("button5")}
             </div>
 
             <div className="form">
+
                 <div className="inputs">
-                    <label htmlFor="phone" className="label-form">Telefon raqam</label>
+                    <label htmlFor="phone" className="label-form">{t("logintext")}</label>
                     <PhoneInput
                         id="phone"
                         international
@@ -145,28 +142,32 @@ const Login = () => {
                         value={phone}
                         onChange={setPhone}/>
                 </div>
-                {checkCodeCount > 3 || phone === "" ? <button className="login-btn-disablet">
-                    {checkCodeCount > 3 ? "Qayta yuborish" : "Ko'dni olish"}
+
+                {checkCodeCount > 3 || phone === undefined || phone === "" ? <button className="login-btn-disablet">
+                    {checkCodeCount > 3 ? t("logintext4") : t("logintext3")}
                 </button> : <button onClick={HandleLogin} className="login-btn">
-                    {checkCode ? "Qayta yuborish" : "Ko'dni olish"}
+                    {checkCode ? t("logintext4") : t("logintext3")}
                 </button>}
+
             </div>
 
             <div className="form-verify">
                 {checkCode && <>
                     <div className="inputs-verify-code">
-                        <label htmlFor="phone" className="label-form">Tasdiqlash kodi</label>
+                        <label htmlFor="phone" className="label-form">{t("logintext")}</label>
                         <AuthCode allowedCharacters='numeric' length="5" onChange={getCodeValue}/>
                     </div>
                     <button onClick={CheckCode} className="login-btn">
-                        Kirish
+                        {t("button5")}
                     </button>
                 </>}
             </div>
 
             <div className="text-register">
-                <div className="label-text">Ro'yxatdan o'tmagan bo'lsangiz!</div>
-                <span onClick={() => navigate("/register")}>Ro'yxatdan o'tish</span>
+                <div className="label-text">
+                    {t("registertext1")}
+                </div>
+                <span onClick={() => navigate("/register")}>{t("button6")}</span>
             </div>
         </div>
     </div>

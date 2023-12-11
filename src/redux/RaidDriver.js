@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit"
 
+
 export const RaidDriver = createSlice({
     name: "RaidDrivers",
     initialState: {
@@ -8,9 +9,12 @@ export const RaidDriver = createSlice({
     reducers: {
         addRaidDriver: (state, {payload}) => {
             state.data = payload
+        },
+        filterRaidDriver: (state, {payload}) => {
+            state.data = payload.filter((item) => (item.status === "Delivered"))
         }
     }
 })
 
-export const {addRaidDriver} = RaidDriver.actions
+export const {addRaidDriver,filterRaidDriver} = RaidDriver.actions
 export default RaidDriver.reducer

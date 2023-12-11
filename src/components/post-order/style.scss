@@ -1106,6 +1106,13 @@ $color: #047766;
             margin-top: 8px;
             overflow: hidden;
 
+            input::-webkit-calendar-picker-indicator{
+              width: 20px;
+              height: 20px;
+              background-image:url("date.png");
+              background-size: 100%;
+            }
+
             input {
               font-size: 14px;
               color: #787F95;
@@ -1248,6 +1255,138 @@ $color: #047766;
     .next-btn {
       padding: 13px 25px 13px 25px;
       @extend %button;
+    }
+  }
+}
+
+
+
+@media (min-width: 768px) and (max-width: 992px){
+  .post-order-container {
+    .modal-sloy {
+      .map-wrapper {
+        width: 90%;
+        .header {
+          .text {
+            font-size: 20px;
+          }
+        }
+        .map-box {
+          .search-address {
+            transform: translateX(-20%);
+          }
+        }
+      }
+    }
+    .title {
+      font-size: 18px;
+    }
+    .title-info {
+      font-size: 18px;
+    }
+    .truck-information {
+      width: 100%;
+    }
+    .form-informations {
+      .left-forms {
+        padding-right: 15px;
+        .form-box {
+          padding-bottom: 20px;
+          .error {
+            font-size: 10px;
+          }
+        }
+      }
+      .right-forms {
+        padding-left: 15px;
+        .form-box {
+          padding-bottom: 20px;
+          .error {
+            font-size: 10px;
+          }
+        }
+      }
+    }
+
+    .plus-information {
+      .input-box {
+        .locitions {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .plus-information-forms {
+      display: flex;
+      .content-forms {
+        width: 50%;
+        padding-right: 20px;
+
+        .form-box {
+          padding-bottom: 20px;
+          .error {
+            font-size: 10px;
+          }
+
+          .input-box {
+            .icon {
+              width: 50px;
+              @extend %d-flex;
+
+              img {
+                width: 22px;
+              }
+            }
+          }
+        }
+
+        .form-box-time {
+          width: 100%;
+          padding-bottom: 25px;
+          .forms {
+            display: flex;
+            justify-content: space-between;
+            .input-box {
+              width: 80%;
+            }
+          }
+
+        }
+
+        .form-box-radio {
+          padding-bottom: 20px;
+          .error {
+            font-size: 10px;
+          }
+        }
+      }
+
+    }
+
+    .buttons {
+      margin-top: 40px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .cancel-btn {
+        @extend %button;
+        padding: 13px 25px 13px 25px;
+        margin-right: 20px;
+        background-color: rgba(4, 119, 102, 0.05);
+        color: $color;
+        border: 1px solid $color;
+
+        &:hover {
+          background-color: rgba(4, 119, 102, 0.2);
+        }
+      }
+
+      .next-btn {
+        padding: 13px 25px 13px 25px;
+        @extend %button;
+      }
     }
   }
 }

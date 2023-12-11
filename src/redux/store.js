@@ -19,7 +19,6 @@ export const store = configureStore({
         Distance,
         Price,
         RaidDriver,
-        ActiveDriversList
-
+        ActiveDriversList,
     }
 })

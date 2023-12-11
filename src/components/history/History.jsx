@@ -42,7 +42,7 @@ const History = () => {
 
     return <div className="history-container">
         {
-            !ordersList.length > 0 ? <Loader/> :
+            ordersList ? !ordersList.length > 0 ? <Loader/> :
                 <>
                     <div className="title">
                         {t("nav-history")}
@@ -155,7 +155,7 @@ const History = () => {
                             })
                         }
                     </div>
-                </>
+                </> :""
         }
 
     </div>

@@ -47,9 +47,16 @@ $color: #047766;
     .logo-box {
       margin-left: 20px;
 
+      .desctop-logo {
+        display: block;
+      }
+
+      .mobile-logo {
+        display: none;
+      }
+
       img {
-        width: 80px;
-        height: 80px;
+        width: 200px;
       }
 
       .name {
@@ -244,7 +251,6 @@ $color: #047766;
               width: auto;
               height: auto;
               border-radius: 5px;
-
               .menu-item {
                 width: 100%;
                 color: #002B48;
@@ -283,8 +289,6 @@ $color: #047766;
 
 
       }
-
-
     }
 
     .bottom-side {
@@ -294,4 +298,85 @@ $color: #047766;
     }
   }
 
+}
+
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .dashboard-container {
+    .left-side {
+      width: 10%;
+      padding: 10px;
+
+      .logo-box {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+        .desctop-logo {
+          display: none;
+        }
+        .mobile-logo {
+          display: block;
+        }
+        img {
+          width: 50px;
+        }
+        .name {
+          display: none;
+        }
+      }
+
+      .menu-box {
+        .menu-item {
+          @extend %d-flex;
+          padding: 0;
+          justify-content: center;
+          .icon {
+            margin-right: 0;
+            .icons {
+              width: 35px;
+              height: 35px;
+            }
+          }
+
+          .name {
+            display: none;
+          }
+
+          .name-disablet {
+            display: none;
+          }
+
+          &:hover {
+            background-color: $color;
+          }
+        }
+
+        .active {
+          background-color: $color;
+
+          .icon {
+            .house {
+              background-color: white;
+            }
+
+            .history {
+              background-color: white;
+            }
+
+            .settings {
+              background-color: white;
+            }
+
+            .profile {
+              background-color: white;
+            }
+          }
+        }
+      }
+    }
+    .right-side {
+      width: 90%;
+    }
+  }
 }

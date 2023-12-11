@@ -4,8 +4,10 @@ import "./style.scss"
 import {useEffect, useState} from "react";
 import Loader from "../loader/Loader";
 import i18next from "i18next";
+import {useTranslation} from "react-i18next";
 
 const Notification = () => {
+    const {t} = useTranslation();
     const baseUrl = useSelector((store) => store.baseUrl.data)
     const [newsList, setNewsList] = useState([])
     const [loading, setLoading] = useState(true)
@@ -43,7 +45,7 @@ const Notification = () => {
             loading ? <Loader/> :
                 <>
                     <div className="title">
-                        Yangiliklar
+                        {t("news")}
                     </div>
 
                     <div className="news-warpper">

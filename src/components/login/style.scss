@@ -4,7 +4,6 @@ $color: #047766;
   justify-content: center;
   align-items: center;
 }
-
 %button {
   padding: 10px 25px;
   font-weight: 600;
@@ -16,7 +15,6 @@ $color: #047766;
   border-radius: 6px;
   cursor: pointer;
 }
-
 %input {
   margin-top: 15px;
   width: 100%;
@@ -215,4 +213,15 @@ $color: #047766;
 
   }
 
+}
+
+@media (min-width: 768px) and (max-width: 992px){
+  .login-container{
+    .left{
+      display: none;
+    }
+    .right{
+      width: 100%;
+    }
+  }
 }

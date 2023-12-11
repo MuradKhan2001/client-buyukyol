@@ -7,10 +7,10 @@ export const ActiveDriversList = createSlice({
     },
     reducers: {
         updateActiveDriver: (state, {payload}) => {
-            state.data = payload
+            state.data = state.data.filter((item) => Number(item.driver) !== Number(payload));
         },
         addActiveDriver: (state, {payload}) => {
-            let driver = state.data.filter(item => item.driver != payload.driver)
+            let driver = state.data.filter(item => Number(item.driver) !== Number(payload.driver))
             state.data = [...driver, payload]
         },
     }

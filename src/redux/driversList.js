@@ -7,7 +7,13 @@ export const DriversList = createSlice({
     },
     reducers: {
         updateDriver: (state, {payload}) => {
-            state.data = payload
+            state.data = state.data.filter((item) => Number(item.order_id) !== Number(payload.order_id));
+        },
+        filterDriver: (state, {payload}) => {
+            state.data = payload.filter((item) => item.status !== "Delivered");
+        },
+        filterDriverDelivered: (state, {payload}) => {
+            state.data = state.data.filter((item) => Number(item.id) !== Number(payload));
         },
         addDriver: (state, {payload}) => {
             state.data = [...state.data, payload]
@@ -15,5 +21,5 @@ export const DriversList = createSlice({
     }
 })
 
-export const {addDriver, updateDriver} = DriversList.actions
+export const {addDriver, updateDriver, filterDriver, filterDriverDelivered} = DriversList.actions
 export default DriversList.reducer

@@ -35,7 +35,7 @@ $color: #047766;
   .left {
     width: 55%;
     height: 100%;
-    background-image: url("./bgimages/loginbg4.jpg");
+    background-image: url("./bgimages/loginbg1.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     .sloy {
@@ -57,7 +57,6 @@ $color: #047766;
     width: 45%;
     height: auto;
 
-
     .title-login {
       color: #002B48;
       font-size: 32px;
@@ -66,7 +65,7 @@ $color: #047766;
     }
 
     .form {
-      width: 80%;
+      width: 90%;
       margin: 30px auto;
       display: flex;
       align-items: flex-end;
@@ -228,5 +227,16 @@ $color: #047766;
       }
     }
 
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px){
+  .register-container{
+    .left{
+      display: none;
+    }
+    .right{
+      width: 100%;
+    }
   }
 }

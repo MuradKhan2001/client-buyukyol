@@ -2,25 +2,20 @@ import {useEffect, useRef, useState, useMemo, useContext} from "react";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {useSelector, useDispatch} from "react-redux";
-
-import {hideModal, showModals} from "../../redux/ModalContent";
 import {addAlert, delAlert} from "../../redux/AlertsBox";
-
 import "./style.scss";
 import i18next from "i18next";
 import Loader from "../loader/Loader";
 import axios from "axios";
 import {useFormik} from 'formik';
 import {CSSTransition} from "react-transition-group";
-import {GoogleMap, InfoWindow, Marker, useLoadScript} from "@react-google-maps/api";
+import {GoogleMap, Marker, useLoadScript} from "@react-google-maps/api";
 import {GOOGLE_MAPS_API_KEY} from './googleMapsApi';
-import {webSockedContext} from "../dashboard/Dashboard";
+import {webSockedContext} from "../app/App";
 import usePlacesAutocomplete, {
     getGeocode, getLatLng,
 } from "use-places-autocomplete";
-import {
-    Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption,
-} from "@reach/combobox";
+import { Combobox, ComboboxInput, ComboboxOption} from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import {getDistance} from "../../redux/distance";
 
@@ -65,57 +60,56 @@ const PostOrder = () => {
     const [validateLocationFrom, setValidateLocationFrom] = useState(false);
     const [validateLocationTo, setValidateLocationTo] = useState(false);
 
-
     const validate = values => {
         const errors = {};
 
         if (!values.cargo) {
             errors.cargo = 'Required';
         } else if (values.cargo.length > 30) {
-            errors.cargo = 'Maxsulot nomini qisqaroq kiriting';
+            errors.cargo = t("validate1");
         }
 
         if (!values.capacity) {
             errors.capacity = 'Required';
         } else if (values.capacity.length > 5) {
-            errors.capacity = "Yuk vazni 5 xonali raqamdan iborat bo'lishi kerak!";
+            errors.capacity = t("validate2");
         } else if (isNaN(Number(values.capacity)) || Number(values.capacity) < 0) {
-            errors.capacity = "Yuk vazni musbat raqamlardan iborat bo'lishi kerak!";
+            errors.capacity = t("validate3");
         }
 
         if (!values.price && direction === "Abroad") {
             errors.price = 'Required';
         } else if (isNaN(Number(values.price))) {
-            errors.price = 'Narx raqamda kiriting!';
+            errors.price = t("validate4");
         } else if (values.price.length >= 10) {
-            errors.price = "Narxda raqamlar soni ko'p";
+            errors.price = t("validate5");
         } else if (Number(values.price) < 0) {
-            errors.price = "Narx musbatda kiritilsin";
+            errors.price = t("validate6");
         }
 
         if (isNaN(Number(values.number_cars))) {
-            errors.number_cars = "Moshinalar soni raqamda bo'lishi kerak!";
+            errors.number_cars = t("validate7");
         } else if (Number(values.number_cars) > 20) {
-            errors.number_cars = "Moshinalar soni 20 tadan ko'p kirtilgan!";
+            errors.number_cars = t("validate8");
         } if (Number(values.number_cars) < 0) {
-            errors.number_cars = "Moshinalar soni musbatda kiritilsin!";
+            errors.number_cars = t("validate9");
         }
 
 
         if (isNaN(Number(values.wait_cost))) {
-            errors.wait_cost = 'Narxni raqamda kiriting!';
+            errors.wait_cost = t("validate4");
         } else if (Number(values.price) <= Number(values.wait_cost) && direction === "Abroad") {
-            errors.wait_cost = "Kutish uchun kiritilgan narx asosiy narxdan ko'p!";
+            errors.wait_cost = t("validate10");
         } else if (Number(values.wait_cost) < 0) {
-            errors.wait_cost = "Narx musbatda kiritilsin!";
+            errors.wait_cost = t("validate6");
         }
 
         if ( isNaN(Number(values.avans))) {
-            errors.avans = 'Narxni raqamda kiriting!';
+            errors.avans = t("validate4");
         } else if (Number(values.price) <= Number(values.avans) && direction === "Abroad") {
-            errors.avans = "Avans uchun kiritilgan narx asosiy narxdan ko'p!";
+            errors.avans = t("validate11");
         } else if (Number(values.avans) < 0) {
-            errors.avans = "Narx musbatda kiritilsin!";
+            errors.avans = t("validate6");
         }
 
         return errors;
@@ -363,18 +357,28 @@ const PostOrder = () => {
     const SendOrder = (command) => {
         let cargoInfoAll = {...formik.values, ...cargo} 
        
-        if (command === "new_order") {
-            webSocked.send(JSON.stringify(cargoInfoAll));
-        } else if (command === "cancel_order") {
-            let order = {
-                command: command, id: price.id
+        if (webSocked){
+            if (command === "new_order") {
+                webSocked.send(JSON.stringify(cargoInfoAll));
+            } else if (command === "cancel_order") {
+                let order = {
+                    command: command, id: price.id
+                };
+                webSocked.send(JSON.stringify(order));
+            } else if (command === "confirm_order") {
+                let order = {
+                    command: command, id: price.id
+                };
+                webSocked.send(JSON.stringify(order));
+            }
+        } else {
+            let idAlertError = Date.now();
+            let alert = {
+                id: idAlertError,
+                text: "Internet kuchsiz!",
+                img: "./images/red.png",
             };
-            webSocked.send(JSON.stringify(order));
-        } else if (command === "confirm_order") {
-            let order = {
-                command: command, id: price.id
-            };
-            webSocked.send(JSON.stringify(order));
+            dispatch(addAlert(alert));
         }
 
     };
@@ -592,7 +596,7 @@ const PostOrder = () => {
                             </div>
 
                             <div className="title">
-                                Valyutani tanlang
+                                {t("title3")}
                             </div>
 
                             <div className="form-order-info">
@@ -969,7 +973,6 @@ const PostOrder = () => {
                         </>
                     }
                 </> :
-
                 <form onSubmit={formik.handleSubmit}>
 
                     <div className="form-informations">
@@ -1162,7 +1165,6 @@ const PostOrder = () => {
                                     <div className="forms">
                                         <div className="input-box">
                                             <div className="icon">
-                                                <img src="./images/date.png" alt="cargo"/>
                                             </div>
 
                                             <input
@@ -1235,7 +1237,6 @@ const PostOrder = () => {
                                         <div className="input-box">
 
                                             <div className="icon">
-                                                <img src="./images/date.png" alt="cargo"/>
                                             </div>
 
                                             <input

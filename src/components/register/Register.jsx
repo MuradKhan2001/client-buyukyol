@@ -1,4 +1,4 @@
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import PhoneInput from 'react-phone-number-input'
 import AuthCode from "react-auth-code-input";
 import axios from "axios";
@@ -6,8 +6,12 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useOnKeyPress} from "./useOnKeyPress";
 import "./style.scss"
+import {addAlert, delAlert} from "../../redux/AlertsBox";
+import {useTranslation} from "react-i18next";
 
 const Register = () => {
+    const {t} = useTranslation();
+    const dispatch = useDispatch()
     const baseUrl = useSelector((store) => store.baseUrl.data)
     const navigate = useNavigate();
     const [first_name, setFirst_name] = useState("")
@@ -26,35 +30,47 @@ const Register = () => {
         setLast_name(e.target.value)
     }
     const HandleLogin = () => {
+        let user = {
+            first_name,
+            last_name,
+            phone,
+            user_type: "Client"
+        };
 
-        if (phone.trim().length > 4 && last_name.trim().length > 0 && first_name.trim().length > 0) {
+        axios.post(`${baseUrl}api/register/`, user).then((response) => {
 
-            let user = {
-                first_name,
-                last_name,
-                phone,
-                user_type: "Client"
-            };
+            if (response.data.user) {
+                localStorage.setItem("userId", response.data.user);
+                setCheckCode(true)
+                setCheckCodeCount(prevState => prevState + 1)
+            } else {
 
-            axios.post(`${baseUrl}api/register/`, user).then((response) => {
-
-                if (response.data.user) {
-                    localStorage.setItem("userId", response.data.user);
-                    setCheckCode(true)
-                    setCheckCodeCount(prevState => prevState + 1)
-                } else {
-                    alert("Bu raqamga sms jo'natib bo'lamaydi ")
+                let idAlert = Date.now()
+                let alert = {
+                    id: idAlert,
+                    text: t("alert4"),
+                    img: "./images/alert-warning.png"
                 }
+                dispatch(addAlert(alert))
+                setTimeout(() => {
+                    dispatch(delAlert(idAlert))
+                }, 5000)
+            }
 
-            }).catch((error) => {
-                if (error.response.status === 404) {
-                    alert("Bu raqamga sms jo'natib bo'lamaydi ")
+        }).catch((error) => {
+            if (error.response.status === 404) {
+                let idAlert = Date.now()
+                let alert = {
+                    id: idAlert,
+                    text: t("alert4"),
+                    img: "./images/alert-warning.png"
                 }
-            });
-
-        } else {
-            alert("Ma'lumotlarni to'liq kiriting")
-        }
+                dispatch(addAlert(alert))
+                setTimeout(() => {
+                    dispatch(delAlert(idAlert))
+                }, 5000)
+            }
+        });
     };
     const CheckCode = () => {
 
@@ -72,12 +88,30 @@ const Register = () => {
             }).catch((error) => {
 
                 if (error.response.status === 404) {
-                    alert("Tasdiqlash kodi xato!")
+                    let idAlert = Date.now()
+                    let alert = {
+                        id: idAlert,
+                        text: t("alert5"),
+                        img: "./images/alert-warning.png"
+                    }
+                    dispatch(addAlert(alert))
+                    setTimeout(() => {
+                        dispatch(delAlert(idAlert))
+                    }, 5000)
                 }
             });
 
         } else {
-            alert("Ko'dni to'liq kiriting")
+            let idAlert = Date.now()
+            let alert = {
+                id: idAlert,
+                text: t("alert12"),
+                img: "./images/alert-warning.png"
+            }
+            dispatch(addAlert(alert))
+            setTimeout(() => {
+                dispatch(delAlert(idAlert))
+            }, 5000)
         }
 
     };
@@ -87,21 +121,21 @@ const Register = () => {
     return <div className="register-container">
         <div className="left">
             <div className="sloy">
-                <img src="./images/white-logo.svg" alt="white-logo"/>
+                <img src="./images/white-logo.png" alt="white-logo"/>
             </div>
         </div>
 
         <div className="right">
             <div className="title-login">
-                Ro'yxatdan o'tish
+                {t("button6")}
             </div>
 
             <div className="form">
                 <div className="register-inputs">
-                    <label htmlFor="first_name" className="label-form">Ism</label>
+                    <label htmlFor="first_name" className="label-form">{t("registertext2")}</label>
                     <input onChange={getFirstName} id="first_name" type="text"/>
 
-                    <label htmlFor="phone" className="label-form">Familiya</label>
+                    <label htmlFor="phone" className="label-form">{t("registertext2")}</label>
                     <input onChange={getLastName} id="last_name" type="text"/>
                 </div>
             </div>
@@ -109,7 +143,9 @@ const Register = () => {
             <div className="form">
 
                 <div className="inputs">
-                    <label htmlFor="phone" className="label-form">Telefon raqam</label>
+                    <label htmlFor="phone" className="label-form">
+                        {t("logintext")}
+                    </label>
                     <PhoneInput
                         id="phone"
                         international
@@ -117,32 +153,33 @@ const Register = () => {
                         value={phone}
                         onChange={setPhone}/>
                 </div>
-                {
-                    checkCodeCount > 3 || (phone  === "" || first_name === "" || last_name === "") ? <button className="login-btn-disablet">
-                        {checkCodeCount > 3 ? "Qayta yuborish" : "Ko'dni olish"}
-                    </button> : <button onClick={HandleLogin} className="login-btn">
-                        {checkCode ? "Qayta yuborish" : "Ko'dni olish"}
-                    </button>
-                }
+
+                {checkCodeCount > 3 || (phone === undefined || phone === "" || first_name === "" || last_name === "") ? <button className="login-btn-disablet">
+                    {checkCodeCount > 3 ? t("logintext4") : t("logintext3")}
+                </button> : <button onClick={HandleLogin} className="login-btn">
+                    {checkCode ? t("logintext4") : t("logintext3")}
+                </button>}
+
             </div>
 
             <div className="form-verify">
                 {
                     checkCode && <>
                         <div className="inputs-verify-code">
-                            <label htmlFor="phone" className="label-form">Tasdiqlash kodi</label>
+                            <label htmlFor="phone" className="label-form">{t("logintext2")}</label>
                             <AuthCode allowedCharacters='numeric' length="5" onChange={getCodeValue}/>
                         </div>
+
                         <button onClick={CheckCode} className="login-btn">
-                            Kirish
+                            {t("button5")}
                         </button>
                     </>
                 }
             </div>
 
             <div className="text-register">
-                <div className="label-text">Siz allaqachon ro'yxatdan o'tganmisiz?</div>
-                <span onClick={() => navigate("/")}>Kirish</span>
+                <div className="label-text">{t("registertext4")}</div>
+                <span onClick={() => navigate("/")}> {t("button5")}</span>
             </div>
         </div>
     </div>
