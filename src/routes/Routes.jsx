@@ -6,6 +6,7 @@ import PostOrder from "../components/post-order/PostOrder";
 import Profile from "../components/profile/Profile";
 import Notification from "../components/notification/Notification";
 import History from "../components/history/History";
+import SettingsMobile from "../components/settings-mobile/SettingsMobile";
 
 export const loginRoutes = [
     {
@@ -45,6 +46,10 @@ export const userPageRoutes = [
     {
         path: "/history",
         element: <History/>
+    },
+    {
+        path: "/settings",
+        element: <SettingsMobile/>
     },
 ];
 

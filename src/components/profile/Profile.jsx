@@ -1,12 +1,14 @@
 import "./style.scss";
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import { RWebShare } from "react-web-share";
+import {showModals} from "../../redux/ModalContent";
 
 
 const Profile = () => {
+    const dispatch = useDispatch();
     const baseUrl = useSelector((store) => store.baseUrl.data)
     const {t} = useTranslation();
     const [user, setUser] = useState("")
@@ -30,6 +32,11 @@ const Profile = () => {
 
     }, [])
 
+
+    const showModalContent = () => {
+        dispatch(showModals({show: true, status: "log-out"}));
+    };
+
     return <div className="profile-container">
         <div className="title">
             {t("nav-profile")}
@@ -46,6 +53,7 @@ const Profile = () => {
         </div>
 
         <div className="send-buttons">
+
             <div className="send-btn">
 
                 <RWebShare
@@ -101,6 +109,22 @@ const Profile = () => {
                     <img src="./images/Stroke.png" alt="Stroke"/>
                 </div>
             </div>
+
+
+            <div onClick={showModalContent} className="send-btn-log-out">
+                <div className="left">
+                    <div className="icon">
+                        <img src="./images/sign-out.png" alt="Vector"/>
+                    </div>
+                    <div className="name">
+                        {t("log-out")}
+                    </div>
+                </div>
+                <div className="right">
+                    <img src="./images/Stroke.png" alt="Stroke"/>
+                </div>
+            </div>
+
         </div>
     </div>
 }

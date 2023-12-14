@@ -334,7 +334,7 @@ $color: #047766;
         overflow-y: auto;
         padding: 25px;
 
-        a{
+        a {
           text-decoration: none;
           color: #100029;
         }
@@ -636,6 +636,7 @@ $color: #047766;
         height: 400px;
         overflow-y: auto;
         padding: 10px;
+
         .bottom-side-driver {
           margin: 10px auto;
           cursor: pointer;
@@ -733,4 +734,297 @@ $color: #047766;
 
 .align-none {
   align-items: flex-start;
+}
+
+
+@media (max-width: 767px) {
+  .modal-sloy {
+    padding: 12px;
+    .modal-card {
+      overflow: hidden;
+      width: 100%;
+      height: max-content;
+      background-color: white;
+      box-shadow: 0 33px 97px 0 #002C5714;
+      border-radius: 12px;
+
+      .show-order {
+        padding: 12px;
+        margin: 0;
+        width: 100%;
+        height: max-content;
+
+        .cancel-btn {
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
+
+          img {
+            cursor: pointer;
+            width: 30px;
+            transition: 0.3s;
+          }
+
+          &:hover {
+            img {
+              transform: scale(1.2);
+            }
+          }
+        }
+
+        .title {
+          text-align: center;
+          font-size: 18px;
+          line-height: 32px;
+        }
+
+        .info-direction {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 20px;
+          font-size: 14px;
+
+          .label-info {
+            width: 40%;
+            font-weight: 600;
+            color: $color;
+            text-transform: uppercase;
+          }
+
+          .value-info {
+            padding-left: 20px;
+            font-weight: 400;
+            color: $color;
+            width: 60%;
+          }
+        }
+
+        .info {
+          margin-top: 15px;
+          width: 100%;
+          justify-content: space-between;
+          display: flex;
+          font-size: 14px;
+
+          .label-info {
+            width: 40%;
+
+            font-weight: 600;
+            color: #787F95;
+            text-transform: uppercase;
+          }
+
+          .value-info {
+            padding-left: 20px;
+            width: 60%;
+            color: #002B48;
+            font-weight: 400;
+          }
+        }
+
+        .cancel-order {
+          cursor: pointer;
+          font-size: 16px;
+          border-radius: 5px;
+          width: 90%;
+          height: 50px;
+          background-color: #FFE6E6;
+          color: #FF0000;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 30px auto;
+          transition: 0.3s;
+
+          &:hover {
+            background-color: #e1c4c4;
+          }
+        }
+
+        .cancel-reason {
+          width: 90%;
+          margin: 30px auto;
+          padding: 5px;
+          text-align: center;
+          border-radius: 20px;
+          background-color: #FFE6E6;
+          color: #FF0000;
+        }
+      }
+
+      .drivers-list {
+        margin: 10px;
+        .drivers-info {
+          margin-top: 20px;
+          width: 100%;
+          height: 450px;
+          overflow-y: auto;
+          padding: 0px;
+
+          .bottom-side-driver {
+            margin-top: 20px;
+            width: 100%;
+            height: 120px;
+            background-color: #E7EAF1;
+
+            &:hover {
+              background-color: #E7EAF1;
+            }
+          }
+        }
+      }
+
+      .active-orders-list {
+        margin: 10px;
+
+        .orders-info {
+          margin-top: 20px;
+          width: 100%;
+          height: 450px;
+          overflow-y: auto;
+          padding: 0px;
+
+          .bottom-side-order {
+            margin-top: 20px;
+            width: 100%;
+            height: 120px;
+            background-color: #E7EAF1;
+
+            &:hover {
+              background-color: #E7EAF1;
+            }
+          }
+        }
+      }
+
+      .driver-raid {
+        margin: 0px;
+        width: 100%;
+
+        .cancel-btn {
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
+
+          img {
+            cursor: pointer;
+            width: 30px;
+            transition: 0.3s;
+          }
+
+          &:hover {
+            img {
+              transform: scale(1.2);
+            }
+          }
+        }
+
+        .photo-driver {
+          margin: 10px auto;
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          overflow: hidden;
+
+          img {
+            width: 100%;
+          }
+        }
+
+        .title {
+          font-size: 20px;
+          margin-top: 20px;
+          text-align: center;
+          font-weight: bold;
+          color: $color;
+        }
+
+        .description {
+          margin-top: 20px;
+          font-size: 16px;
+          text-align: center;
+        }
+
+        .stars {
+          margin-top: 20px;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .buttons {
+          margin-top: 40px;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .cancel-btn {
+            width: max-content;
+            @extend %button;
+            padding: 13px 25px 13px 25px;
+            margin-right: 20px;
+            background-color: rgba(4, 119, 102, 0.05);
+            color: $color;
+            border: 1px solid $color;
+
+            &:hover {
+              background-color: rgba(4, 119, 102, 0.2);
+            }
+          }
+
+          .next-btn {
+            padding: 13px 25px 13px 25px;
+            @extend %button;
+          }
+        }
+      }
+
+      .active-driver-list {
+        width: 100%;
+        margin: 10px;
+
+        .drivers-info {
+          margin-top: 20px;
+          width: 100%;
+          height: 450px;
+          overflow-y: auto;
+          padding: 0px;
+
+          .bottom-side-driver {
+            margin-top: 20px;
+            width: 100%;
+            height: 120px;
+            background-color: #E7EAF1;
+
+            &:hover {
+              background-color: #E7EAF1;
+            }
+          }
+
+          .information-cargo {
+            font-size: 14px;
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            .label-info {
+              font-weight: bold;
+            }
+
+            .info {
+              width: 60%;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .align-none {
+    padding-top: 20px;
+    align-items: flex-start;
+  }
 }

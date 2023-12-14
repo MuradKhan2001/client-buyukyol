@@ -30,47 +30,52 @@ $color: #047766;
   background-color: #F6F8FA;
   padding: 30px;
 
-  .title {
+  .title-history {
     margin-top: 20px;
     font-weight: bold;
     color: #002B48;
     font-size: 24px;
   }
 
-  .header {
-    margin-top: 20px;
+  .header-history {
     width: 100%;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    margin-top: 20px;
+    overflow-x: auto;
+    padding-bottom: 20px;
 
-    .tab-btn {
-      margin-right: 20px;
-      @extend %d-flex;
-      width: 200px;
-      height: 45px;
-      font-weight: 600;
-      font-size: 16px;
-      line-height: 19.09px;
-      color: $color;
-      border: 1px solid $color;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: 0.3s;
+    .tabs-box {
+      padding-left: 20px;
+      width: 900px;
+      display: flex;
 
-      &:hover {
-        background-color: rgba(3, 82, 71, 0.1);
+      .tab-btn {
+        width: 200px !important;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 19.09px;
+        color: $color;
+        border: 1px solid $color;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+          background-color: rgba(3, 82, 71, 0.1);
+        }
       }
-    }
 
-    .tab-active {
-      color: white;
-      background-color: $color;
+      .tab-active {
+        color: white;
+        background-color: $color;
 
-      &:hover {
-
-        background-color: rgba(3, 82, 71, 1);
+        &:hover {
+          background-color: rgba(3, 82, 71, 1);
+        }
       }
     }
   }
@@ -288,17 +293,18 @@ $color: #047766;
   }
 }
 
-
-@media (min-width: 768px) and (max-width: 992px){
-  .history-container{
-    .title {
+@media (min-width: 768px) and (max-width: 992px) {
+  .history-container {
+    .title-history {
       font-size: 18px;
     }
+
     .header {
       .tab-btn {
         font-size: 14px;
       }
     }
+
     .orders-box {
       .order {
         margin-top: 20px;
@@ -341,6 +347,7 @@ $color: #047766;
 
         .cards {
           display: block;
+
           .line {
             margin: 0 auto;
             width: 5px;
@@ -351,12 +358,147 @@ $color: #047766;
             text-decoration: none;
             color: #100029;
           }
+
           .bottom-side-driver {
             margin-top: 0;
           }
         }
 
 
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .history-container {
+    background-color: white;
+    padding: 0px;
+
+    .title-history {
+      margin-top: 0;
+      width: 100%;
+      height: 60px;
+      text-align: center;
+      padding-top: 15px;
+      padding-left: 20px;
+      padding-right: 20px;
+      font-size: 22px;
+      color: #100029;
+      font-weight: 600;
+    }
+
+    .header-history {
+      .tabs-box {
+        padding-left: 20px;
+        width: 660px;
+        display: flex;
+
+        .tab-btn {
+          width: 140px !important;
+          height: 40px;
+          margin-right: 12px;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 20px;
+          border-radius: 8px;
+
+          &:hover {
+            background-color: transparent;
+          }
+        }
+
+        .tab-active {
+          color: white;
+          background-color: $color;
+
+          &:hover {
+            background-color: rgba(3, 82, 71, 1);
+          }
+        }
+      }
+    }
+
+    .orders-box {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-wrap: wrap;
+
+      .order {
+        margin: 5px auto;
+        width: 340px;
+
+        .top-side-order {
+          margin-top: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .date {
+            font-size: 16px;
+            color: black;
+          }
+
+          .btn-badge {
+            font-size: 12px;
+            border-radius: 8px;
+            padding: 8px 15px 8px 15px;
+            color: white;
+          }
+
+          .Active {
+            background-color: #FFC700;
+          }
+
+          .Delivering {
+            background-color: #079b86;
+          }
+
+          .Delivered {
+            background-color: #095b91;
+          }
+
+          .Rejected {
+            background-color: #FF0000;
+          }
+        }
+
+        .cards {
+          display: block;
+          align-items: center;
+          .bottom-side-order {
+            width: 100%;
+            background-color: #E7EAF1;
+
+            &:hover{
+              background-color: #E7EAF1;
+            }
+          }
+
+          .line {
+            background-color: #E7EAF1;
+            margin: 0 auto;
+            width: 5px;
+            height: 25px;
+          }
+
+          a {
+            text-decoration: none;
+            color: #100029;
+          }
+
+          .bottom-side-driver {
+            margin-top: 0px;
+            width: 100%;
+            background-color: #E7EAF1;
+            &:hover{
+              background-color: #E7EAF1;
+            }
+          }
+
+        }
       }
     }
   }

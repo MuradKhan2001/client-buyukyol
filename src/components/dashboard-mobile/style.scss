@@ -1,0 +1,104 @@
+$color: #047766;
+%d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-container{
+  .body-side{
+    width: 100%;
+    height: calc(100vh - 60px);
+  }
+  .footer-side{
+    @extend %d-flex;
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    bottom: 0;
+    background-color: white;
+    a {
+      text-decoration: none;
+    }
+
+    .menu-item {
+      @extend %d-flex;
+      width: 100%;
+      height: 56px;
+      cursor: pointer;
+      transition: .3s;
+      .icon {
+        .icons {
+          width: 40px;
+          height: 40px;
+          mask: {
+            repeat: no-repeat;
+            size: 100%;
+            position: center center;
+          };
+          -webkit-mask: {
+            repeat: no-repeat;
+            size: 100%;
+            position: center center;
+          };
+        }
+
+        .house {
+          -webkit-mask-size: cover;
+          mask-size: cover;
+          -webkit-mask-image: url(./icons/house.svg);
+          mask-image: url(./icons/house.svg);
+          background-color: #D6DADF;
+        }
+
+        .history {
+          -webkit-mask-size: cover;
+          mask-size: cover;
+          -webkit-mask-image: url(./icons/history.svg);
+          mask-image: url(./icons/history.svg);
+          background-color: #D6DADF;
+        }
+
+        .settings {
+          -webkit-mask-size: cover;
+          mask-size: cover;
+          -webkit-mask-image: url(./icons/setting.svg);
+          mask-image: url(./icons/setting.svg);
+          background-color: #D6DADF;
+        }
+
+        .profile {
+          -webkit-mask-size: cover;
+          mask-size: cover;
+          -webkit-mask-image: url(./icons/person.svg);
+          mask-image: url(./icons/person.svg);
+          background-color: #D6DADF;
+        }
+      }
+    }
+
+    .active {
+      .icon {
+        .house {
+          background-color: $color;
+        }
+
+        .history {
+          background-color: $color;
+        }
+
+        .settings {
+          background-color: $color;
+        }
+
+        .profile {
+          background-color: $color;
+        }
+      }
+
+      .name {
+        color: $color;
+      }
+    }
+  }
+}

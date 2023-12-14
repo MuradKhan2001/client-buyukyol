@@ -420,361 +420,363 @@ const PostOrder = () => {
         >
             <div className={`modal-sloy ${modalShow.status === "order" ? "align-none" : ""}`}>
 
-                <div ref={nodeRef} className="modal-card">
+                { modalShow.status !== "getLocation" &&
+                    <div ref={nodeRef} className="modal-card">
 
-                    {modalShow.status === "payment-type" &&
-                        <div className="form-orders">
-                            <div className="cancel-btn">
-                                <img onClick={() => showModalForm("", false)} src="./images/x.png" alt=""/>
-                            </div>
-
-                            <div className="title">
-                                {t("info10")}
-                            </div>
-
-                            <div className="form-order-info">
-
-                                <label htmlFor="payment_type_one">
-                                    <input
-                                        name="payment_type"
-                                        onChange={(e) => setPayment_type(e.target.value)}
-                                        id="payment_type_one" type="radio"
-                                        value={t("payment1")}/>
-                                    <div>{t("payment1")}</div>
-                                </label>
-
-                                <label htmlFor="payment_type_two">
-                                    <input
-                                        onChange={(e) => setPayment_type(e.target.value)}
-                                        id="payment_type_two" type="radio"
-                                        name="payment_type"
-                                        value={t("payment2")}/>
-                                    <div>{t("payment2")}</div>
-                                </label>
-
-                                <label>
-                                    <input
-                                        onChange={(e) => setPayment_type(e.target.value)}
-                                        id="payment_type_three" type="radio"
-                                        name="payment_type"
-                                        value={t("payment3")}/>
-                                    <div>{t("payment3")}</div>
-                                </label>
-
-                                <div onClick={() => {
-                                    showModalForm("", false)
-                                    cargo.payment_type = payment_type
-                                }} className="success-btn">
-                                    {t("button2")}
+                        {modalShow.status === "payment-type" &&
+                            <div className="form-orders">
+                                <div className="cancel-btn">
+                                    <img onClick={() => showModalForm("", false)} src="./images/x.png" alt=""/>
                                 </div>
-                            </div>
 
-                        </div>
-                    }
-
-                    {modalShow.status === "cargo-weight" &&
-                        <div className="form-orders">
-                            <div className="cancel-btn">
-                                <img onClick={() => showModalForm("", false)} src="./images/x.png" alt=""/>
-                            </div>
-
-                            <div className="title">
-                                {t("infoTruck4")}
-                            </div>
-
-                            <div className="form-order-info">
-
-                                <label htmlFor="unit1">
-                                    <input
-                                        name="unit"
-                                        onChange={(e) => setUnit(e.target.value)}
-                                        id="unit1" type="radio"
-                                        value={t("infoWaits1")}/>
-                                    <div>{t("infoWaits1")}</div>
-                                </label>
-
-                                <label htmlFor="unit2">
-                                    <input
-                                        name="unit"
-                                        onChange={(e) => setUnit(e.target.value)}
-                                        id="unit2" type="radio"
-                                        value={t("infoWaits2")}/>
-                                    <div>{t("infoWaits2")}</div>
-                                </label>
-
-                                <label htmlFor="unit3">
-                                    <input
-                                        name="unit"
-                                        onChange={(e) => setUnit(e.target.value)}
-                                        id="unit3" type="radio"
-                                        value={t("infoWaits3")}/>
-                                    <div>{t("infoWaits3")}</div>
-                                </label>
-
-                                <label htmlFor="unit4">
-                                    <input
-                                        name="unit"
-                                        onChange={(e) => setUnit(e.target.value)}
-                                        id="unit4" type="radio"
-                                        value={t("infoWaits4")}/>
-                                    <div>{t("infoWaits4")}</div>
-                                </label>
-
-                                <label htmlFor="unit5">
-                                    <input
-                                        name="unit"
-                                        onChange={(e) => setUnit(e.target.value)}
-                                        id="unit5" type="radio"
-                                        value={t("infoWaits5")}/>
-                                    <div>{t("infoWaits5")}</div>
-                                </label>
-
-                                <label htmlFor="unit6">
-                                    <input
-                                        name="unit"
-                                        onChange={(e) => setUnit(e.target.value)}
-                                        id="unit6" type="radio"
-                                        value={t("infoWaits6")}/>
-                                    <div>{t("infoWaits6")}</div>
-                                </label>
-
-                                <div onClick={() => {
-                                    showModalForm("", false)
-                                    cargo.unit = unit
-                                }} className="success-btn">
-                                    {t("button2")}
+                                <div className="title">
+                                    {t("info10")}
                                 </div>
-                            </div>
 
-                        </div>
-                    }
+                                <div className="form-order-info">
 
-                    {modalShow.status === "weight-type" &&
-                        <div className="form-orders">
-                            <div className="cancel-btn">
-                                <img onClick={() => showModalForm("", false)} src="./images/x.png" alt=""/>
-                            </div>
+                                    <label htmlFor="payment_type_one">
+                                        <input
+                                            name="payment_type"
+                                            onChange={(e) => setPayment_type(e.target.value)}
+                                            id="payment_type_one" type="radio"
+                                            value={t("payment1")}/>
+                                        <div>{t("payment1")}</div>
+                                    </label>
 
-                            <div className="title">
-                                {t("info11")}
-                            </div>
+                                    <label htmlFor="payment_type_two">
+                                        <input
+                                            onChange={(e) => setPayment_type(e.target.value)}
+                                            id="payment_type_two" type="radio"
+                                            name="payment_type"
+                                            value={t("payment2")}/>
+                                        <div>{t("payment2")}</div>
+                                    </label>
 
-                            <div className="form-order-info">
+                                    <label>
+                                        <input
+                                            onChange={(e) => setPayment_type(e.target.value)}
+                                            id="payment_type_three" type="radio"
+                                            name="payment_type"
+                                            value={t("payment3")}/>
+                                        <div>{t("payment3")}</div>
+                                    </label>
 
-                                <label htmlFor="wait_type1">
-                                    <input
-                                        name="wait_type"
-                                        onChange={(e) => setWait_type(e.target.value)}
-                                        id="wait_type1" type="radio"
-                                        value={t("waitCount1")}/>
-                                    <div> {t("waitCount1")} </div>
-                                </label>
-
-                                <label htmlFor="wait_type2">
-                                    <input
-                                        name="wait_type"
-                                        onChange={(e) => setWait_type(e.target.value)}
-                                        id="wait_type2" type="radio"
-                                        value={t("waitCount2")}/>
-                                    <div> {t("waitCount2")}</div>
-                                </label>
-
-                                <div onClick={() => {
-                                    showModalForm("", false)
-                                    cargo.wait_type = wait_type
-                                }} className="success-btn">
-                                    {t("button2")}
-                                </div>
-                            </div>
-                        </div>
-                    }
-
-                    {modalShow.status === "currency" &&
-                        <div className="form-orders">
-                            <div className="cancel-btn">
-                                <img onClick={() => showModalForm("", false)} src="./images/x.png" alt=""/>
-                            </div>
-
-                            <div className="title">
-                                {t("title3")}
-                            </div>
-
-                            <div className="form-order-info">
-
-                                <label htmlFor="currency1">
-                                    <input
-                                        name="currency"
-                                        onChange={(e) => setCurrency(e.target.value)}
-                                        id="currency1" type="radio"
-                                        value="UZS"/>
-                                    <div> UZS</div>
-                                </label>
-
-                                <label htmlFor="currency2">
-                                    <input
-                                        name="currency"
-                                        onChange={(e) => setCurrency(e.target.value)}
-                                        id="currency2" type="radio"
-                                        value="USD"/>
-                                    <div>USD</div>
-                                </label>
-
-                                <div onClick={() => {
-                                    showModalForm("", false)
-                                    cargo.currency = currency
-                                }} className="success-btn">
-                                    {t("button2")}
-                                </div>
-                            </div>
-                        </div>
-                    }
-
-                    {modalShow.status === "order" &&
-                        <div className="show-order">
-                            <div className="cancel-btn">
-                                <img onClick={() => showModalForm("", false)} src="./images/x.png" alt=""/>
-                            </div>
-
-                            <div className="title">
-                                {t("moreInfo")}
-                            </div>
-
-                            <div className="info-direction">
-                                <div className="label-info">{t("info1")}</div>
-                                <div className="value-info">
-                                    {cargo.type === "OUT" ? t("direction2") : ""}
-                                    {cargo.type === "IN" ? t("direction3") : ""}
-                                    {cargo.type === "Abroad" ? t("direction1") : ""}
-                                </div>
-                            </div>
-
-                            <div className="info">
-                                <div className="label-info">{t("loc1")}</div>
-                                <div className="value-info"> {cargo.address_from}</div>
-                            </div>
-
-                            <div className="info">
-                                <div className="label-info">{t("loc3")}</div>
-                                <div className="value-info"> {cargo.address_to}</div>
-                            </div>
-
-                            <div className="info">
-                                <div className="label-info"> {t("info2")}</div>
-                                <div className="value-info"> {cargoInfo.cargo}</div>
-                            </div>
-
-                            <div className="info">
-                                <div className="label-info">  {t("info7")}</div>
-                                <div className="value-info">  
-                                {direction !== "Abroad" ? price.distance : distance} km
-                                </div>
-                            </div>
-
-                            <div className="info">
-                                <div className="label-info"> {t("info10")}</div>
-                                <div className="value-info">{cargo.payment_type}</div>
-                            </div>
-
-                            <div className="info">
-                                <div className="label-info"> {t("info8")}</div>
-                                <div className="value-info">
-                                {cargoInfo.price ? cargoInfo.price : price.price} 
-                                {cargo.currency}
+                                    <div onClick={() => {
+                                        showModalForm("", false)
+                                        cargo.payment_type = payment_type
+                                    }} className="success-btn">
+                                        {t("button2")}
                                     </div>
-                            </div>
-
-                            <div className="info">
-                                <div className="label-info"> {t("info3")}</div>
-                                <div className="value-info"> {cargoInfo.number_cars}</div>
-                            </div>
-
-                            <div className="info">
-                                <div className="label-info"> {t("info4")}</div>
-                                <div className="value-info"> {cargoInfo.capacity} {cargo.unit}</div>
-                            </div>
-
-                            <div className="info">
-                                <div className="label-info">{t("info5")}</div>
-                                <div className="value-info">
-
-                                    {categories.map((item, index) => {
-                                        if (item.id === cargo.car_category) {
-                                            return <div key={index}>
-
-                                                {
-                                                    item.name !== "Авто Ташувчи" ? 
-                                                    <>
-                                                {item.min_weight} - {item.max_weight} {t("infoWaits4")}, 
-                                                </> :""
-                                                }
-
-                                                {item.name === "Мини" && t("tariff1")}
-                                                {item.name === "Енгил" && t("tariff2")}
-                                                {item.name === "Ўрта" && t("tariff3")}
-                                                {item.name === "Оғир" && t("tariff4")}
-                                                {item.name === "Ўта оғир" && t("tariff5")}
-                                                {item.name === "Авто Ташувчи" && t("tariff6")}
-                                            </div>
-                                        }
-                                    })}
-
-                                </div>
-                            </div>
-
-                            <div className="info">
-                                <div className="label-info"> {t("info6")}</div>
-                                <div className="value-info">
-                                    {trucks.map((item, index) => {
-                                        if (item.id === cargo.car_body_type) {
-                                            return <div key={index}>
-                                                {item.name}
-                                            </div>
-                                        }
-                                    })}
-                                </div>
-                            </div>
-
-                            {cargoInfo.avans ? <div className="info">
-                                <div className="label-info"> {t("info9")}</div>
-                                <div className="value-info">  {cargoInfo.avans} {cargo.currency}</div>
-                            </div> : ""}
-
-                            {cargoInfo.wait_cost ? <div className="info">
-
-                                <div className="label-info"> {t("info11")}</div>
-
-                                <div className="value-info">
-                                    {cargoInfo.wait_cost} {cargo.currency}
                                 </div>
 
-                            </div> : ""}
-
-                            {cargoInfo.load_time ? <div className="info">
-                                <div className="label-info"> {t("info12")}</div>
-                                <div className="value-info">
-                                    {cargoInfo.load_time.slice(0, 10)},
-                                    {cargoInfo.load_time.slice(11, 16)}
-                                </div>
-                            </div> : ""}
-
-                            {cargoInfo.start_time ? <div className="info">
-                                <div className="label-info"> {t("info13")}</div>
-                                <div className="value-info">
-                                    {cargoInfo.start_time.slice(0, 10)},
-                                    {cargoInfo.start_time.slice(11, 16)}
-                                </div>
-                            </div> : ""}
-
-                            <div className="buttons">
-                                <button onClick={CancelOrder}
-                                        className="cancel-btn">{t("button3")}</button>
-
-                                <button onClick={ConfirmOrder} className="next-btn ">{t("button2")}</button>
                             </div>
-                        </div>
-                    }
+                        }
 
-                </div>
+                        {modalShow.status === "cargo-weight" &&
+                            <div className="form-orders">
+                                <div className="cancel-btn">
+                                    <img onClick={() => showModalForm("", false)} src="./images/x.png" alt=""/>
+                                </div>
+
+                                <div className="title">
+                                    {t("infoTruck4")}
+                                </div>
+
+                                <div className="form-order-info">
+
+                                    <label htmlFor="unit1">
+                                        <input
+                                            name="unit"
+                                            onChange={(e) => setUnit(e.target.value)}
+                                            id="unit1" type="radio"
+                                            value={t("infoWaits1")}/>
+                                        <div>{t("infoWaits1")}</div>
+                                    </label>
+
+                                    <label htmlFor="unit2">
+                                        <input
+                                            name="unit"
+                                            onChange={(e) => setUnit(e.target.value)}
+                                            id="unit2" type="radio"
+                                            value={t("infoWaits2")}/>
+                                        <div>{t("infoWaits2")}</div>
+                                    </label>
+
+                                    <label htmlFor="unit3">
+                                        <input
+                                            name="unit"
+                                            onChange={(e) => setUnit(e.target.value)}
+                                            id="unit3" type="radio"
+                                            value={t("infoWaits3")}/>
+                                        <div>{t("infoWaits3")}</div>
+                                    </label>
+
+                                    <label htmlFor="unit4">
+                                        <input
+                                            name="unit"
+                                            onChange={(e) => setUnit(e.target.value)}
+                                            id="unit4" type="radio"
+                                            value={t("infoWaits4")}/>
+                                        <div>{t("infoWaits4")}</div>
+                                    </label>
+
+                                    <label htmlFor="unit5">
+                                        <input
+                                            name="unit"
+                                            onChange={(e) => setUnit(e.target.value)}
+                                            id="unit5" type="radio"
+                                            value={t("infoWaits5")}/>
+                                        <div>{t("infoWaits5")}</div>
+                                    </label>
+
+                                    <label htmlFor="unit6">
+                                        <input
+                                            name="unit"
+                                            onChange={(e) => setUnit(e.target.value)}
+                                            id="unit6" type="radio"
+                                            value={t("infoWaits6")}/>
+                                        <div>{t("infoWaits6")}</div>
+                                    </label>
+
+                                    <div onClick={() => {
+                                        showModalForm("", false)
+                                        cargo.unit = unit
+                                    }} className="success-btn">
+                                        {t("button2")}
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+
+                        {modalShow.status === "weight-type" &&
+                            <div className="form-orders">
+                                <div className="cancel-btn">
+                                    <img onClick={() => showModalForm("", false)} src="./images/x.png" alt=""/>
+                                </div>
+
+                                <div className="title">
+                                    {t("info11")}
+                                </div>
+
+                                <div className="form-order-info">
+
+                                    <label htmlFor="wait_type1">
+                                        <input
+                                            name="wait_type"
+                                            onChange={(e) => setWait_type(e.target.value)}
+                                            id="wait_type1" type="radio"
+                                            value={t("waitCount1")}/>
+                                        <div> {t("waitCount1")} </div>
+                                    </label>
+
+                                    <label htmlFor="wait_type2">
+                                        <input
+                                            name="wait_type"
+                                            onChange={(e) => setWait_type(e.target.value)}
+                                            id="wait_type2" type="radio"
+                                            value={t("waitCount2")}/>
+                                        <div> {t("waitCount2")}</div>
+                                    </label>
+
+                                    <div onClick={() => {
+                                        showModalForm("", false)
+                                        cargo.wait_type = wait_type
+                                    }} className="success-btn">
+                                        {t("button2")}
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        {modalShow.status === "currency" &&
+                            <div className="form-orders">
+                                <div className="cancel-btn">
+                                    <img onClick={() => showModalForm("", false)} src="./images/x.png" alt=""/>
+                                </div>
+
+                                <div className="title">
+                                    {t("title3")}
+                                </div>
+
+                                <div className="form-order-info">
+
+                                    <label htmlFor="currency1">
+                                        <input
+                                            name="currency"
+                                            onChange={(e) => setCurrency(e.target.value)}
+                                            id="currency1" type="radio"
+                                            value="UZS"/>
+                                        <div> UZS</div>
+                                    </label>
+
+                                    <label htmlFor="currency2">
+                                        <input
+                                            name="currency"
+                                            onChange={(e) => setCurrency(e.target.value)}
+                                            id="currency2" type="radio"
+                                            value="USD"/>
+                                        <div>USD</div>
+                                    </label>
+
+                                    <div onClick={() => {
+                                        showModalForm("", false)
+                                        cargo.currency = currency
+                                    }} className="success-btn">
+                                        {t("button2")}
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        {modalShow.status === "order" &&
+                            <div className="show-order">
+                                <div className="cancel-btn">
+                                    <img onClick={() => showModalForm("", false)} src="./images/x.png" alt=""/>
+                                </div>
+
+                                <div className="title">
+                                    {t("moreInfo")}
+                                </div>
+
+                                <div className="info-direction">
+                                    <div className="label-info">{t("info1")}</div>
+                                    <div className="value-info">
+                                        {cargo.type === "OUT" ? t("direction2") : ""}
+                                        {cargo.type === "IN" ? t("direction3") : ""}
+                                        {cargo.type === "Abroad" ? t("direction1") : ""}
+                                    </div>
+                                </div>
+
+                                <div className="info">
+                                    <div className="label-info">{t("loc1")}</div>
+                                    <div className="value-info"> {cargo.address_from}</div>
+                                </div>
+
+                                <div className="info">
+                                    <div className="label-info">{t("loc3")}</div>
+                                    <div className="value-info"> {cargo.address_to}</div>
+                                </div>
+
+                                <div className="info">
+                                    <div className="label-info"> {t("info2")}</div>
+                                    <div className="value-info"> {cargoInfo.cargo}</div>
+                                </div>
+
+                                <div className="info">
+                                    <div className="label-info">  {t("info7")}</div>
+                                    <div className="value-info">
+                                        {direction !== "Abroad" ? price.distance : distance} km
+                                    </div>
+                                </div>
+
+                                <div className="info">
+                                    <div className="label-info"> {t("info10")}</div>
+                                    <div className="value-info">{cargo.payment_type}</div>
+                                </div>
+
+                                <div className="info">
+                                    <div className="label-info"> {t("info8")}</div>
+                                    <div className="value-info">
+                                        {cargoInfo.price ? cargoInfo.price : price.price}
+                                        {cargo.currency}
+                                    </div>
+                                </div>
+
+                                <div className="info">
+                                    <div className="label-info"> {t("info3")}</div>
+                                    <div className="value-info"> {cargoInfo.number_cars}</div>
+                                </div>
+
+                                <div className="info">
+                                    <div className="label-info"> {t("info4")}</div>
+                                    <div className="value-info"> {cargoInfo.capacity} {cargo.unit}</div>
+                                </div>
+
+                                <div className="info">
+                                    <div className="label-info">{t("info5")}</div>
+                                    <div className="value-info">
+
+                                        {categories.map((item, index) => {
+                                            if (item.id === cargo.car_category) {
+                                                return <div key={index}>
+
+                                                    {
+                                                        item.name !== "Авто Ташувчи" ?
+                                                            <>
+                                                                {item.min_weight} - {item.max_weight} {t("infoWaits4")},
+                                                            </> :""
+                                                    }
+
+                                                    {item.name === "Мини" && t("tariff1")}
+                                                    {item.name === "Енгил" && t("tariff2")}
+                                                    {item.name === "Ўрта" && t("tariff3")}
+                                                    {item.name === "Оғир" && t("tariff4")}
+                                                    {item.name === "Ўта оғир" && t("tariff5")}
+                                                    {item.name === "Авто Ташувчи" && t("tariff6")}
+                                                </div>
+                                            }
+                                        })}
+
+                                    </div>
+                                </div>
+
+                                <div className="info">
+                                    <div className="label-info"> {t("info6")}</div>
+                                    <div className="value-info">
+                                        {trucks.map((item, index) => {
+                                            if (item.id === cargo.car_body_type) {
+                                                return <div key={index}>
+                                                    {item.name}
+                                                </div>
+                                            }
+                                        })}
+                                    </div>
+                                </div>
+
+                                {cargoInfo.avans ? <div className="info">
+                                    <div className="label-info"> {t("info9")}</div>
+                                    <div className="value-info">  {cargoInfo.avans} {cargo.currency}</div>
+                                </div> : ""}
+
+                                {cargoInfo.wait_cost ? <div className="info">
+
+                                    <div className="label-info"> {t("info11")}</div>
+
+                                    <div className="value-info">
+                                        {cargoInfo.wait_cost} {cargo.currency}
+                                    </div>
+
+                                </div> : ""}
+
+                                {cargoInfo.load_time ? <div className="info">
+                                    <div className="label-info"> {t("info12")}</div>
+                                    <div className="value-info">
+                                        {cargoInfo.load_time.slice(0, 10)},
+                                        {cargoInfo.load_time.slice(11, 16)}
+                                    </div>
+                                </div> : ""}
+
+                                {cargoInfo.start_time ? <div className="info">
+                                    <div className="label-info"> {t("info13")}</div>
+                                    <div className="value-info">
+                                        {cargoInfo.start_time.slice(0, 10)},
+                                        {cargoInfo.start_time.slice(11, 16)}
+                                    </div>
+                                </div> : ""}
+
+                                <div className="buttons">
+                                    <button onClick={CancelOrder}
+                                            className="cancel-btn">{t("button3")}</button>
+
+                                    <button onClick={ConfirmOrder} className="next-btn ">{t("button2")}</button>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                }
 
                 {modalShow.status === "getLocation" && <div ref={nodeRef} className="map-wrapper">
 
@@ -1015,6 +1017,22 @@ const PostOrder = () => {
                                 </div>
                             </div>
 
+                            <div className="form-box mobile-loc">
+                                <label htmlFor="cargo">{t("loc3")}</label>
+                                <div onClick={() => {
+                                    showModalForm("getLocation", true)
+                                    setLocationTo(true)
+                                    setLocationFrom(false)
+                                }} className={`input-box ${validateLocationTo ? "input-box-required" : ""}`}>
+                                    <div className="icon">
+                                        <img src="./images/location.png" alt="cargo"/>
+                                    </div>
+                                    <div className="locitions">
+                                        {locationToAddress}
+                                    </div>
+                                </div>
+                            </div>
+
                             {direction === "Abroad" && distance &&
                                 <div className="distance">
                                     <div className="label-distance">
@@ -1073,7 +1091,7 @@ const PostOrder = () => {
                                 </div>
                             </div>
 
-                            <div className="form-box">
+                            <div className="form-box desktop-loc">
                                 <label htmlFor="cargo">{t("loc3")}</label>
                                 <div onClick={() => {
                                     showModalForm("getLocation", true)
@@ -1230,7 +1248,7 @@ const PostOrder = () => {
                                         </div>
                                     </div>
                                 </div>
-
+                                
                                 <div className="form-box-time">
                                     <label htmlFor="cargo">{t("info13")}</label>
                                     <div className="forms">

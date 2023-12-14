@@ -65,6 +65,7 @@ $color: #047766;
       justify-content: space-between;
       cursor: pointer;
       .left {
+        height: 100%;
         display: flex;
         align-items: center;
 
@@ -90,6 +91,10 @@ $color: #047766;
         }
       }
     }
+
+    .send-btn-log-out{
+      display: none;
+    }
   }
 }
 
@@ -104,6 +109,104 @@ $color: #047766;
       .send-btn {
         margin-top: 30px;
         width: 70%;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px){
+  .profile-container {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background-color: white;
+
+    .title {
+      margin-top: 0;
+      width: 100%;
+      height: 60px;
+      text-align: center;
+      padding-top: 15px;
+      padding-left: 20px;
+      padding-right: 20px;
+      font-size: 22px;
+      color: #100029;
+      font-weight: 600;
+    }
+    .person {
+      margin-top: 20px;
+      display: block;
+      .photo {
+        margin: 0 auto;
+        width: 110px;
+        height: 110px;
+      }
+
+      .text {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        .name {
+          font-size: 22px;
+        }
+        .phone {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .send-buttons {
+      margin-top: 35px;
+      display: block;
+
+      .send-btn {
+        margin: 20px auto;
+        width: 90%;
+        height: 45px;
+        border: none;
+        background-color: #F5F6F8;
+      }
+
+      .send-btn-log-out{
+        margin: 40px auto;
+        width: 90%;
+        height: 45px;
+        border: none;
+        background-color: #F5F6F8;
+        border-radius: 6px;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+        .left {
+          height: 100%;
+          display: flex;
+          align-items: center;
+
+          .icon {
+            margin-right: 10px;
+            img {
+              width: 25px;
+            }
+          }
+
+          .name {
+            font-size: 16px;
+            color: #787F95;
+          }
+        }
+
+        .right {
+          height: 100%;
+          display: flex;
+          align-items: center;
+          img{
+            width: 10px;
+          }
+        }
       }
     }
   }

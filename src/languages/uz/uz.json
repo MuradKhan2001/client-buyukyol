@@ -129,5 +129,6 @@
   "validate8": "Moshinalar soni 20 tadan ko'p kirtilgan!",
   "validate9": "Moshinalar soni musbatda kiritilsin!",
   "validate10": "Kutish uchun kiritilgan narx asosiy narxdan ko'p!",
-  "validate11": "Avans uchun kiritilgan narx asosiy narxdan ko'p!"
+  "validate11": "Avans uchun kiritilgan narx asosiy narxdan ko'p!",
+  "language": "Web ilova tili"
 }

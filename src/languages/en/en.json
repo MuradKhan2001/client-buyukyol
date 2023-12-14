@@ -129,5 +129,6 @@
   "validate8": "Number of cars entered is more than 20!",
   "validate9": "Enter the number of cars in positive numbers!",
   "validate10": "The price entered for waiting is more than the base price!",
-  "validate11": "The price entered for the advance is more than the base price!"
+  "validate11": "The price entered for the advance is more than the base price!",
+  "language": "Language"
 }

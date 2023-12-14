@@ -11,11 +11,10 @@ import {addAlert, delAlert} from "../../redux/AlertsBox";
 import axios from "axios";
 import {showModals} from "../../redux/ModalContent";
 import {getOrders} from "../../redux/Orders";
-import MapBoxMobile from "../map-mobile/MapBoxMobile";
 
 const libraries = ["places"];
 
-const MapBox = () => {
+const MapBoxMobile = () => {
     const baseUrl = useSelector((store) => store.baseUrl.data);
     const navigate = useNavigate();
     const {t} = useTranslation();
@@ -58,7 +57,7 @@ const MapBox = () => {
     });
 
     const options = useMemo(() => ({
-        disableDefaultUI: window.innerWidth < 767 ? true : false, clickableIcons: false,
+        disableDefaultUI: false, clickableIcons: false,
     }), []);
 
     const postOrder = () => {
@@ -90,68 +89,64 @@ const MapBox = () => {
     if (!isLoaded) return <Loader/>;
     return (<div className="map-container">
 
-        <div className="map-box-desktop">
-
-            <div className="header">
-                <div
-                    onClick={() => dispatch(showModals({show: true, status: "active-driver"}))}
-                    className="title"
-                >
-                    {t("nav-home")}
-                </div>
-
-                <div className="icons">
-                    <div
-                        onClick={() => showInfo("drivers")}
-                        className="icon-active-drivers"
-                    >
-                        <img src="./images/truck.png" alt="truck"/>
-                        <div className="count">{drivers.length}</div>
-                    </div>
-
-                    <div
-                        onClick={() => showInfo("active-orders")}
-                        className="icon-active-orders"
-                    >
-                        <img src="./images/box.png" alt="truck"/>
-                        <div className="count">{activeOrders.length}</div>
-                    </div>
-
-                    <div onClick={postOrder} className="post-order">
-                        {t("post-order")}
-                    </div>
-                </div>
+        <div className="header">
+            <div></div>
+            <div className="title">
+                {t("nav-home")}
             </div>
 
-            <GoogleMap
-                zoom={10}
-                center={center}
-                options={options}
-                mapContainerClassName="map"
-            >
-
-                {Activedrivers.length >= 0 ? (<>
-                    {Activedrivers.map((item) => {
-                        return (<Marker
-                            key={item.driver}
-                            icon={truckIcon}
-                            position={{
-                                lat: Number(item.latitude), lng: Number(item.longitude),
-                            }}
-                            onClick={() => dispatch(showModals({show: true, status: "active-driver", item}))}
-                        />);
-                    })}
-                </>) : ("")}
-
-            </GoogleMap>
-
+            <div onClick={() => navigate("/news")} className="icon-news">
+                <img src="./images/news.png" alt=""/>
+            </div>
         </div>
 
-        <div className="map-box-mobile">
-            <MapBoxMobile/>
-        </div>
+        <GoogleMap
+            zoom={5}
+            center={center}
+            options={options}
+            mapContainerClassName="map"
+        >
+
+
+            <div className="icons">
+                <div
+                    onClick={() => showInfo("drivers")}
+                    className="icon-active-drivers"
+                >
+                    <img src="./images/truck.png" alt="truck"/>
+                    <div className="count">{drivers.length}</div>
+                </div>
+
+                <div
+                    onClick={() => showInfo("active-orders")}
+                    className="icon-active-orders"
+                >
+                    <img src="./images/box.png" alt="truck"/>
+                    <div className="count">{activeOrders.length}</div>
+                </div>
+            </div>
+            
+            {Activedrivers.length >= 0 ? (<>
+                {Activedrivers.map((item) => {
+                    return (<Marker
+                        key={item.driver}
+                        icon={truckIcon}
+                        position={{
+                            lat: Number(item.latitude), lng: Number(item.longitude),
+                        }}
+                        onClick={() => dispatch(showModals({show: true, status: "active-driver", item}))}
+                    />);
+                })}
+            </>) : ("")}
+
+            <div className="bottom-btn">
+                <div onClick={postOrder} className="post-order">
+                    {t("post-order")}
+                </div>
+            </div>
+        </GoogleMap>
 
     </div>);
 };
 
-export default MapBox;
+export default MapBoxMobile;

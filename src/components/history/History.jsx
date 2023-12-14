@@ -44,20 +44,24 @@ const History = () => {
         {
             ordersList ? !ordersList.length > 0 ? <Loader/> :
                 <>
-                    <div className="title">
+                    <div className="title-history">
                         {t("nav-history")}
                     </div>
 
-                    <div className="header">
-                        {
-                            tabs.map((item, index) => {
-                                return <div onClick={() => setActiveTab(prevState => prevState = item.status)}
-                                            key={index}
-                                            className={`tab-btn ${activeTab === item.status ? "tab-active" : ""} `}>
-                                    {item.name}
-                                </div>
-                            })
-                        }
+                    <div className="header-history">
+
+                        <div className="tabs-box">
+                            {
+                                tabs.map((item, index) => {
+                                    return <div onClick={() => setActiveTab(prevState => prevState = item.status)}
+                                                key={index}
+                                                className={`tab-btn ${activeTab === item.status ? "tab-active" : ""} `}>
+                                        {item.name}
+                                    </div>
+                                })
+                            }
+                        </div>
+
                     </div>
 
                     <div className="orders-box">

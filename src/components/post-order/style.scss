@@ -318,8 +318,9 @@ $color: #047766;
             position: relative;
             width: 300px;
             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-            .address-wrapper{
-              .list-address{
+
+            .address-wrapper {
+              .list-address {
                 font-size: 14px;
                 border-radius: 5px;
                 list-style: none;
@@ -446,7 +447,7 @@ $color: #047766;
   .tarifs {
     margin-top: 25px;
     width: 100%;
-    overflow-y: auto;
+    overflow-x: auto;
 
     &::-webkit-scrollbar {
       width: 10px;
@@ -669,6 +670,7 @@ $color: #047766;
           margin-top: 8px;
           overflow: hidden;
           cursor: pointer;
+
           input {
             font-size: 14px;
             color: #787F95;
@@ -708,6 +710,10 @@ $color: #047766;
           border: 1px solid rgba(255, 0, 0, 0.5);
         }
 
+      }
+
+      .mobile-loc {
+        display: none;
       }
 
       .distance {
@@ -1106,10 +1112,10 @@ $color: #047766;
             margin-top: 8px;
             overflow: hidden;
 
-            input::-webkit-calendar-picker-indicator{
+            input::-webkit-calendar-picker-indicator {
               width: 20px;
               height: 20px;
-              background-image:url("date.png");
+              background-image: url("date.png");
               background-size: 100%;
             }
 
@@ -1260,17 +1266,18 @@ $color: #047766;
 }
 
 
-
-@media (min-width: 768px) and (max-width: 992px){
+@media (min-width: 768px) and (max-width: 992px) {
   .post-order-container {
     .modal-sloy {
       .map-wrapper {
         width: 90%;
+
         .header {
           .text {
             font-size: 20px;
           }
         }
+
         .map-box {
           .search-address {
             transform: translateX(-20%);
@@ -1278,29 +1285,38 @@ $color: #047766;
         }
       }
     }
+
     .title {
       font-size: 18px;
     }
+
     .title-info {
       font-size: 18px;
     }
+
     .truck-information {
       width: 100%;
     }
+
     .form-informations {
       .left-forms {
         padding-right: 15px;
+
         .form-box {
           padding-bottom: 20px;
+
           .error {
             font-size: 10px;
           }
         }
       }
+
       .right-forms {
         padding-left: 15px;
+
         .form-box {
           padding-bottom: 20px;
+
           .error {
             font-size: 10px;
           }
@@ -1318,12 +1334,14 @@ $color: #047766;
 
     .plus-information-forms {
       display: flex;
+
       .content-forms {
         width: 50%;
         padding-right: 20px;
 
         .form-box {
           padding-bottom: 20px;
+
           .error {
             font-size: 10px;
           }
@@ -1343,9 +1361,11 @@ $color: #047766;
         .form-box-time {
           width: 100%;
           padding-bottom: 25px;
+
           .forms {
             display: flex;
             justify-content: space-between;
+
             .input-box {
               width: 80%;
             }
@@ -1355,6 +1375,7 @@ $color: #047766;
 
         .form-box-radio {
           padding-bottom: 20px;
+
           .error {
             font-size: 10px;
           }
@@ -1386,6 +1407,358 @@ $color: #047766;
       .next-btn {
         padding: 13px 25px 13px 25px;
         @extend %button;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 767px) {
+
+  .post-order-container {
+    padding: 0 15px 15px 15px;
+    background-color: white;
+
+    .modal-sloy {
+      padding: 15px;
+      .modal-card {
+        width: 100%;
+        height: max-content;
+
+        .form-orders {
+          width: 100%;
+          padding: 20px;
+        }
+
+        .show-order {
+          margin: 0;
+          width: 100%;
+          height: max-content;
+          .title {
+            font-size: 18px;
+          }
+
+          .info-direction {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 14px;
+          }
+
+          .info {
+            margin-top: 15px;
+            font-size: 14px;
+          }
+
+          .buttons {
+            margin-top: 40px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .cancel-btn {
+              width: max-content;
+              @extend %button;
+              padding: 13px 25px 13px 25px;
+              margin-right: 20px;
+              background-color: rgba(4, 119, 102, 0.05);
+              color: $color;
+              border: 1px solid $color;
+
+              &:hover {
+                background-color: rgba(4, 119, 102, 0.2);
+              }
+            }
+
+            .next-btn {
+              padding: 13px 25px 13px 25px;
+              @extend %button;
+            }
+          }
+        }
+      }
+
+      .map-wrapper {
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        .header {
+          padding: 0;
+          .text {
+            font-size: 16px;
+            font-weight: 500;
+          }
+        }
+        .map-box {
+          margin-top: 5px;
+          width: 100%;
+          height: calc(100% - 105px);
+          position: relative;
+          .search-address {
+            top: 60px;
+          }
+        }
+      }
+    }
+
+    .title {
+      margin-top: 0;
+      width: 100%;
+      height: 60px;
+      text-align: center;
+      padding-top: 15px;
+      padding-left: 20px;
+      padding-right: 20px;
+      font-size: 22px;
+      color: #100029;
+      font-weight: 600;
+    }
+
+    .directions {
+      display: block;
+
+      .direction {
+        padding-left: 35px;
+        margin-top: 20px;
+        width: 100%;
+        height: 60px;
+        border-radius: 8px;
+        background-color: #F5F6F8;
+        box-shadow: none;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: row;
+        margin-right: 0px;
+
+
+        &:hover {
+          background-color: #E7EAF1;
+        }
+
+        .photo {
+          margin-right: 20px;
+
+          img {
+            width: 30px;
+          }
+        }
+
+        .name {
+          color: #100029;
+          text-align: start;
+          font-size: 18px;
+        }
+      }
+
+      .direction-active {
+        background-color: #E7EAF1;
+      }
+    }
+
+    .tarifs {
+      .content {
+        .tarif {
+          background-color: #F5F6F8;
+
+          &:hover {
+            background-color: #E7EAF1;
+          }
+        }
+
+        .active-tarif {
+          background-color: #E7EAF1;
+        }
+      }
+
+    }
+
+    .trucks {
+      .content {
+        .truck {
+          background-color: #F5F6F8;
+
+          &:hover {
+            background-color: #E7EAF1;
+          }
+        }
+
+        .active-truck {
+          background-color: #E7EAF1;
+        }
+      }
+    }
+
+    .truck-information {
+      width: 100%;
+      background-color: #F5F6F8;
+      flex-wrap: wrap;
+
+      .text {
+        width: 50%;
+      }
+    }
+
+    .form-informations {
+      margin-top: 25px;
+      width: 100%;
+      display: block;
+
+      .left-forms {
+        width: 100%;
+        padding: 0;
+
+        .form-box {
+          width: 100%;
+          display: block;
+          align-items: center;
+          padding-bottom: 25px;
+        }
+
+        .distance {
+          border-radius: 8px;
+          background: #0477661A;
+          width: 185px;
+          height: 35px;
+          color: $color;
+          font-size: 16px;
+          margin-bottom: 25px;
+
+          .label-distance {
+            margin-right: 5px;
+          }
+        }
+      }
+
+      .right-forms {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+
+        .mobile-loc {
+          display: block;
+        }
+
+        .desktop-loc {
+          display: none;
+        }
+      }
+    }
+
+    .plus-information {
+      width: 100%;
+    }
+
+    .plus-information-forms {
+      display: block;
+
+      .content-forms {
+        width: 100%;
+        padding: 0;
+
+        .form-box-time {
+          width: 100%;
+          padding-bottom: 25px;
+
+          .forms {
+            display: flex;
+            justify-content: space-between;
+
+            .input-box {
+              width: 100%;
+              cursor: pointer;
+              height: 45px;
+              display: flex;
+              align-items: center;
+              border: 2px solid #EEF0F4;
+              background-color: white;
+              border-radius: 6px;
+              margin-top: 8px;
+              overflow: hidden;
+
+              input::-webkit-calendar-picker-indicator {
+                width: 20px;
+                height: 20px;
+                background-image: url("date.png");
+                background-size: 100%;
+              }
+
+              input {
+                width: 100%;
+                font-size: 14px;
+                color: #787F95;
+                height: 100%;
+                border: none;
+                padding-right: 20px;
+
+                &:focus {
+                  outline: none;
+                }
+              }
+
+              .icon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 50px;
+
+                img {
+                  width: 22px;
+                }
+              }
+            }
+          }
+
+        }
+      }
+
+    }
+
+    .buttons {
+      margin-top: 40px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .cancel-btn {
+        padding: 13px 25px 13px 25px;
+        margin-right: 20px;
+        background-color: rgba(4, 119, 102, 0.05);
+        color: $color;
+        border: 1px solid $color;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 19.09px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+          background-color: #035247;
+        }
+
+        &:hover {
+          background-color: rgba(4, 119, 102, 0.2);
+        }
+      }
+
+      .next-btn {
+        padding: 13px 25px 13px 25px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 19.09px;
+        background-color: $color;
+        color: white;
+        border: 1px solid #EEF0F4;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+          background-color: #035247;
+        }
       }
     }
   }

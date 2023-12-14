@@ -1,0 +1,113 @@
+$color: #047766;
+.settings-container {
+  .header {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    .title {
+      font-size: 22px;
+      color: #100029;
+      font-weight: 600;
+    }
+
+    .icon-news {
+      img {
+        width: 25px;
+        height: 25px;
+      }
+    }
+  }
+
+  .language-dropdown {
+    margin: 20px auto;
+    width: 90%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #E7EAF1;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 8px;
+
+    .left-side {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+
+      .icon {
+        img {
+          width: 30px;
+        }
+      }
+
+      .name {
+        margin-left: 15px;
+        font-size: 16px;
+        color: #100029;
+      }
+    }
+
+    .right-side {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      border-left: 1px solid #d7d8e0;
+
+      .name {
+        font-size: 18px;
+      }
+
+      .icon {
+        transition: 0.3s;
+        img {
+          width: 25px;
+        }
+      }
+      .rotate-icon{
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .language-content {
+    padding: 15px 15px 15px 35px;
+    margin: 20px auto;
+    width: 90%;
+    background-color: #E7EAF1;
+    border-radius: 8px;
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      height: 50px;
+
+      .circle {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        border: 3px solid #047766;
+        margin-right: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .circle-radio {
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          background-color: #047766;
+        }
+      }
+    }
+  }
+}
