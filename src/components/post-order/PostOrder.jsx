@@ -139,8 +139,8 @@ const PostOrder = () => {
             capacity: '',
             price: "",
             number_cars: 1,
-            load_time: "",
-            start_time: "",
+            load_time: "2024-01-01T00:00",
+            start_time: "2024-01-01T00:00",
             wait_cost: "",
             avans: "",
         },
@@ -1183,6 +1183,7 @@ const PostOrder = () => {
                                     <div className="forms">
                                         <div className="input-box">
                                             <div className="icon">
+                                                <img className="mobile-icon" src="./images/date.png" alt=""/>
                                             </div>
 
                                             <input
@@ -1190,6 +1191,24 @@ const PostOrder = () => {
                                                 value={formik.values.load_time}
                                                 name="load_time"
                                                 id="load_time" type="datetime-local"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="form-box-time mobile-time">
+                                    <label htmlFor="cargo">{t("info13")}</label>
+                                    <div className="forms">
+                                        <div className="input-box">
+
+                                            <div className="icon">
+                                                <img className="mobile-icon" src="./images/date.png" alt=""/>
+                                            </div>
+
+                                            <input
+                                                onChange={formik.handleChange}
+                                                value={formik.values.start_time}
+                                                name="start_time"
+                                                id="start_time" type="datetime-local"/>
                                         </div>
                                     </div>
                                 </div>
@@ -1249,7 +1268,7 @@ const PostOrder = () => {
                                     </div>
                                 </div>
                                 
-                                <div className="form-box-time">
+                                <div className="form-box-time desktop-time">
                                     <label htmlFor="cargo">{t("info13")}</label>
                                     <div className="forms">
                                         <div className="input-box">

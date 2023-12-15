@@ -4,8 +4,9 @@ $color: #047766;
   justify-content: center;
   align-items: center;
 }
+
 %button {
-  padding: 10px 25px;
+  padding: 15px 25px;
   font-weight: 600;
   font-size: 16px;
   line-height: 19.09px;
@@ -15,6 +16,7 @@ $color: #047766;
   border-radius: 6px;
   cursor: pointer;
 }
+
 %input {
   margin-top: 15px;
   width: 100%;
@@ -36,6 +38,7 @@ $color: #047766;
     background-image: url("./bgimages/loginbg1.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+
     .sloy {
       width: 100%;
       height: 100%;
@@ -158,7 +161,7 @@ $color: #047766;
       width: 80%;
       height: 120px;
       padding-bottom: 20px;
-      margin: 30px auto;
+      margin: 15px auto;
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
@@ -191,6 +194,34 @@ $color: #047766;
         margin-bottom: 5px;
         @extend %button
       }
+
+      .login-btn-disablet {
+        width: max-content;
+        height: max-content;
+        margin-bottom: 5px;
+        opacity: 0.5;
+        @extend %button
+      }
+    }
+
+    .coundown {
+      width: 80%;
+      margin: 0 auto;
+
+      .count {
+        display: flex;
+        align-items: center;
+        width: max-content;
+        padding: 10px;
+        border-radius: 44px;
+        border: 1px solid #EEF0F4;
+        color: #002B48;
+        font-weight: 600;
+
+        img {
+          margin-right: 10px;
+        }
+      }
     }
 
     .text-register {
@@ -215,13 +246,67 @@ $color: #047766;
 
 }
 
-@media (min-width: 768px) and (max-width: 992px){
-  .login-container{
-    .left{
+@media (min-width: 768px) and (max-width: 992px) {
+  .login-container {
+    .left {
       display: none;
     }
-    .right{
+
+    .right {
       width: 100%;
+    }
+  }
+}
+
+
+@media (max-width: 767px) {
+  .login-container {
+    .left {
+      display: none;
+    }
+    .right {
+      width: 100%;
+      height: auto;
+
+      .title-login {
+        font-size: 24px;
+      }
+      .form {
+        display: block;
+        .inputs {
+          width: 100%;
+        }
+
+        .login-btn {
+          border-radius: 16px;
+          margin-top: 20px;
+          width: 100% ;
+        }
+
+        .login-btn-disablet {
+          margin-top: 20px;
+          width: 100%;
+          border-radius: 16px;
+        }
+      }
+      .form-verify {
+        width: 80%;
+        height: 120px;
+        margin: 20px auto;
+        display: block;
+
+        .login-btn {
+          border-radius: 30px;
+          margin-top: 30px;
+          width: 100%;
+        }
+        .login-btn-disablet {
+          margin-top: 30px;
+          width: 100%;
+          border-radius: 16px;
+        }
+      }
+
     }
   }
 }

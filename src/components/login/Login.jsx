@@ -1,7 +1,7 @@
 import PhoneInput from 'react-phone-number-input'
 import AuthCode from "react-auth-code-input";
 import axios from "axios";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useOnKeyPress} from "./useOnKeyPress";
 import "./style.scss"
@@ -19,102 +19,96 @@ const Login = () => {
     const [phone, setPhone] = useState("")
     const [code, setCode] = useState("")
     const [checkCode, setCheckCode] = useState(false)
-    const [checkCodeCount, setCheckCodeCount] = useState(0)
+    const [minutes, setMinutes] = useState(0)
+    const [seconds, setSeconds] = useState(60)
+
+    const resetTimer = () => {
+        setMinutes(0)
+        setSeconds(59)
+    }
+    useEffect(() => {
+
+        const interval = setInterval(() => {
+            if (seconds > 0) {
+                setSeconds(seconds - 1)
+            }
+            if (seconds === 0) {
+                if (minutes === 0) {
+                    clearInterval(interval)
+                } else {
+                    setSeconds(60)
+                    setMinutes(minutes - 1)
+                }
+            }
+        }, 1000)
+
+        return () => {
+            clearInterval(interval)
+        }
+
+    }, [checkCode ? seconds : null])
+
     const getCodeValue = (e) => {
         setCode(e)
     }
     const HandleLogin = () => {
+        let user = {
+            phone: phone, user_type: "Client"
+        };
+        axios.post(`${baseUrl}api/login/`, user).then((response) => {
 
-        if (phone.trim().length > 4) {
-            let user = {
-                phone: phone, user_type: "Client"
-            };
-            axios.post(`${baseUrl}api/login/`, user).then((response) => {
+            if (response.data.user) {
+                localStorage.setItem("userId", response.data.user);
+                setCheckCode(prevState => true)
 
-                if (response.data.user) {
-                    localStorage.setItem("userId", response.data.user);
-                    setCheckCode(true)
-                    setCheckCodeCount(prevState => prevState + 1)
-                } else {
-                    let idAlert = Date.now()
-                    let alert = {
-                        id: idAlert,
-                        text: t("alert4"),
-                        img: "./images/alert-warning.png"
-                    }
-                    dispatch(addAlert(alert))
-                    setTimeout(() => {
-                        dispatch(delAlert(idAlert))
-                    }, 5000)
+                if (checkCode) {
+                    resetTimer()
                 }
-
-            }).catch((error) => {
-                if (error.response.status === 404) {
-                    let idAlert = Date.now()
-                    let alert = {
-                        id: idAlert,
-                        text: t("alert4"),
-                        img: "./images/alert-warning.png"
-                    }
-                    dispatch(addAlert(alert))
-                    setTimeout(() => {
-                        dispatch(delAlert(idAlert))
-                    }, 5000)
+            } else {
+                let idAlert = Date.now()
+                let alert = {
+                    id: idAlert, text: t("alert4"), img: "./images/alert-warning.png"
                 }
-            });
-        } else {
-            let idAlert = Date.now()
-            let alert = {
-                id: idAlert, text: t("alert11"), img: "./images/alert-warning.png"
+                dispatch(addAlert(alert))
+                setTimeout(() => {
+                    dispatch(delAlert(idAlert))
+                }, 5000)
             }
-            dispatch(addAlert(alert))
-            setTimeout(() => {
-                dispatch(delAlert(idAlert))
-            }, 5000)
 
-        }
+        }).catch((error) => {
+            if (error.response.status === 404) {
+                let idAlert = Date.now()
+                let alert = {
+                    id: idAlert, text: t("alert4"), img: "./images/alert-warning.png"
+                }
+                dispatch(addAlert(alert))
+                setTimeout(() => {
+                    dispatch(delAlert(idAlert))
+                }, 5000)
+            }
+        });
+
     };
     const CheckCode = () => {
+        axios.post(`${baseUrl}api/verify/`, {
+            user: localStorage.getItem("userId"), number: code
+        }).then((response) => {
+            localStorage.setItem("token", response.data.token);
+            navigate("/")
+            window.location.reload()
+        }).catch((error) => {
+            if (error.response.status === 404) {
 
-        if (code.trim().length === 5) {
-
-            axios.post(`${baseUrl}api/verify/`, {
-                user: localStorage.getItem("userId"), number: code
-            }).then((response) => {
-
-                localStorage.setItem("token", response.data.token);
-                navigate("/")
-                window.location.reload()
-
-            }).catch((error) => {
-                if (error.response.status === 404) {
-
-                    let idAlert = Date.now()
-                    let alert = {
-                        id: idAlert,
-                        text: t("alert5"),
-                        img: "./images/alert-warning.png"
-                    }
-                    dispatch(addAlert(alert))
-                    setTimeout(() => {
-                        dispatch(delAlert(idAlert))
-                    }, 5000)
+                let idAlert = Date.now()
+                let alert = {
+                    id: idAlert, text: t("alert5"), img: "./images/alert-warning.png"
                 }
-            });
-
-        } else {
-            let idAlert = Date.now()
-            let alert = {
-                id: idAlert,
-                text: t("alert12"),
-                img: "./images/alert-warning.png"
+                dispatch(addAlert(alert))
+                setTimeout(() => {
+                    dispatch(delAlert(idAlert))
+                }, 5000)
             }
-            dispatch(addAlert(alert))
-            setTimeout(() => {
-                dispatch(delAlert(idAlert))
-            }, 5000)
-        }
-
+        });
     };
 
     useOnKeyPress(checkCode ? CheckCode : HandleLogin, 'Enter');
@@ -143,13 +137,31 @@ const Login = () => {
                         onChange={setPhone}/>
                 </div>
 
-                {checkCodeCount > 3 || phone === undefined || phone === "" ? <button className="login-btn-disablet">
-                    {checkCodeCount > 3 ? t("logintext4") : t("logintext3")}
-                </button> : <button onClick={HandleLogin} className="login-btn">
-                    {checkCode ? t("logintext4") : t("logintext3")}
+                {checkCode ? <button disabled={phone === "" || phone === undefined || seconds > 0 || minutes > 0}
+                                     onClick={HandleLogin}
+                                     className={seconds > 0 || minutes > 0 || phone === "" || phone === undefined ?
+                                         "login-btn-disablet" : "login-btn"}>
+
+                    {t("logintext4")}
+
+                </button> : <button disabled={phone === "" || phone === undefined}
+                                    onClick={HandleLogin}
+                                    className={phone === "" || phone === undefined ? "login-btn-disablet" : "login-btn"}>
+                    {t("logintext3")}
                 </button>}
 
             </div>
+
+            {
+                checkCode &&
+                <div className="coundown">
+                    <div className="count">
+                        <img src="./images/time.png" alt=""/>
+                        {minutes < 10 ? `0${minutes}` : minutes}:
+                        {seconds < 10 ? `0${seconds}` : seconds}
+                    </div>
+                </div>
+            }
 
             <div className="form-verify">
                 {checkCode && <>
@@ -157,7 +169,8 @@ const Login = () => {
                         <label htmlFor="phone" className="label-form">{t("logintext")}</label>
                         <AuthCode allowedCharacters='numeric' length="5" onChange={getCodeValue}/>
                     </div>
-                    <button onClick={CheckCode} className="login-btn">
+                    <button disabled={code.trim().length < 5} onClick={CheckCode}
+                            className={code.trim().length < 5 ? "login-btn-disablet" : "login-btn"}>
                         {t("button5")}
                     </button>
                 </>}

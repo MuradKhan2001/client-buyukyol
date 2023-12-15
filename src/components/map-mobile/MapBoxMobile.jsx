@@ -34,8 +34,7 @@ const MapBoxMobile = () => {
         });
 
         dispatch(getOrders());
-        axios
-            .get(`${baseUrl}api/client/`, {
+        axios.get(`${baseUrl}api/client/`, {
                 headers: {
                     Authorization: `Token ${localStorage.getItem("token")}`,
                 },
@@ -57,14 +56,14 @@ const MapBoxMobile = () => {
     });
 
     const options = useMemo(() => ({
-        disableDefaultUI: false, clickableIcons: false,
+        disableDefaultUI: true, clickableIcons: false,
     }), []);
 
     const postOrder = () => {
         if (user.is_block) {
             let idAlert = Date.now();
             let alert = {
-                id: idAlert, text: "Profilingiz bloklangan!", img: "./images/red.png",
+                id: idAlert, text: t("block"), img: "./images/red.png",
             };
             dispatch(addAlert(alert));
             setTimeout(() => {
@@ -106,8 +105,6 @@ const MapBoxMobile = () => {
             options={options}
             mapContainerClassName="map"
         >
-
-
             <div className="icons">
                 <div
                     onClick={() => showInfo("drivers")}

@@ -1092,6 +1092,18 @@ $color: #047766;
         }
       }
 
+      .mobile-time {
+        display: none;
+      }
+
+      .mobile-time {
+        display: none;
+      }
+
+      desktop-time {
+        display: block;
+      }
+
       .form-box-time {
         width: 100%;
         padding-bottom: 25px;
@@ -1141,6 +1153,11 @@ $color: #047766;
               img {
                 width: 22px;
               }
+            }
+          }
+          .icon{
+            img{
+              display: none;
             }
           }
         }
@@ -1421,6 +1438,7 @@ $color: #047766;
 
     .modal-sloy {
       padding: 15px;
+
       .modal-card {
         width: 100%;
         height: max-content;
@@ -1434,6 +1452,7 @@ $color: #047766;
           margin: 0;
           width: 100%;
           height: max-content;
+
           .title {
             font-size: 18px;
           }
@@ -1483,18 +1502,22 @@ $color: #047766;
         width: 100%;
         height: 100%;
         padding: 20px;
+
         .header {
           padding: 0;
+
           .text {
             font-size: 16px;
             font-weight: 500;
           }
         }
+
         .map-box {
           margin-top: 5px;
           width: 100%;
           height: calc(100% - 105px);
           position: relative;
+
           .search-address {
             top: 60px;
           }
@@ -1657,6 +1680,14 @@ $color: #047766;
         width: 100%;
         padding: 0;
 
+        .desktop-time {
+          display: none;
+        }
+
+        .mobile-time {
+          display: block;
+        }
+
         .form-box-time {
           width: 100%;
           padding-bottom: 25px;
@@ -1666,17 +1697,7 @@ $color: #047766;
             justify-content: space-between;
 
             .input-box {
-              width: 100%;
-              cursor: pointer;
-              height: 45px;
-              display: flex;
-              align-items: center;
-              border: 2px solid #EEF0F4;
-              background-color: white;
-              border-radius: 6px;
-              margin-top: 8px;
-              overflow: hidden;
-
+              width: max-content;
               input::-webkit-calendar-picker-indicator {
                 width: 20px;
                 height: 20px;
@@ -1687,6 +1708,7 @@ $color: #047766;
               input {
                 width: 100%;
                 font-size: 14px;
+                background-color: transparent;
                 color: #787F95;
                 height: 100%;
                 border: none;
@@ -1698,12 +1720,8 @@ $color: #047766;
               }
 
               .icon {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 50px;
-
                 img {
+                  display: block;
                   width: 22px;
                 }
               }

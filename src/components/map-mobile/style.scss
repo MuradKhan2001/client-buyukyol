@@ -121,8 +121,8 @@ $color: #047766;
 
     .bottom-btn {
       width: 100%;
-      position: absolute;
-      bottom: 15px;
+      position: fixed;
+      bottom: 80px;
       display: flex;
       justify-content: center;
       .post-order {

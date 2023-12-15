@@ -33,18 +33,15 @@ const MapBox = () => {
             let locMy = {lat: latitude, lng: longitude};
             setCenter(locMy);
         });
-
         dispatch(getOrders());
-        axios
-            .get(`${baseUrl}api/client/`, {
+
+        axios.get(`${baseUrl}api/client/`, {
                 headers: {
                     Authorization: `Token ${localStorage.getItem("token")}`,
                 },
-            })
-            .then((response) => {
+            }).then((response) => {
                 setUser(response);
-            })
-            .catch((error) => {
+            }).catch((error) => {
                 if (error.response.statusText == "Unauthorized") {
                     window.location.pathname = "/";
                     localStorage.removeItem("token");
@@ -58,14 +55,14 @@ const MapBox = () => {
     });
 
     const options = useMemo(() => ({
-        disableDefaultUI: window.innerWidth < 767 ? true : false, clickableIcons: false,
+        disableDefaultUI: false, clickableIcons: false,
     }), []);
 
     const postOrder = () => {
         if (user.is_block) {
             let idAlert = Date.now();
             let alert = {
-                id: idAlert, text: "Profilingiz bloklangan!", img: "./images/red.png",
+                id: idAlert, text: t("block"), img: "./images/red.png",
             };
             dispatch(addAlert(alert));
             setTimeout(() => {
