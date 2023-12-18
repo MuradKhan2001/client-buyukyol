@@ -1,9 +1,26 @@
 import {Route, Routes, NavLink} from "react-router-dom";
 import {userPageRoutes} from "../../routes/Routes";
 import "./style.scss";
+import {useEffect} from "react";
+import axios from "axios";
 
 
 const DashboardMobile = () => {
+
+    useEffect(() => {
+        axios.get(`https://api.buyukyol.uz/api/client/`, {
+            headers: {
+                Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+        }).then((response) => {
+        }).catch((error) => {
+            if (error.response.statusText == "Unauthorized") {
+                window.location.pathname = "/";
+                localStorage.removeItem("token");
+                localStorage.removeItem("userId");
+            }
+        });
+    }, []);
 
     return ( <div className="dashboard-container">
                 <div className="body-side">

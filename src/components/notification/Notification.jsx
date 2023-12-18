@@ -14,7 +14,7 @@ const Notification = () => {
 
     useEffect(() => {
         const getNews = () => {
-            axios.get(`${baseUrl}api/news/`, {
+            axios.get(`https://api.buyukyol.uz/api/news/`, {
                 headers: {
                     "Authorization": `Token ${localStorage.getItem("token")}`
                 },

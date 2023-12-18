@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Route, Routes, NavLink} from "react-router-dom";
 import {userPageRoutes} from "../../routes/Routes";
 import i18next from "i18next";
@@ -10,6 +10,7 @@ import {useNavigate} from "react-router-dom";
 import {showModals} from "../../redux/ModalContent";
 import Alerts from "../alerts/Alerts";
 import DashboardMobile from "../dashboard-mobile/DashboardMobile";
+import axios from "axios";
 
 
 const Dashboard = () => {
@@ -34,6 +35,22 @@ const Dashboard = () => {
             country_code: "ru",
         },
     ];
+
+    useEffect(() => {
+        axios.get(`https://api.buyukyol.uz/api/client/`, {
+            headers: {
+                Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+        }).then((response) => {
+        }).catch((error) => {
+            if (error.response.statusText == "Unauthorized") {
+                window.location.pathname = "/";
+                localStorage.removeItem("token");
+                localStorage.removeItem("userId");
+            }
+        });
+    }, []);
+
     const changeLanguage = (code) => {
         localStorage.setItem("lng", code);
         i18next.changeLanguage(code);

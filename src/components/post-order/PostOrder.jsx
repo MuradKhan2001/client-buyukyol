@@ -24,7 +24,6 @@ const libraries = ['places'];
 
 const PostOrder = () => {
     let webSocked = useContext(webSockedContext);
-    const baseUrl = useSelector((store) => store.baseUrl.data)
     const distance = useSelector((store) => store.Distance.data)
     const price = useSelector((store) => store.Price.data)
     const {t} = useTranslation();
@@ -172,21 +171,16 @@ const PostOrder = () => {
     });
 
     useEffect(() => {
-        const getCategory = () => {
-            axios.get(`${baseUrl}api/car-category/`).then((response) => {
-                let re = response.data.reverse();
-                setCategories(re);
-            })
-        }
-        return () => {
-            getCategory()
-        }
+        axios.get(`https://api.buyukyol.uz/api/car-category/`).then((response) => {
+            let re = response.data.reverse();
+            setCategories(re);
+        })
     }, [])
 
     const getTrucks = (categoryId) => {
         cargo.car_category = categoryId
         setCategory(categoryId)
-        axios.get(`${baseUrl}api/car-category/${categoryId}`, {}).then((response) => {
+        axios.get(`https://api.buyukyol.uz/api/car-category/${categoryId}`, {}).then((response) => {
             let re = response.data.reverse();
             setTrucks(re);
         })
@@ -917,7 +911,7 @@ const PostOrder = () => {
                                             }} key={index}
                                                         className={`truck ${item.id === infoTruck.id ? "active-truck" : ""}`}>
                                                 <div className="photo">
-                                                    <img src={`${baseUrl}${item.car_image}`} alt=""/>
+                                                    <img src={`https://api.buyukyol.uz/${item.car_image}`} alt=""/>
                                                 </div>
                                                 <div className="name">
                                                     {item.name}
