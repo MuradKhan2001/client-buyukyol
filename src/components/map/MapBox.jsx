@@ -62,7 +62,7 @@ const MapBox = () => {
         if (user.is_block) {
             let idAlert = Date.now();
             let alert = {
-                id: idAlert, text: t("block"), img: "./images/red.png",
+                id: idAlert, text: t("block"), img: "./images/red.svg", color:"#FFEDF1"
             };
             dispatch(addAlert(alert));
             setTimeout(() => {

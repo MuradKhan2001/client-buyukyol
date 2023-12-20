@@ -1,8 +1,7 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {url} from "./url"
 
 export const getOrders = createAsyncThunk("getOrders", async (payload) => {
-    return fetch(`${url}api/my-orders/`, {
+    return fetch(`https://api.buyukyol.uz/api/my-orders/`, {
         headers: {
             "Authorization": `Token ${localStorage.getItem("token")}`
         }

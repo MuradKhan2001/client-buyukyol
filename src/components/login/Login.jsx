@@ -26,6 +26,7 @@ const Login = () => {
         setMinutes(0)
         setSeconds(59)
     }
+
     useEffect(() => {
 
         const interval = setInterval(() => {
@@ -67,7 +68,7 @@ const Login = () => {
             } else {
                 let idAlert = Date.now()
                 let alert = {
-                    id: idAlert, text: t("alert4"), img: "./images/alert-warning.png"
+                    id: idAlert, text: t("alert4"), img: "./images/yellow.svg",color:"#FFFAEA"
                 }
                 dispatch(addAlert(alert))
                 setTimeout(() => {
@@ -79,7 +80,7 @@ const Login = () => {
             if (error.response.status === 404) {
                 let idAlert = Date.now()
                 let alert = {
-                    id: idAlert, text: t("alert4"), img: "./images/alert-warning.png"
+                    id: idAlert, text: t("alert4"), img: "./images/yellow.svg",color:"#FFFAEA"
                 }
                 dispatch(addAlert(alert))
                 setTimeout(() => {
@@ -101,7 +102,7 @@ const Login = () => {
 
                 let idAlert = Date.now()
                 let alert = {
-                    id: idAlert, text: t("alert5"), img: "./images/alert-warning.png"
+                    id: idAlert, text: t("alert5"), img: "./images/yellow.svg",color:"#FFFAEA"
                 }
                 dispatch(addAlert(alert))
                 setTimeout(() => {

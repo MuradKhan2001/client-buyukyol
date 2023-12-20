@@ -55,18 +55,17 @@ const Profile = () => {
         <div className="send-buttons">
 
             <div className="send-btn">
-
                 <RWebShare
                     data={{
                         text: "Web Share - GfG",
-                        url: "http://localhost:3000",
+                        url: "https://client.buyukyol.uz/",
                         title: "Buyuk yo'l",
                     }}
                     onClick={() =>
                         console.log("shared successfully!")
                     }
                 >
-                    <>
+                    <button>
                         <div className="left">
                             <div className="icon">
                                 <img src="./images/Vector.png" alt="Vector"/>
@@ -78,7 +77,7 @@ const Profile = () => {
                         <div className="right">
                             <img src="./images/Stroke.png" alt="Stroke"/>
                         </div>
-                    </>
+                    </button>
                 </RWebShare>
             </div>
 
@@ -96,7 +95,7 @@ const Profile = () => {
                 </div>
             </div>
 
-            <div className="send-btn">
+            <a href="https://t.me/buyukyol_admin" target="_blank" className="send-btn">
                 <div className="left">
                     <div className="icon">
                         <img src="./images/sms.png" alt="Vector"/>
@@ -108,7 +107,7 @@ const Profile = () => {
                 <div className="right">
                     <img src="./images/Stroke.png" alt="Stroke"/>
                 </div>
-            </div>
+            </a>
 
 
             <div onClick={showModalContent} className="send-btn-log-out">

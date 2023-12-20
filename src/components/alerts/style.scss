@@ -21,7 +21,6 @@
       padding-left: 15px;
       padding-right: 15px;
 
-
       .left-side {
         display: flex;
         justify-content: center;
@@ -69,11 +68,15 @@
 
 @media (max-width: 767px) {
   .alerts-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     top: 0px;
     left: 0px;
 
     .alerts-box {
-      width: 380px;
+      width: 95%;
     }
   }
 }

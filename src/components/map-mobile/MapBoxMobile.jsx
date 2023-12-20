@@ -15,7 +15,6 @@ import {getOrders} from "../../redux/Orders";
 const libraries = ["places"];
 
 const MapBoxMobile = () => {
-    const baseUrl = useSelector((store) => store.baseUrl.data);
     const navigate = useNavigate();
     const {t} = useTranslation();
     const [center, setCenter] = useState();
@@ -26,15 +25,13 @@ const MapBoxMobile = () => {
     const Activedrivers = useSelector((store) => store.ActiveDriversList.data);
 
     useEffect(() => {
-
         navigator.geolocation.getCurrentPosition((position) => {
             const {latitude, longitude} = position.coords;
             let locMy = {lat: latitude, lng: longitude};
             setCenter(locMy);
         });
-
         dispatch(getOrders());
-        axios.get(`${baseUrl}api/client/`, {
+        axios.get(`https://api.buyukyol.uz/api/client/`, {
                 headers: {
                     Authorization: `Token ${localStorage.getItem("token")}`,
                 },
@@ -63,7 +60,7 @@ const MapBoxMobile = () => {
         if (user.is_block) {
             let idAlert = Date.now();
             let alert = {
-                id: idAlert, text: t("block"), img: "./images/red.png",
+                id: idAlert, text: t("block"), img: "./images/red.svg", color:"#FFEDF1"
             };
             dispatch(addAlert(alert));
             setTimeout(() => {
@@ -82,7 +79,7 @@ const MapBoxMobile = () => {
     };
 
     const truckIcon = {
-        url: "./images/location-pin-truck.png", scaledSize: {width: 70, height: 70},
+        url: "./images/location-pin-truck.png", scaledSize: {width: 60, height: 60},
     };
 
     if (!isLoaded) return <Loader/>;

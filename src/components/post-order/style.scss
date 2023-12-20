@@ -1450,6 +1450,7 @@ $color: #047766;
 
         .show-order {
           margin: 0;
+          padding: 20px;
           width: 100%;
           height: max-content;
 
@@ -1501,13 +1502,13 @@ $color: #047766;
       .map-wrapper {
         width: 100%;
         height: 100%;
-        padding: 20px;
+        padding: 10px;
 
         .header {
+          height: 30px;
           padding: 0;
-
           .text {
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 500;
           }
         }
@@ -1515,11 +1516,18 @@ $color: #047766;
         .map-box {
           margin-top: 5px;
           width: 100%;
-          height: calc(100% - 105px);
+          height: calc(100% - 80px);
           position: relative;
 
           .search-address {
-            top: 60px;
+            top: 55px;
+          }
+        }
+
+        .footer-map {
+          height: 45px;
+          .success-btn {
+            padding: 10px 60px 10px 60px;
           }
         }
       }

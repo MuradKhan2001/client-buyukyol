@@ -131,5 +131,7 @@
   "validate10": "The price entered for waiting is more than the base price!",
   "validate11": "The price entered for the advance is more than the base price!",
   "language": "Language",
-  "block": "You are blocked!"
+  "block": "You are blocked!",
+  "net": "Internet is down!",
+  "geoLocationError": "Please, enable your geolocation"
 }

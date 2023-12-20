@@ -19,7 +19,6 @@ const Register = () => {
     const [phone, setPhone] = useState("")
     const [code, setCode] = useState("")
     const [checkCode, setCheckCode] = useState(false)
-    const [checkCodeCount, setCheckCodeCount] = useState(0)
     const [minutes, setMinutes] = useState(0)
     const [seconds, setSeconds] = useState(60)
     const [checkVerify, setCheckVerify] = useState(false)
@@ -50,7 +49,6 @@ const Register = () => {
         }
 
     }, [checkCode ? seconds : null])
-
     const getCodeValue = (e) => {
         setCode(e)
     }
@@ -80,7 +78,8 @@ const Register = () => {
                 let alert = {
                     id: idAlert,
                     text: t("alert4"),
-                    img: "./images/alert-warning.png"
+                    img: "./images/yellow.svg",
+                    color:"#FFFAEA"
                 }
                 dispatch(addAlert(alert))
                 setTimeout(() => {
@@ -94,7 +93,8 @@ const Register = () => {
                 let alert = {
                     id: idAlert,
                     text: t("alert4"),
-                    img: "./images/alert-warning.png"
+                    img: "./images/yellow.svg",
+                    color:"#FFFAEA"
                 }
                 dispatch(addAlert(alert))
                 setTimeout(() => {
@@ -120,7 +120,8 @@ const Register = () => {
                 let alert = {
                     id: idAlert,
                     text: t("alert5"),
-                    img: "./images/alert-warning.png"
+                    img: "./images/yellow.svg",
+                    color:"#FFFAEA"
                 }
                 dispatch(addAlert(alert))
                 setTimeout(() => {

@@ -15,7 +15,7 @@ import {webSockedContext} from "../app/App";
 import usePlacesAutocomplete, {
     getGeocode, getLatLng,
 } from "use-places-autocomplete";
-import { Combobox, ComboboxInput, ComboboxOption} from "@reach/combobox";
+import {Combobox, ComboboxInput, ComboboxOption} from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import {getDistance} from "../../redux/distance";
 
@@ -90,7 +90,8 @@ const PostOrder = () => {
             errors.number_cars = t("validate7");
         } else if (Number(values.number_cars) > 20) {
             errors.number_cars = t("validate8");
-        } if (Number(values.number_cars) < 0) {
+        }
+        if (Number(values.number_cars) < 0) {
             errors.number_cars = t("validate9");
         }
 
@@ -103,7 +104,7 @@ const PostOrder = () => {
             errors.wait_cost = t("validate6");
         }
 
-        if ( isNaN(Number(values.avans))) {
+        if (isNaN(Number(values.avans))) {
             errors.avans = t("validate4");
         } else if (Number(values.price) <= Number(values.avans) && direction === "Abroad") {
             errors.avans = t("validate11");
@@ -145,27 +146,31 @@ const PostOrder = () => {
         },
         validate,
         onSubmit: values => {
-            if(locationFromAddress && locationToAddress){
-                setCargoInfo(prevState => prevState = values)
+            if (locationFromAddress && locationToAddress) {
+
+                if (values.start_time === "2024-01-01T00:00" || values.load_time === "2024-01-01T00:00") {
+                    values.start_time = ""
+                    values.load_time = ""
+                    setCargoInfo(prevState => prevState = values)
+                } else  setCargoInfo(prevState => prevState = values)
+
                 showModalForm("order", true)
 
-                if(direction !== "Abroad"){
+                if (direction !== "Abroad") {
                     SendOrder("new_order")
                 }
 
-                
-                
-            } else if (locationFromAddress === "" && locationToAddress === ""){
+            } else if (locationFromAddress === "" && locationToAddress === "") {
 
                 setValidateLocationFrom(true)
                 setValidateLocationTo(true)
 
-            } else if (locationFromAddress === ""){
+            } else if (locationFromAddress === "") {
 
                 setValidateLocationFrom(true)
 
-            } else if (locationToAddress === "")  setValidateLocationTo(true)
-           
+            } else if (locationToAddress === "") setValidateLocationTo(true)
+
         },
 
     });
@@ -257,7 +262,8 @@ const PostOrder = () => {
                 let alert = {
                     id: idAlert,
                     text: t("alert7"),
-                    img: "./images/alert-warning.png"
+                    img: "./images/yellow.svg",
+                    color:"#FFFAEA"
                 }
                 dispatch(addAlert(alert))
                 setTimeout(() => {
@@ -284,7 +290,8 @@ const PostOrder = () => {
                 let alert = {
                     id: idAlert,
                     text: t("alert7"),
-                    img: "./images/alert-warning.png"
+                    img: "./images/yellow.svg",
+                    color:"#FFFAEA"
                 }
                 dispatch(addAlert(alert))
                 setTimeout(() => {
@@ -349,9 +356,9 @@ const PostOrder = () => {
     }), []);
 
     const SendOrder = (command) => {
-        let cargoInfoAll = {...formik.values, ...cargo} 
-       
-        if (webSocked){
+        let cargoInfoAll = {...formik.values, ...cargo}
+
+        if (webSocked) {
             if (command === "new_order") {
                 webSocked.send(JSON.stringify(cargoInfoAll));
             } else if (command === "cancel_order") {
@@ -369,17 +376,18 @@ const PostOrder = () => {
             let idAlertError = Date.now();
             let alert = {
                 id: idAlertError,
-                text: "Internet kuchsiz!",
-                img: "./images/red.png",
+                text: t("net"),
+                img: "./images/red.svg",
+                color:"#FFEDF1"
             };
             dispatch(addAlert(alert));
         }
 
     };
 
-    const ConfirmOrder = () =>{
+    const ConfirmOrder = () => {
 
-        if(direction !== "Abroad"){
+        if (direction !== "Abroad") {
             SendOrder("confirm_order")
         } else {
             cargo.distance = distance
@@ -397,7 +405,7 @@ const PostOrder = () => {
         setInfoTruck("")
     }
 
-    const CancelOrder = () =>{
+    const CancelOrder = () => {
         direction !== "Abroad" ? SendOrder("cancel_order") : showModalForm("", false)
         showModalForm("", false)
     }
@@ -414,7 +422,7 @@ const PostOrder = () => {
         >
             <div className={`modal-sloy ${modalShow.status === "order" ? "align-none" : ""}`}>
 
-                { modalShow.status !== "getLocation" &&
+                {modalShow.status !== "getLocation" &&
                     <div ref={nodeRef} className="modal-card">
 
                         {modalShow.status === "payment-type" &&
@@ -700,7 +708,7 @@ const PostOrder = () => {
                                                         item.name !== "Авто Ташувчи" ?
                                                             <>
                                                                 {item.min_weight} - {item.max_weight} {t("infoWaits4")},
-                                                            </> :""
+                                                            </> : ""
                                                     }
 
                                                     {item.name === "Мини" && t("tariff1")}
@@ -1261,7 +1269,7 @@ const PostOrder = () => {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div className="form-box-time desktop-time">
                                     <label htmlFor="cargo">{t("info13")}</label>
                                     <div className="forms">

@@ -92,7 +92,8 @@ const History = () => {
 
                                                 <div className="content">
                                                     <div className="title">
-                                                        Toshkent- Samarqandddddddddddddddddddddddddsssssssssssssssssss
+                                                        {item.order_title ? item.order_title : item.type === "OUT" ? t("direction2") :
+                                                            item.type === "IN" ? t("direction3") : t("direction1")}
                                                     </div>
                                                     <div className="text">
                                                         <img src="./images/location.png" alt=""/>

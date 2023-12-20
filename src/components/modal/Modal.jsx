@@ -9,10 +9,7 @@ import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import {webSockedContext} from "../app/App";
 import {getOrders} from "../../redux/Orders";
-import RaidDriver, {
-    addRaidDriver,
-    updateRaidDriver,
-} from "../../redux/RaidDriver";
+import {addRaidDriver} from "../../redux/RaidDriver";
 import {delAlert, addAlert} from "../../redux/AlertsBox";
 
 const Modal = () => {
@@ -83,7 +80,8 @@ const Modal = () => {
                 let alert = {
                     id: idAlert,
                     text: t("raidDriverText"),
-                    img: "./images/green.png",
+                    img: "./images/green.svg",
+                    color: "#EDFFFA"
                 };
                 dispatch(addAlert(alert));
                 setTimeout(() => {
@@ -534,15 +532,20 @@ const Modal = () => {
                             <div className="title">{t("cargoLabel1")}</div>
 
                             <div className="orders-info">
+
                                 {activeOrders.map((item, index) => {
-                                    return (
-                                        <div
-                                            key={index}
-                                            onClick={() => {
-                                                showModalContent(item);
-                                            }}
-                                            className="bottom-side-order"
-                                        >
+                                    return <div key={index}
+                                                onClick={() => {
+                                                    showModalContent(item);
+                                                }}>
+                                        <div className="top-side-order">
+                                            <div className="date">
+                                                {item.ordered_time.slice(0, 10)}, &nbsp;
+                                                {item.ordered_time.slice(11, 16)}
+                                            </div>
+                                        </div>
+
+                                        <div className="bottom-side-order">
                                             <div className="photo">
                                                 <img
                                                     src={`${baseUrl}${item.car_category.image}`}
@@ -552,8 +555,8 @@ const Modal = () => {
 
                                             <div className="content">
                                                 <div className="title">
-                                                    Toshkent-
-                                                    Samarqandddddddddddddddddddddddddsssssssssssssssssss
+                                                    {item.order_title ? item.order_title : item.type === "OUT" ? t("direction2") :
+                                                        item.type === "IN" ? t("direction3") : t("direction1")}
                                                 </div>
                                                 <div className="text">
                                                     <img src="./images/location.png" alt=""/>
@@ -573,8 +576,9 @@ const Modal = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                    );
+                                    </div>
                                 })}
+
                             </div>
                         </div>
                     )}
@@ -638,72 +642,79 @@ const Modal = () => {
 
                             <div className="title">{t("order")}</div>
 
-                            <div className="drivers-info">
-                                <div
-                                    onClick={() => {
-                                        navigate("/history");
-                                        dispatch(hideModal({show: false}));
-                                    }}
-                                    className="bottom-side-driver"
-                                >
-                                    <div className="photo">
-                                        <img src="./images/driver.png" alt=""/>
-                                    </div>
+                            {
+                                drivers.map((item, index) => {
+                                    if (item.driver.id === modalContent.item.driver) {
+                                        return <div key={index} className="drivers-info">
+                                            <div
+                                                onClick={() => {
+                                                    navigate("/history");
+                                                    dispatch(hideModal({show: false}));
+                                                }}
+                                                className="bottom-side-driver"
+                                            >
+                                                <div className="photo">
+                                                    <img src={baseUrl+item.driver.image} alt=""/>
+                                                </div>
 
-                                    <div className="content">
-                                        <div className="title">Malikov Murodxon</div>
-                                        <div className="text">
-                                            <img src="./images/truck2.png" alt=""/>
-                                            <div className="info">
-                                                <div className="label">MAN</div>
                                                 <div className="content">
-                                                    {modalContent.item.car_number}
+                                                    <div className="title">{item.driver.first_name} {item.driver.last_name}</div>
+                                                    <div className="text">
+                                                        <img src="./images/truck2.png" alt=""/>
+                                                        <div className="info">
+                                                            <div className="label">
+                                                                {item.driver.documentation.name}
+                                                            </div>
+                                                            <div className="content">
+                                                                {item.driver.documentation.car_number}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="text">
+                                                        <img src="./images/phone.png" alt=""/>
+                                                        <div className="info">
+                                                            <div className="label">
+                                                                {item.driver.phone}
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="text">
-                                            <img src="./images/phone.png" alt=""/>
-                                            <div className="info">
-                                                <div className="label">
-                                                    {modalContent.item.phone_number}
+
+                                            <div className="information-cargo">
+                                                <div className="label-info">{t("loc1")}</div>
+                                                <div className="info">
+                                                    {item.order.address_from}
                                                 </div>
                                             </div>
+
+                                            <div className="information-cargo">
+                                                <div className="label-info">{t("loc3")}</div>
+                                                <div className="info">
+                                                    {item.order.address_from}
+                                                </div>
+                                            </div>
+
+                                            <div className="information-cargo">
+                                                <div className="label-info">{t("info2")}</div>
+                                                <div className="info">
+                                                    {item.order.cargo}
+                                                </div>
+                                            </div>
+
+                                            <div className="information-cargo">
+                                                <div className="label-info">{t("info4")}</div>
+                                                <div className="info">{item.order.capacity} {item.order.unit}</div>
+                                            </div>
+
+                                            <div className="information-cargo">
+                                                <div className="label-info">{t("info8")}</div>
+                                                <div className="info">{item.order.price} {item.order.currency}</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div className="information-cargo">
-                                    <div className="label-info">{t("loc1")}</div>
-                                    <div className="info">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                        Eius, tenetur! Lorem ipsum dolor sit amet, consectetur
-                                        adipisicing elit. Eius, tenetur!
-                                    </div>
-                                </div>
-
-                                <div className="information-cargo">
-                                    <div className="label-info">{t("loc3")}</div>
-                                    <div className="info">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                        Eius, tenetur!
-                                    </div>
-                                </div>
-
-                                <div className="information-cargo">
-                                    <div className="label-info">{t("info2")}</div>
-                                    <div className="info">Mevalar</div>
-                                </div>
-
-                                <div className="information-cargo">
-                                    <div className="label-info">{t("info4")}</div>
-                                    <div className="info">10 tonna</div>
-                                </div>
-
-                                <div className="information-cargo">
-                                    <div className="label-info">{t("info8")}</div>
-                                    <div className="info">1000 dolor</div>
-                                </div>
-                            </div>
+                                    }
+                                })
+                            }
                         </div>
                     )}
                 </div>
