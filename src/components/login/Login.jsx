@@ -57,25 +57,12 @@ const Login = () => {
             phone: phone, user_type: "Client"
         };
         axios.post(`${baseUrl}api/login/`, user).then((response) => {
+            localStorage.setItem("userId", response.data.user);
+            setCheckCode(prevState => true)
 
-            if (response.data.user) {
-                localStorage.setItem("userId", response.data.user);
-                setCheckCode(prevState => true)
-
-                if (checkCode) {
-                    resetTimer()
-                }
-            } else {
-                let idAlert = Date.now()
-                let alert = {
-                    id: idAlert, text: t("alert4"), img: "./images/yellow.svg",color:"#FFFAEA"
-                }
-                dispatch(addAlert(alert))
-                setTimeout(() => {
-                    dispatch(delAlert(idAlert))
-                }, 5000)
+            if (checkCode) {
+                resetTimer()
             }
-
         }).catch((error) => {
             if (error.response.status === 404) {
                 let idAlert = Date.now()

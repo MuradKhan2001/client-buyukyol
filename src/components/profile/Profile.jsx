@@ -57,13 +57,10 @@ const Profile = () => {
             <div className="send-btn">
                 <RWebShare
                     data={{
-                        text: "Web Share - GfG",
+                        text: "Buyuk yo'l",
                         url: "https://client.buyukyol.uz/",
                         title: "Buyuk yo'l",
                     }}
-                    onClick={() =>
-                        console.log("shared successfully!")
-                    }
                 >
                     <button>
                         <div className="left">

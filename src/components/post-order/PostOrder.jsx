@@ -29,6 +29,9 @@ const PostOrder = () => {
     const {t} = useTranslation();
     const navigate = useNavigate();
     const nodeRef = useRef(null);
+    const ref = useRef(null);
+    const ref2 = useRef(null);
+    const ref3 = useRef(null);
     const dispatch = useDispatch()
 
     const [categories, setCategories] = useState([])
@@ -152,7 +155,7 @@ const PostOrder = () => {
                     values.start_time = ""
                     values.load_time = ""
                     setCargoInfo(prevState => prevState = values)
-                } else  setCargoInfo(prevState => prevState = values)
+                } else setCargoInfo(prevState => prevState = values)
 
                 showModalForm("order", true)
 
@@ -186,8 +189,7 @@ const PostOrder = () => {
         cargo.car_category = categoryId
         setCategory(categoryId)
         axios.get(`https://api.buyukyol.uz/api/car-category/${categoryId}`, {}).then((response) => {
-            let re = response.data.reverse();
-            setTrucks(re);
+            setTrucks(response.data);
         })
     }
 
@@ -263,7 +265,7 @@ const PostOrder = () => {
                     id: idAlert,
                     text: t("alert7"),
                     img: "./images/yellow.svg",
-                    color:"#FFFAEA"
+                    color: "#FFFAEA"
                 }
                 dispatch(addAlert(alert))
                 setTimeout(() => {
@@ -291,7 +293,7 @@ const PostOrder = () => {
                     id: idAlert,
                     text: t("alert7"),
                     img: "./images/yellow.svg",
-                    color:"#FFFAEA"
+                    color: "#FFFAEA"
                 }
                 dispatch(addAlert(alert))
                 setTimeout(() => {
@@ -378,7 +380,7 @@ const PostOrder = () => {
                 id: idAlertError,
                 text: t("net"),
                 img: "./images/red.svg",
-                color:"#FFEDF1"
+                color: "#FFEDF1"
             };
             dispatch(addAlert(alert));
         }
@@ -403,6 +405,24 @@ const PostOrder = () => {
         setCategory("")
         setNextPage(false)
         setInfoTruck("")
+        let resetCargo = {
+            command: "new_order",
+            client: Number(localStorage.getItem("userId")),
+            type: "",
+            car_category: "",
+            car_body_type: "",
+            address_from: "",
+            latitude_from: "",
+            longitude_from: "",
+            address_to: "",
+            latitude_to: "",
+            longitude_to: "",
+            payment_type: t("payment1"),
+            unit: t("infoWaits1"),
+            currency: "UZS",
+            wait_type: t("waitCount1"),
+        }
+        setCargo(resetCargo)
     }
 
     const CancelOrder = () => {
@@ -821,8 +841,51 @@ const PostOrder = () => {
             </div>
         </CSSTransition>
 
-        <div className="title">
+        <div ref={ref3} className="title">
             {t("post-order")}
+        </div>
+
+        <div className="directions-card">
+            {direction && <div className="direction-item">
+                {direction === "OUT" ? t("direction2") : ""}
+                {direction === "IN" ? t("direction3") : ""}
+                {direction === "Abroad" ? t("direction1") : ""}
+            </div>}
+
+            {category &&
+                <>
+                    <div className="line"></div>
+                    {categories.map((item, index) => {
+                        if (item.id === category)
+                            return <div key={index} className="direction-item">
+                                {item.name === "Мини" && t("tariff1")}
+                                {item.name === "Енгил" && t("tariff2")}
+                                {item.name === "Ўрта" && t("tariff3")}
+                                {item.name === "Оғир" && t("tariff4")}
+                                {item.name === "Ўта оғир" && t("tariff5")}
+                                {item.name === "Авто Ташувчи" && t("tariff6")}
+                                {item.id !== 9 && <>
+                                    , &nbsp; {item.min_weight} - {item.max_weight} {t("infoWaits4")}
+                                </>}
+                            </div>
+                    })}
+
+                </>
+            }
+
+            {
+                trucks.map((item, index) => {
+                    if (item.id === cargo.car_body_type) {
+                        return <div key={index}>
+                            <div className="line"></div>
+                            <div className="direction-item">
+                                {item.name}
+                            </div>
+                        </div>
+                    }
+                })
+            }
+
         </div>
 
         {
@@ -875,7 +938,12 @@ const PostOrder = () => {
                                 <div className="content">
                                     {
                                         categories.map((item, index) => {
-                                            return <div onClick={() => getTrucks(item.id)} key={index}
+                                            return <div onClick={() => {
+                                                getTrucks(item.id)
+                                                setTimeout(() => {
+                                                    ref.current?.scrollIntoView({behavior: 'smooth'});
+                                                }, 500);
+                                            }} key={index}
                                                         className={`tarif ${category === item.id ? "active-tarif" : ""}`}>
                                                 <div className="photo">
                                                     <img src={item.image} alt=""/>
@@ -891,7 +959,7 @@ const PostOrder = () => {
                                                     </div>
                                                     <div className="count">
                                                         {item.id !== 9 && <>
-                                                            {item.min_weight} - {item.max_weight} tonna
+                                                            {item.min_weight} - {item.max_weight} {t("infoWaits4")}
                                                         </>}
                                                     </div>
                                                 </div>
@@ -906,7 +974,7 @@ const PostOrder = () => {
                     {
                         category &&
                         <>
-                            <div className="title-info">
+                            <div ref={ref} className="title-info">
                                 {t("trucks")}
                             </div>
                             <div className="trucks">
@@ -916,6 +984,9 @@ const PostOrder = () => {
                                             return <div onClick={() => {
                                                 setInfoTruck(prevState => prevState = item)
                                                 cargo.car_body_type = item.id
+                                                setTimeout(() => {
+                                                    ref2.current?.scrollIntoView({behavior: 'smooth'});
+                                                }, 500);
                                             }} key={index}
                                                         className={`truck ${item.id === infoTruck.id ? "active-truck" : ""}`}>
                                                 <div className="photo">
@@ -935,7 +1006,7 @@ const PostOrder = () => {
                     {
                         infoTruck &&
                         <>
-                            <div className="truck-information">
+                            <div ref={ref2} className="truck-information">
                                 <div className="text">
                                     <div className="name">
                                         {t("infoTruck1")}:
@@ -971,7 +1042,12 @@ const PostOrder = () => {
 
                             <div className="buttons">
                                 <button onClick={() => navigate("/")} className="cancel-btn">{t("button3")}</button>
-                                <button onClick={() => setNextPage(prevState => prevState = true)}
+                                <button onClick={() => {
+                                    setNextPage(prevState => prevState = true)
+                                    setTimeout(() => {
+                                        ref3.current?.scrollIntoView({behavior: 'smooth'});
+                                    }, 500);
+                                }}
                                         className="next-btn ">{t("button1")}</button>
                             </div>
                         </>
@@ -1184,6 +1260,7 @@ const PostOrder = () => {
 
                                     <div className="forms">
                                         <div className="input-box">
+
                                             <div className="icon">
                                                 <img className="mobile-icon" src="./images/date.png" alt=""/>
                                             </div>
@@ -1197,7 +1274,7 @@ const PostOrder = () => {
                                     </div>
                                 </div>
 
-                                <div className="form-box-time mobile-time">
+                                <div className="form-box-time">
                                     <label htmlFor="cargo">{t("info13")}</label>
                                     <div className="forms">
                                         <div className="input-box">
@@ -1214,8 +1291,35 @@ const PostOrder = () => {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div className="form-box-radio">
+                            <div className="content-forms">
+                                {direction === "Abroad" && <div className="form-box-radio">
+                                    <label htmlFor="cargo">{t("info9")}</label>
+                                    {formik.errors.avans && formik.errors.avans !== "Required" ?
+                                        <div className="error">
+                                            {formik.errors.avans}
+                                        </div> : ""}
+
+                                    <div
+                                        className={`input-box ${formik.errors.avans === "Required" ? "input-box-required" : ""}`}>
+                                        <div className="icon">
+                                            <img src="./images/pay.png" alt="cargo"/>
+                                        </div>
+                                        <input
+                                            onChange={formik.handleChange}
+                                            value={formik.values.avans}
+                                            name="avans"
+                                            type="text"/>
+                                        <div className="icon-right">
+                                            <div className="text">
+                                                {currency}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>}
+
+                                {direction === "Abroad" && <div className="form-box-radio">
                                     <label htmlFor="cargo">{t("info11")}</label>
 
                                     {formik.errors.wait_cost && formik.errors.wait_cost !== "Required" ?
@@ -1241,51 +1345,7 @@ const PostOrder = () => {
                                         </div>
                                     </div>
 
-                                </div>
-                            </div>
-
-                            <div className="content-forms">
-                                <div className="form-box-radio">
-                                    <label htmlFor="cargo">{t("info9")}</label>
-                                    {formik.errors.avans && formik.errors.avans !== "Required" ?
-                                        <div className="error">
-                                            {formik.errors.avans}
-                                        </div> : ""}
-
-                                    <div
-                                        className={`input-box ${formik.errors.avans === "Required" ? "input-box-required" : ""}`}>
-                                        <div className="icon">
-                                            <img src="./images/pay.png" alt="cargo"/>
-                                        </div>
-                                        <input
-                                            onChange={formik.handleChange}
-                                            value={formik.values.avans}
-                                            name="avans"
-                                            type="text"/>
-                                        <div className="icon-right">
-                                            <div className="text">
-                                                {currency}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="form-box-time desktop-time">
-                                    <label htmlFor="cargo">{t("info13")}</label>
-                                    <div className="forms">
-                                        <div className="input-box">
-
-                                            <div className="icon">
-                                            </div>
-
-                                            <input
-                                                onChange={formik.handleChange}
-                                                value={formik.values.start_time}
-                                                name="start_time"
-                                                id="start_time" type="datetime-local"/>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>}
                             </div>
 
                         </div> : ""

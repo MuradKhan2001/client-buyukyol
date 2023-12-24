@@ -34,7 +34,7 @@ $color: #047766;
 .post-order-container {
   width: 100%;
   height: 100%;
-  padding: 25px 25px 65px 25px;
+  padding: 0px 25px 65px 25px;
   background-color: #F6F8FA;
   overflow-y: auto;
 
@@ -393,6 +393,35 @@ $color: #047766;
     font-size: 24px;
   }
 
+  .directions-card {
+    margin-top: 30px;
+    margin-bottom: 40px;
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .direction-item {
+      transition: 0.3s;
+      width: max-content;
+      background-color: $color;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+      padding: 10px 25px;
+      border-radius: 8px;
+      color: white;
+    }
+
+    .line {
+      width: 50px;
+      height: 3px;
+      background-color: $color;
+    }
+    div{
+      display: flex;
+      align-items: center;
+    }
+  }
+
   .title-info {
     margin-top: 25px;
     font-size: 22px;
@@ -419,6 +448,19 @@ $color: #047766;
       margin-right: 20px;
       cursor: pointer;
       transition: 0.3s;
+      position: relative;
+
+      &:after {
+        border-radius: 10px;
+        background-color: $color;
+        position: absolute;
+        bottom: -3px;
+        content: "";
+        width: 80%;
+        height: 3px;
+        opacity: 0;
+        transition: 0.3s;
+      }
 
       &:hover {
         background-color: #E7EAF1;
@@ -441,6 +483,10 @@ $color: #047766;
 
     .direction-active {
       background-color: #E7EAF1;
+
+      &:after {
+        opacity: 1;
+      }
     }
   }
 
@@ -483,6 +529,19 @@ $color: #047766;
         flex-direction: column;
         transition: .3s;
         cursor: pointer;
+        position: relative;
+
+        &:after {
+          border-radius: 10px;
+          background-color: $color;
+          position: absolute;
+          bottom: -3px;
+          content: "";
+          width: 70%;
+          height: 3px;
+          opacity: 0;
+          transition: 0.3s;
+        }
 
         .photo {
           overflow: hidden;
@@ -521,6 +580,10 @@ $color: #047766;
       }
 
       .active-tarif {
+        &:after {
+          opacity: 1;
+        }
+
         background-color: #E7EAF1;
       }
     }
@@ -566,6 +629,19 @@ $color: #047766;
         flex-direction: column;
         transition: .3s;
         cursor: pointer;
+        position: relative;
+
+        &:after {
+          border-radius: 10px;
+          background-color: $color;
+          position: absolute;
+          bottom: -3px;
+          content: "";
+          width: 70%;
+          height: 3px;
+          opacity: 0;
+          transition: 0.3s;
+        }
 
         .photo {
           overflow: hidden;
@@ -594,6 +670,10 @@ $color: #047766;
       }
 
       .active-truck {
+        &:after {
+          opacity: 1;
+        }
+
         background-color: #E7EAF1;
       }
     }
@@ -1113,7 +1193,7 @@ $color: #047766;
           justify-content: space-between;
 
           .input-box {
-            width: 48%;
+            width: 45%;
             cursor: pointer;
             height: 45px;
             display: flex;
@@ -1134,7 +1214,7 @@ $color: #047766;
             input {
               font-size: 14px;
               color: #787F95;
-              width: calc(100% - 50px);
+              width: 100%;
               height: 100%;
               border: none;
               padding-right: 20px;
@@ -1148,16 +1228,11 @@ $color: #047766;
               display: flex;
               justify-content: center;
               align-items: center;
-              width: 50px;
+              width: 25px;
 
               img {
-                width: 22px;
+                display: none;
               }
-            }
-          }
-          .icon{
-            img{
-              display: none;
             }
           }
         }
@@ -1364,6 +1439,7 @@ $color: #047766;
           }
 
           .input-box {
+            padding-left: 10px;
             .icon {
               width: 50px;
               @extend %d-flex;
@@ -1507,6 +1583,7 @@ $color: #047766;
         .header {
           height: 30px;
           padding: 0;
+
           .text {
             font-size: 13px;
             font-weight: 500;
@@ -1526,11 +1603,41 @@ $color: #047766;
 
         .footer-map {
           height: 45px;
+
           .success-btn {
             padding: 10px 60px 10px 60px;
           }
         }
       }
+    }
+
+    .directions-card {
+      margin-top: 30px;
+      margin-bottom: 40px;
+
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      .direction-item {
+        text-align: center;
+        transition: 0.3s;
+        width: max-content;
+        background-color: $color;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        padding: 12px 10px;
+        border-radius: 8px;
+        color: white;
+        font-size: 12px;
+      }
+
+      .line {
+        width: 50px;
+        height: 3px;
+        background-color: $color;
+      }
+
+
     }
 
     .title {
@@ -1706,6 +1813,7 @@ $color: #047766;
 
             .input-box {
               width: max-content;
+
               input::-webkit-calendar-picker-indicator {
                 width: 20px;
                 height: 20px;
@@ -1728,7 +1836,9 @@ $color: #047766;
               }
 
               .icon {
+                margin-left: 15px;
                 img {
+                  margin-right: 10px;
                   display: block;
                   width: 22px;
                 }

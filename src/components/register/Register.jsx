@@ -8,6 +8,7 @@ import {useOnKeyPress} from "./useOnKeyPress";
 import "./style.scss"
 import {addAlert, delAlert} from "../../redux/AlertsBox";
 import {useTranslation} from "react-i18next";
+import Alerts from "../alerts/Alerts";
 
 const Register = () => {
     const {t} = useTranslation();
@@ -59,6 +60,7 @@ const Register = () => {
         setLast_name(e.target.value)
     }
     const HandleLogin = () => {
+        let idAlert = Date.now()
         let user = {
             first_name,
             last_name,
@@ -67,6 +69,7 @@ const Register = () => {
         };
 
         axios.post(`${baseUrl}api/register/`, user).then((response) => {
+
             if (response.data.user) {
                 localStorage.setItem("userId", response.data.user);
                 setCheckCode(prevState => true)
@@ -74,12 +77,8 @@ const Register = () => {
                     resetTimer()
                 }
             } else {
-                let idAlert = Date.now()
                 let alert = {
-                    id: idAlert,
-                    text: t("alert4"),
-                    img: "./images/yellow.svg",
-                    color:"#FFFAEA"
+                    id: idAlert, text: t("alert4"), img: "./images/yellow.svg",color:"#FFFAEA"
                 }
                 dispatch(addAlert(alert))
                 setTimeout(() => {
@@ -88,7 +87,7 @@ const Register = () => {
             }
 
         }).catch((error) => {
-            if (error.response.status === 404) {
+            if (error.response.status === 400) {
                 let idAlert = Date.now()
                 let alert = {
                     id: idAlert,
@@ -134,6 +133,7 @@ const Register = () => {
     useOnKeyPress(checkCode ? CheckCode : HandleLogin, 'Enter');
 
     return <div className="register-container">
+        <Alerts/>
         <div className="left">
             <div className="sloy">
                 <img src="./images/white-logo.png" alt="white-logo"/>

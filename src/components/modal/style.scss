@@ -449,7 +449,7 @@ $color: #047766;
         padding: 30px;
 
         .top-side-order{
-          font-weight: 500px;
+          font-weight: 500;
           font-size: 14px;
           margin-top: 25px;
         }
@@ -859,7 +859,8 @@ $color: #047766;
       }
 
       .drivers-list {
-        margin: 10px;
+        margin: 0;
+        padding: 25px;
         .drivers-info {
           margin-top: 20px;
           width: 100%;
@@ -881,7 +882,8 @@ $color: #047766;
       }
 
       .active-orders-list {
-        margin: 10px;
+        margin: 0;
+        padding: 25px;
 
         .top-side-order{
           margin-top: 15px;
