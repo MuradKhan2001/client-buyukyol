@@ -902,6 +902,22 @@ $color: #047766;
             height: 120px;
             background-color: #E7EAF1;
 
+            .photo {
+              width: 100px;
+            }
+
+            .content {
+              width: calc(100% - 60px);
+              .text {
+                .info {
+                  font-size: 13px;
+                  .label {
+                    margin-right: 5px;
+                  }
+                }
+              }
+            }
+
             &:hover {
               background-color: #E7EAF1;
             }

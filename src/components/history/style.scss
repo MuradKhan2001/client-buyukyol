@@ -376,6 +376,9 @@ $color: #047766;
     padding: 0px;
 
     .title-history {
+      position: sticky;
+      top: 0;
+      background-color: white;
       margin-top: 0;
       width: 100%;
       height: 60px;

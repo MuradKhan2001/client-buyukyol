@@ -218,14 +218,54 @@ const PostOrder = () => {
         });
 
         const handleSelect = async (address) => {
-            setValue(address, false);
-            clearSuggestions();
-            setSearchLocationAddress(address)
-
             const results = await getGeocode({address});
             const {lat, lng} = await getLatLng(results[0]);
-            setSelected({lat, lng});
-            setCenter({lat, lng});
+
+            const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&lan=en`;
+
+            axios.get(`${url}`, {
+                headers: {
+                    "Accept-Language": i18next.language
+                }
+            }).then((res) => {
+
+                let city = res.data.address.city;
+                let country = res.data.address.country;
+                let suburb = res.data.address.suburb;
+                let neighbourhood = res.data.address.neighbourhood;
+                let county = res.data.address.county;
+                let road = res.data.address.road;
+                let fullAddress = `${country ? country + "," : ""} ${city ? city + "," : ""} ${suburb ? suburb + "," : ""} 
+            ${neighbourhood ? neighbourhood + "," : ""} ${county ? county + "," : ""} ${road ? road : ""}`
+
+                if (direction !== "Abroad") {
+                    if (res.data.address.country_code === "uz") {
+                        setSearchLocationAddress(fullAddress)
+                        setSelected({lat, lng});
+                        setCenter({lat, lng});
+                        setValue(address, false);
+                        clearSuggestions();
+                    } else {
+                        let idAlert = Date.now();
+                        let alert = {
+                            id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                        };
+                        dispatch(addAlert(alert));
+                        setTimeout(() => {
+                            dispatch(delAlert(idAlert));
+                        }, 5000);
+                        setSearchLocationAddress("")
+                        setSelected(null)
+                    }
+
+                } else {
+                    setSearchLocationAddress(fullAddress)
+                    setSelected({lat, lng});
+                    setCenter({lat, lng});
+                    setValue(address, false);
+                    clearSuggestions();
+                }
+            })
         };
 
         return (<Combobox onSelect={handleSelect}>
@@ -318,7 +358,6 @@ const PostOrder = () => {
         let longitude = e.latLng.lng()
 
         let locMy = {lat: latitude, lng: longitude}
-        setSelected(locMy)
 
         const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&lan=en`;
 
@@ -327,16 +366,37 @@ const PostOrder = () => {
                 "Accept-Language": i18next.language
             }
         }).then((res) => {
+
             let city = res.data.address.city;
             let country = res.data.address.country;
             let suburb = res.data.address.suburb;
             let neighbourhood = res.data.address.neighbourhood;
             let county = res.data.address.county;
             let road = res.data.address.road;
-
             let fullAddress = `${country ? country + "," : ""} ${city ? city + "," : ""} ${suburb ? suburb + "," : ""} 
             ${neighbourhood ? neighbourhood + "," : ""} ${county ? county + "," : ""} ${road ? road : ""}`
-            setSearchLocationAddress(fullAddress)
+
+            if (direction !== "Abroad") {
+                if (res.data.address.country_code === "uz") {
+                    setSearchLocationAddress(fullAddress)
+                    setSelected(locMy)
+                } else {
+                    let idAlert = Date.now();
+                    let alert = {
+                        id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                    };
+                    dispatch(addAlert(alert));
+                    setTimeout(() => {
+                        dispatch(delAlert(idAlert));
+                    }, 5000);
+                    setSearchLocationAddress("")
+                    setSelected(null)
+                }
+
+            } else {
+                setSearchLocationAddress(fullAddress)
+                setSelected(locMy)
+            }
         })
 
     }
@@ -1353,7 +1413,11 @@ const PostOrder = () => {
 
 
                     <div className="buttons">
-                        <div onClick={() => setNextPage(false)} className="cancel-btn">{t("button7")}</div>
+                        <div onClick={() => {
+                            setNextPage(false)
+                            setSearchLocationAddress("")
+                            setSelected(null)
+                        }} className="cancel-btn">{t("button7")}</div>
                         <button type="submit" className="next-btn ">{t("button1")}</button>
                     </div>
 
