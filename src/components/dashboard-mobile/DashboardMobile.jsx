@@ -4,14 +4,17 @@ import "./style.scss";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useTranslation} from "react-i18next";
+import {useSelector} from "react-redux";
 
 
 const DashboardMobile = () => {
     const navigate = useNavigate();
     const [nav, setNav] = useState(false)
     const {t} = useTranslation();
+    const baseUrl = useSelector((store) => store.baseUrl.data)
+
     useEffect(() => {
-        axios.get(`https://api.buyukyol.uz/api/client/`, {
+        axios.get(`${baseUrl}api/client/`, {
             headers: {
                 Authorization: `Token ${localStorage.getItem("token")}`,
             },
@@ -26,7 +29,8 @@ const DashboardMobile = () => {
     }, []);
 
     return (<div className="dashboard-container">
-            <div className="body-side">
+
+            <div  className="body-side">
                 <Routes>
                     {userPageRoutes.map((route, index) => (
                         <Route key={index} {...route} />
@@ -122,7 +126,6 @@ const DashboardMobile = () => {
                     </div>
 
                 </div>
-
             </div>
 
             {/*<div className="footer-side">*/}

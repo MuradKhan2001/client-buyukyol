@@ -3,13 +3,15 @@ import "./style.scss"
 import {useEffect, useState} from "react";
 import i18next from "i18next";
 import {useTranslation} from "react-i18next";
+import {useSelector} from "react-redux";
 
 const Notification = () => {
     const {t} = useTranslation();
     const [newsList, setNewsList] = useState([])
+    const baseUrl = useSelector((store) => store.baseUrl.data)
 
     useEffect(() => {
-        axios.get(`https://api.buyukyol.uz/api/news/`, {
+        axios.get(`${baseUrl}api/news/`, {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("token")}`
             }, params: {

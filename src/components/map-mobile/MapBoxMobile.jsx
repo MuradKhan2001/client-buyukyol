@@ -15,6 +15,7 @@ import {getOrders} from "../../redux/Orders";
 const libraries = ["places"];
 
 const MapBoxMobile = () => {
+    const baseUrl = useSelector((store) => store.baseUrl.data);
     const navigate = useNavigate();
     const {t} = useTranslation();
     const [center, setCenter] = useState();
@@ -31,7 +32,7 @@ const MapBoxMobile = () => {
             setCenter(locMy);
         });
         dispatch(getOrders());
-        axios.get(`https://api.buyukyol.uz/api/client/`, {
+        axios.get(`${baseUrl}api/client/`, {
                 headers: {
                     Authorization: `Token ${localStorage.getItem("token")}`,
                 },

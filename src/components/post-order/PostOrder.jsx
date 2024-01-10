@@ -33,6 +33,7 @@ const PostOrder = () => {
     const ref2 = useRef(null);
     const ref3 = useRef(null);
     const dispatch = useDispatch()
+    const baseUrl = useSelector((store) => store.baseUrl.data)
 
     const [categories, setCategories] = useState([])
     const [trucks, setTrucks] = useState([])
@@ -56,6 +57,7 @@ const PostOrder = () => {
     const [locationFrom, setLocationFrom] = useState(false)
     const [locationFromAddress, setLocationFromAddress] = useState("")
     const [locationTo, setLocationTo] = useState(false)
+    const [locationCode, setLocationCode] = useState(false)
     const [locationToAddress, setLocationToAddress] = useState("")
     const [searchLocationAddress, setSearchLocationAddress] = useState("")
     const [selected, setSelected] = useState(null);
@@ -179,7 +181,7 @@ const PostOrder = () => {
     });
 
     useEffect(() => {
-        axios.get(`https://api.buyukyol.uz/api/car-category/`).then((response) => {
+        axios.get(`${baseUrl}api/car-category/`).then((response) => {
             let re = response.data.reverse();
             setCategories(re);
         })
@@ -188,7 +190,7 @@ const PostOrder = () => {
     const getTrucks = (categoryId) => {
         cargo.car_category = categoryId
         setCategory(categoryId)
-        axios.get(`https://api.buyukyol.uz/api/car-category/${categoryId}`, {}).then((response) => {
+        axios.get(`${baseUrl}api/car-category/${categoryId}`, {}).then((response) => {
             setTrucks(response.data);
         })
     }
@@ -238,13 +240,41 @@ const PostOrder = () => {
                 let fullAddress = `${country ? country + "," : ""} ${city ? city + "," : ""} ${suburb ? suburb + "," : ""} 
             ${neighbourhood ? neighbourhood + "," : ""} ${county ? county + "," : ""} ${road ? road : ""}`
 
-                if (direction !== "Abroad") {
+                if (direction === "OUT") {
                     if (res.data.address.country_code === "uz") {
-                        setSearchLocationAddress(fullAddress)
-                        setSelected({lat, lng});
-                        setCenter({lat, lng});
-                        setValue(address, false);
-                        clearSuggestions();
+
+                        if (locationToAddress || locationFromAddress) {
+
+                            if (res.data.address["ISO3166-2-lvl4"] !== locationCode) {
+
+                                setSearchLocationAddress(fullAddress)
+                                setSelected({lat, lng})
+                                setCenter({lat, lng});
+                                setValue(address, false);
+                                clearSuggestions();
+                            } else {
+                                setSearchLocationAddress("")
+                                setSelected(null)
+                                let idAlert = Date.now();
+                                let alert = {
+                                    id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                                };
+                                dispatch(addAlert(alert));
+                                setTimeout(() => {
+                                    dispatch(delAlert(idAlert));
+                                }, 5000);
+                            }
+
+                        } else {
+                            setSearchLocationAddress(fullAddress)
+                            setSearchLocationAddress(fullAddress)
+                            setSelected({lat, lng})
+                            setCenter({lat, lng});
+                            setValue(address, false);
+                            clearSuggestions();
+                            setLocationCode(res.data.address["ISO3166-2-lvl4"])
+                        }
+
                     } else {
                         let idAlert = Date.now();
                         let alert = {
@@ -257,14 +287,91 @@ const PostOrder = () => {
                         setSearchLocationAddress("")
                         setSelected(null)
                     }
-
-                } else {
-                    setSearchLocationAddress(fullAddress)
-                    setSelected({lat, lng});
-                    setCenter({lat, lng});
-                    setValue(address, false);
-                    clearSuggestions();
                 }
+
+                if (direction === "IN") {
+                    if (res.data.address.country_code === "uz") {
+                        if (locationToAddress || locationFromAddress) {
+
+                            if (res.data.address["ISO3166-2-lvl4"] === locationCode) {
+                                setSearchLocationAddress(fullAddress)
+                                setSearchLocationAddress(fullAddress)
+                                setSelected({lat, lng})
+                                setCenter({lat, lng});
+                                setValue(address, false);
+                                clearSuggestions();
+                            } else {
+                                setSearchLocationAddress("")
+                                setSelected(null)
+                                let idAlert = Date.now();
+                                let alert = {
+                                    id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                                };
+                                dispatch(addAlert(alert));
+                                setTimeout(() => {
+                                    dispatch(delAlert(idAlert));
+                                }, 5000);
+                            }
+
+                        } else {
+                            setSearchLocationAddress(fullAddress)
+                            setSelected({lat, lng})
+                            setCenter({lat, lng});
+                            setValue(address, false);
+                            clearSuggestions();
+                            setLocationCode(res.data.address["ISO3166-2-lvl4"])
+                        }
+
+                    } else {
+                        let idAlert = Date.now();
+                        let alert = {
+                            id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                        };
+                        dispatch(addAlert(alert));
+                        setTimeout(() => {
+                            dispatch(delAlert(idAlert));
+                        }, 5000);
+                        setSearchLocationAddress("")
+                        setSelected(null)
+                    }
+                }
+
+                if (direction === "Abroad") {
+                    if (locationToAddress || locationFromAddress) {
+
+                        if (res.data.address.country_code !== locationCode) {
+                            setSearchLocationAddress(fullAddress)
+                            setSearchLocationAddress(fullAddress)
+                            setSelected({lat, lng})
+                            setCenter({lat, lng});
+                            setValue(address, false);
+                            clearSuggestions();
+                        } else {
+                            setSearchLocationAddress("")
+                            setSelected(null)
+                            let idAlert = Date.now();
+                            let alert = {
+                                id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                            };
+                            dispatch(addAlert(alert));
+                            setTimeout(() => {
+                                dispatch(delAlert(idAlert));
+                            }, 5000);
+                        }
+
+                    } else {
+                        setSearchLocationAddress(fullAddress)
+                        setSearchLocationAddress(fullAddress)
+                        setSelected({lat, lng})
+                        setCenter({lat, lng});
+                        setValue(address, false);
+                        clearSuggestions();
+                        setLocationCode(res.data.address.country_code)
+                    }
+                }
+
+
+
             })
         };
 
@@ -376,10 +483,35 @@ const PostOrder = () => {
             let fullAddress = `${country ? country + "," : ""} ${city ? city + "," : ""} ${suburb ? suburb + "," : ""} 
             ${neighbourhood ? neighbourhood + "," : ""} ${county ? county + "," : ""} ${road ? road : ""}`
 
-            if (direction !== "Abroad") {
+            if (direction === "OUT") {
                 if (res.data.address.country_code === "uz") {
-                    setSearchLocationAddress(fullAddress)
-                    setSelected(locMy)
+
+                    if (locationToAddress || locationFromAddress) {
+
+                        if (res.data.address["ISO3166-2-lvl4"] !== locationCode) {
+
+                            setSearchLocationAddress(fullAddress)
+                            setSelected(locMy)
+                        } else {
+                            setSearchLocationAddress("")
+                            setSelected(null)
+                            let idAlert = Date.now();
+                            let alert = {
+                                id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                            };
+                            dispatch(addAlert(alert));
+                            setTimeout(() => {
+                                dispatch(delAlert(idAlert));
+                            }, 5000);
+
+                        }
+
+                    } else {
+                        setSearchLocationAddress(fullAddress)
+                        setSelected(locMy)
+                        setLocationCode(res.data.address["ISO3166-2-lvl4"])
+                    }
+
                 } else {
                     let idAlert = Date.now();
                     let alert = {
@@ -392,11 +524,75 @@ const PostOrder = () => {
                     setSearchLocationAddress("")
                     setSelected(null)
                 }
-
-            } else {
-                setSearchLocationAddress(fullAddress)
-                setSelected(locMy)
             }
+
+            if (direction === "IN") {
+                if (res.data.address.country_code === "uz") {
+                    if (locationToAddress || locationFromAddress) {
+
+                        if (res.data.address["ISO3166-2-lvl4"] === locationCode) {
+                            setSearchLocationAddress(fullAddress)
+                            setSelected(locMy)
+                        } else {
+                            setSearchLocationAddress("")
+                            setSelected(null)
+                            let idAlert = Date.now();
+                            let alert = {
+                                id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                            };
+                            dispatch(addAlert(alert));
+                            setTimeout(() => {
+                                dispatch(delAlert(idAlert));
+                            }, 5000);
+
+                        }
+
+                    } else {
+                        setSearchLocationAddress(fullAddress)
+                        setSelected(locMy)
+                        setLocationCode(res.data.address["ISO3166-2-lvl4"])
+                    }
+
+                } else {
+                    let idAlert = Date.now();
+                    let alert = {
+                        id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                    };
+                    dispatch(addAlert(alert));
+                    setTimeout(() => {
+                        dispatch(delAlert(idAlert));
+                    }, 5000);
+                    setSearchLocationAddress("")
+                    setSelected(null)
+                }
+            }
+
+            if (direction === "Abroad") {
+                if (locationToAddress || locationFromAddress) {
+
+                    if (res.data.address.country_code !== locationCode) {
+                        setSearchLocationAddress(fullAddress)
+                        setSelected(locMy)
+                    } else {
+                        setSearchLocationAddress("")
+                        setSelected(null)
+                        let idAlert = Date.now();
+                        let alert = {
+                            id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                        };
+                        dispatch(addAlert(alert));
+                        setTimeout(() => {
+                            dispatch(delAlert(idAlert));
+                        }, 5000);
+                    }
+
+                } else {
+                    setSearchLocationAddress(fullAddress)
+                    setSelected(locMy)
+                    setLocationCode(res.data.address.country_code)
+                }
+            }
+
         })
 
     }
@@ -1050,7 +1246,7 @@ const PostOrder = () => {
                                             }} key={index}
                                                         className={`truck ${item.id === infoTruck.id ? "active-truck" : ""}`}>
                                                 <div className="photo">
-                                                    <img src={`https://api.buyukyol.uz/${item.car_image}`} alt=""/>
+                                                    <img src={`${baseUrl}${item.car_image}`} alt=""/>
                                                 </div>
                                                 <div className="name">
                                                     {item.name}
@@ -1416,8 +1612,12 @@ const PostOrder = () => {
                         <div onClick={() => {
                             setNextPage(false)
                             setSearchLocationAddress("")
+                            setLocationCode("")
+                            setLocationToAddress("")
+                            setLocationFromAddress("")
                             setSelected(null)
                         }} className="cancel-btn">{t("button7")}</div>
+
                         <button type="submit" className="next-btn ">{t("button1")}</button>
                     </div>
 

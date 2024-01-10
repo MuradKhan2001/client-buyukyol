@@ -133,5 +133,6 @@
   "language": "Language",
   "block": "You are blocked!",
   "net": "Internet is down!",
-  "geoLocationError": "Please, enable your geolocation"
+  "geoLocationError": "Please, enable your geolocation",
+  "comment": "Comment..."
 }

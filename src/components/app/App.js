@@ -40,6 +40,7 @@ const App = () => {
             websocket.onclose = () => {
                 window.location.reload()
             }
+
             websocket.onerror = (event) => {
                 let alert = {
                     id: idAlertError, text: t("net"), img: "./images/red.svg",color:"#FFEDF1"
@@ -49,9 +50,11 @@ const App = () => {
                     window.location.reload()
                 }, 1000)
             };
+
             websocket.onopen = () => {
                 dispatch(delAlert(idAlertError));
             }
+
         },(error) => {
             let idAlertError = Date.now();
             let alert = {
@@ -70,7 +73,6 @@ const App = () => {
             websocket.onmessage = (event) => {
 
                 const data = JSON.parse(event.data);
-
                 if (!("status" in data.message)) {
                     dispatch(filterDriver(data.message));
                     dispatch(filterRaidDriver(data.message));

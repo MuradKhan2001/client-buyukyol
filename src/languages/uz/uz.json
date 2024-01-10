@@ -130,5 +130,6 @@
   "language": "Web ilova tili",
   "block": "Siz bloklangansiz!",
   "net": "Internet kuchsiz!",
-  "geoLocationError": "Iltimos, geolakatsiyangizni yoqing!"
+  "geoLocationError": "Iltimos, geolakatsiyangizni yoqing!",
+  "comment": "Izoh..."
 }

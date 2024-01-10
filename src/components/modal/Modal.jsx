@@ -28,6 +28,7 @@ const Modal = () => {
     const [add_reason, setAdd_Reason] = useState("");
     const [cargoId, setCargoId] = useState("");
     const [many, setMany] = useState(false);
+    const [comment, setComment] = useState("")
 
     const logOut = () => {
         localStorage.removeItem("token");
@@ -67,6 +68,7 @@ const Modal = () => {
             driver: id,
             delivery: did,
             mark: raidCount,
+            comment: comment
         };
 
         axios
@@ -494,13 +496,13 @@ const Modal = () => {
                                                     <img src="./images/truck2.png" alt=""/>
                                                     <div className="info">
                                                         <div className="label">
-                                                            {item.driver.documentation
-                                                                ? item.driver.documentation.name
+                                                            {item.driver.name
+                                                                ? item.driver.name
                                                                 : ""}
                                                         </div>
                                                         <div className="content">
-                                                            {item.driver.documentation
-                                                                ? item.driver.documentation.car_number
+                                                            {item.driver.car_number
+                                                                ? item.driver.car_number
                                                                 : ""}
                                                         </div>
                                                     </div>
@@ -608,6 +610,11 @@ const Modal = () => {
                                 />
                             </div>
 
+                            <div className="comment-box">
+                                <input onChange={(e) => setComment(e.target.value)} placeholder={t("comment")}
+                                       type="text"/>
+                            </div>
+
                             <div className="buttons">
                                 <button
                                     onClick={() => cancelRaid(Raiddriver[0].id)}
@@ -654,19 +661,20 @@ const Modal = () => {
                                                 className="bottom-side-driver"
                                             >
                                                 <div className="photo">
-                                                    <img src={baseUrl+item.driver.image} alt=""/>
+                                                    <img src={baseUrl + item.driver.image} alt=""/>
                                                 </div>
 
                                                 <div className="content">
-                                                    <div className="title">{item.driver.first_name} {item.driver.last_name}</div>
+                                                    <div
+                                                        className="title">{item.driver.first_name} {item.driver.last_name}</div>
                                                     <div className="text">
                                                         <img src="./images/truck2.png" alt=""/>
                                                         <div className="info">
                                                             <div className="label">
-                                                                {item.driver.documentation.name}
+                                                                {item.driver.name}
                                                             </div>
                                                             <div className="content">
-                                                                {item.driver.documentation.car_number}
+                                                                {item.driver.car_number}
                                                             </div>
                                                         </div>
                                                     </div>

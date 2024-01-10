@@ -5,7 +5,7 @@ import i18next from "i18next";
 import {useTranslation} from "react-i18next";
 import "./style.scss";
 import Modal from "../modal/Modal";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {showModals} from "../../redux/ModalContent";
 import Alerts from "../alerts/Alerts";
@@ -14,6 +14,7 @@ import axios from "axios";
 
 
 const Dashboard = () => {
+    const baseUrl = useSelector((store) => store.baseUrl.data)
     const navigate = useNavigate();
     const {t} = useTranslation();
     const dispatch = useDispatch();
@@ -36,8 +37,9 @@ const Dashboard = () => {
         },
     ];
 
+
     useEffect(() => {
-        axios.get(`https://api.buyukyol.uz/api/client/`, {
+        axios.get(`${baseUrl}api/client/`, {
             headers: {
                 Authorization: `Token ${localStorage.getItem("token")}`,
             },
