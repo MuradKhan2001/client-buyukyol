@@ -18,6 +18,7 @@ import usePlacesAutocomplete, {
 import {Combobox, ComboboxInput, ComboboxOption} from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import {getDistance} from "../../redux/distance";
+import {getPrice} from "../../redux/Price";
 
 
 const libraries = ['places'];
@@ -257,7 +258,10 @@ const PostOrder = () => {
                                 setSelected(null)
                                 let idAlert = Date.now();
                                 let alert = {
-                                    id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                                    id: idAlert,
+                                    text: t("errorLocations"),
+                                    img: "./images/red.svg",
+                                    color: "#FFEDF1"
                                 };
                                 dispatch(addAlert(alert));
                                 setTimeout(() => {
@@ -278,7 +282,7 @@ const PostOrder = () => {
                     } else {
                         let idAlert = Date.now();
                         let alert = {
-                            id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                            id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
                         };
                         dispatch(addAlert(alert));
                         setTimeout(() => {
@@ -305,7 +309,10 @@ const PostOrder = () => {
                                 setSelected(null)
                                 let idAlert = Date.now();
                                 let alert = {
-                                    id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                                    id: idAlert,
+                                    text: t("errorLocations"),
+                                    img: "./images/red.svg",
+                                    color: "#FFEDF1"
                                 };
                                 dispatch(addAlert(alert));
                                 setTimeout(() => {
@@ -325,7 +332,7 @@ const PostOrder = () => {
                     } else {
                         let idAlert = Date.now();
                         let alert = {
-                            id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                            id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
                         };
                         dispatch(addAlert(alert));
                         setTimeout(() => {
@@ -351,7 +358,7 @@ const PostOrder = () => {
                             setSelected(null)
                             let idAlert = Date.now();
                             let alert = {
-                                id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                                id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
                             };
                             dispatch(addAlert(alert));
                             setTimeout(() => {
@@ -369,9 +376,6 @@ const PostOrder = () => {
                         setLocationCode(res.data.address.country_code)
                     }
                 }
-
-
-
             })
         };
 
@@ -497,7 +501,7 @@ const PostOrder = () => {
                             setSelected(null)
                             let idAlert = Date.now();
                             let alert = {
-                                id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                                id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
                             };
                             dispatch(addAlert(alert));
                             setTimeout(() => {
@@ -515,7 +519,7 @@ const PostOrder = () => {
                 } else {
                     let idAlert = Date.now();
                     let alert = {
-                        id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                        id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
                     };
                     dispatch(addAlert(alert));
                     setTimeout(() => {
@@ -538,7 +542,7 @@ const PostOrder = () => {
                             setSelected(null)
                             let idAlert = Date.now();
                             let alert = {
-                                id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                                id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
                             };
                             dispatch(addAlert(alert));
                             setTimeout(() => {
@@ -556,7 +560,7 @@ const PostOrder = () => {
                 } else {
                     let idAlert = Date.now();
                     let alert = {
-                        id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                        id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
                     };
                     dispatch(addAlert(alert));
                     setTimeout(() => {
@@ -578,7 +582,7 @@ const PostOrder = () => {
                         setSelected(null)
                         let idAlert = Date.now();
                         let alert = {
-                            id: idAlert, text: "Manzil tarifga mos emas!", img: "./images/red.svg", color: "#FFEDF1"
+                            id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
                         };
                         dispatch(addAlert(alert));
                         setTimeout(() => {
@@ -657,6 +661,7 @@ const PostOrder = () => {
         setLocationFromAddress("")
         setLocationToAddress("")
         dispatch(getDistance(""))
+        dispatch(getPrice(""))
         setDirection("")
         setCategory("")
         setNextPage(false)
@@ -665,6 +670,8 @@ const PostOrder = () => {
             command: "new_order",
             client: Number(localStorage.getItem("userId")),
             type: "",
+            price:"",
+            distance:"",
             car_category: "",
             car_body_type: "",
             address_from: "",

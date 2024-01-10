@@ -131,7 +131,7 @@ const App = () => {
                             dispatch(delAlert(idAlert));
                         }, 30000);
 
-                        dispatch(addDriver(data.message));
+                        dispatch(addDriver(data.message.driver));
                         dispatch(getOrders());
                     }
 

@@ -134,5 +134,6 @@
   "block": "You are blocked!",
   "net": "Internet is down!",
   "geoLocationError": "Please, enable your geolocation",
-  "comment": "Comment..."
+  "comment": "Comment...",
+  "errorLocations": "The address does not match the tariff!"
 }
