@@ -6,13 +6,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {w3cwebsocket as W3CWebSocket} from "websocket"
 import {addAlert, delAlert} from "../../redux/AlertsBox";
 import {addDriver, filterDriver, filterDriverDelivered, updateDriver} from "../../redux/driversList";
-import {filterRaidDriver,addRaidDriver} from "../../redux/RaidDriver";
+import {filterRaidDriver, addRaidDriver} from "../../redux/RaidDriver";
 import {getDistance} from "../../redux/distance";
 import {getPrice} from "../../redux/Price";
 import {getOrders} from "../../redux/Orders";
 import {hideModal} from "../../redux/ModalContent";
 import {addActiveDriver, updateActiveDriver} from "../../redux/ActiveDriversList";
 import {useTranslation} from "react-i18next";
+import success from "./sound/success.mp3"
+import error from "./sound/error.mp3"
 
 export const webSockedContext = createContext();
 
@@ -27,8 +29,17 @@ const App = () => {
     const [sockedContext, setSockedContext] = useState(null);
     const drivers = useSelector((store) => store.DriversList.data);
 
+    function successAudio() {
+        new Audio(success).play()
+    }
+
+    function errorAudio() {
+        new Audio(error).play()
+    }
+
     useEffect(() => {
-        if (!localStorage.getItem("token")) return () => {}
+        if (!localStorage.getItem("token")) return () => {
+        }
 
         navigator.geolocation.getCurrentPosition((position) => {
             const {latitude, longitude} = position.coords;
@@ -43,7 +54,7 @@ const App = () => {
 
             websocket.onerror = (event) => {
                 let alert = {
-                    id: idAlertError, text: t("net"), img: "./images/red.svg",color:"#FFEDF1"
+                    id: idAlertError, text: t("net"), img: "./images/red.svg", color: "#FFEDF1"
                 };
                 dispatch(addAlert(alert));
                 setTimeout(() => {
@@ -55,10 +66,10 @@ const App = () => {
                 dispatch(delAlert(idAlertError));
             }
 
-        },(error) => {
+        }, (error) => {
             let idAlertError = Date.now();
             let alert = {
-                id: idAlertError, text: t("geoLocationError"), img: "./images/yellow.svg",color:"#FFFAEA"
+                id: idAlertError, text: t("geoLocationError"), img: "./images/yellow.svg", color: "#FFFAEA"
             };
             dispatch(addAlert(alert));
         });
@@ -91,31 +102,29 @@ const App = () => {
                     if (data.message.status === "confirmed" || data.message.status === "Added") {
                         let idAlert = Date.now();
                         let alert = {
-                            id: idAlert, text: t("alert1"), img: "./images/green.svg",color:"#EDFFFA"
+                            id: idAlert, text: t("alert1"), img: "./images/green.svg", color: "#EDFFFA"
                         };
                         dispatch(addAlert(alert));
+                        successAudio()
                         setTimeout(() => {
                             dispatch(delAlert(idAlert));
                         }, 5000);
-
                         dispatch(getOrders());
                     }
 
                     if (data.message.status === "canceled") {
                         let idAlert = Date.now();
                         let alert = {
-                            id: idAlert, text: t("alert2"), img: "./images/red.svg",color:"#FFEDF1"
+                            id: idAlert, text: t("alert2"), img: "./images/red.svg", color: "#FFEDF1"
                         };
                         dispatch(addAlert(alert));
+                        errorAudio()
                         setTimeout(() => {
                             dispatch(delAlert(idAlert));
                         }, 5000);
-
                         dispatch(getOrders());
                         dispatch(hideModal({show: false}));
-
                         dispatch(updateDriver(data.message));
-
                         if (data.message.driver_id) {
                             dispatch(updateActiveDriver(data.message.driver_id));
                         }
@@ -124,9 +133,10 @@ const App = () => {
                     if (data.message.status === "Accepted") {
                         let idAlert = Date.now();
                         let alert = {
-                            id: idAlert, text: t("alert8"), img: "./images/green.svg",color:"#EDFFFA"
+                            id: idAlert, text: t("alert8"), img: "./images/green.svg", color: "#EDFFFA"
                         };
                         dispatch(addAlert(alert));
+                        successAudio()
                         setTimeout(() => {
                             dispatch(delAlert(idAlert));
                         }, 30000);
@@ -138,9 +148,10 @@ const App = () => {
                     if (data.message.status === "delivering") {
                         let idAlert = Date.now();
                         let alert = {
-                            id: idAlert, text: t("alert9"), img: "./images/green.svg",color:"#EDFFFA"
+                            id: idAlert, text: t("alert9"), img: "./images/green.svg", color: "#EDFFFA"
                         };
                         dispatch(addAlert(alert));
+                        successAudio()
                         setTimeout(() => {
                             dispatch(delAlert(idAlert));
                         }, 5000);
@@ -149,15 +160,14 @@ const App = () => {
                     if (data.message.status === "delivered") {
                         let idAlert = Date.now();
                         let alert = {
-                            id: idAlert, text: t("alert10"), img: "./images/green.svg",color:"#EDFFFA"
+                            id: idAlert, text: t("alert10"), img: "./images/green.svg", color: "#EDFFFA"
                         };
                         dispatch(addAlert(alert));
+                        successAudio()
                         setTimeout(() => {
                             dispatch(delAlert(idAlert));
                         }, 10000);
-
                         let newRaidDriver = drivers.filter((item) => Number(item.id) === Number(data.message.id))
-
                         dispatch(addRaidDriver(newRaidDriver));
                         dispatch(filterDriverDelivered(data.message.id));
                         dispatch(updateActiveDriver(newRaidDriver[0].driver.id));
@@ -181,6 +191,7 @@ const App = () => {
         })
 
     }, [sockedContext, drivers])
+
 
     return <webSockedContext.Provider value={sockedContext}>
         <Routes>

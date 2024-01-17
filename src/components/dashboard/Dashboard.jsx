@@ -53,6 +53,7 @@ const Dashboard = () => {
         });
     }, []);
 
+
     const changeLanguage = (code) => {
         localStorage.setItem("lng", code);
         i18next.changeLanguage(code);

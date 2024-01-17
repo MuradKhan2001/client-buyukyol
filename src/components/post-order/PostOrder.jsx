@@ -19,6 +19,9 @@ import {Combobox, ComboboxInput, ComboboxOption} from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import {getDistance} from "../../redux/distance";
 import {getPrice} from "../../redux/Price";
+import success from "../app/sound/success.mp3";
+import error from "../app/sound/error.mp3";
+
 
 
 const libraries = ['places'];
@@ -60,6 +63,7 @@ const PostOrder = () => {
     const [locationTo, setLocationTo] = useState(false)
     const [locationCode, setLocationCode] = useState(false)
     const [locationToAddress, setLocationToAddress] = useState("")
+    const [countryCode, setCountryCode] = useState("")
     const [searchLocationAddress, setSearchLocationAddress] = useState("")
     const [selected, setSelected] = useState(null);
     const [validateLocationFrom, setValidateLocationFrom] = useState(false);
@@ -188,6 +192,10 @@ const PostOrder = () => {
         })
     }, [])
 
+    function errorAudio() {
+        new Audio(error).play()
+    }
+
     const getTrucks = (categoryId) => {
         cargo.car_category = categoryId
         setCategory(categoryId)
@@ -242,104 +250,78 @@ const PostOrder = () => {
             ${neighbourhood ? neighbourhood + "," : ""} ${county ? county + "," : ""} ${road ? road : ""}`
 
                 if (direction === "OUT") {
-                    if (res.data.address.country_code === "uz") {
+                    if (locationToAddress || locationFromAddress ) {
 
-                        if (locationToAddress || locationFromAddress) {
+                        if (res.data.address["ISO3166-2-lvl4"] !== locationCode && res.data.address.country_code === countryCode) {
 
-                            if (res.data.address["ISO3166-2-lvl4"] !== locationCode) {
-
-                                setSearchLocationAddress(fullAddress)
-                                setSelected({lat, lng})
-                                setCenter({lat, lng});
-                                setValue(address, false);
-                                clearSuggestions();
-                            } else {
-                                setSearchLocationAddress("")
-                                setSelected(null)
-                                let idAlert = Date.now();
-                                let alert = {
-                                    id: idAlert,
-                                    text: t("errorLocations"),
-                                    img: "./images/red.svg",
-                                    color: "#FFEDF1"
-                                };
-                                dispatch(addAlert(alert));
-                                setTimeout(() => {
-                                    dispatch(delAlert(idAlert));
-                                }, 5000);
-                            }
-
-                        } else {
-                            setSearchLocationAddress(fullAddress)
                             setSearchLocationAddress(fullAddress)
                             setSelected({lat, lng})
                             setCenter({lat, lng});
                             setValue(address, false);
                             clearSuggestions();
-                            setLocationCode(res.data.address["ISO3166-2-lvl4"])
+                        } else {
+                            setSearchLocationAddress("")
+                            setSelected(null)
+                            let idAlert = Date.now();
+                            let alert = {
+                                id: idAlert,
+                                text: t("errorLocations"),
+                                img: "./images/red.svg",
+                                color: "#FFEDF1"
+                            };
+                            dispatch(addAlert(alert));
+                            errorAudio()
+                            setTimeout(() => {
+                                dispatch(delAlert(idAlert));
+                            }, 5000);
                         }
 
                     } else {
-                        let idAlert = Date.now();
-                        let alert = {
-                            id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
-                        };
-                        dispatch(addAlert(alert));
-                        setTimeout(() => {
-                            dispatch(delAlert(idAlert));
-                        }, 5000);
-                        setSearchLocationAddress("")
-                        setSelected(null)
+                        setCountryCode(res.data.address.country_code)
+                        setSearchLocationAddress(fullAddress)
+                        setSearchLocationAddress(fullAddress)
+                        setSelected({lat, lng})
+                        setCenter({lat, lng});
+                        setValue(address, false);
+                        clearSuggestions();
+                        setLocationCode(res.data.address["ISO3166-2-lvl4"])
                     }
                 }
 
                 if (direction === "IN") {
-                    if (res.data.address.country_code === "uz") {
-                        if (locationToAddress || locationFromAddress) {
+                    if (locationToAddress || locationFromAddress) {
 
-                            if (res.data.address["ISO3166-2-lvl4"] === locationCode) {
-                                setSearchLocationAddress(fullAddress)
-                                setSearchLocationAddress(fullAddress)
-                                setSelected({lat, lng})
-                                setCenter({lat, lng});
-                                setValue(address, false);
-                                clearSuggestions();
-                            } else {
-                                setSearchLocationAddress("")
-                                setSelected(null)
-                                let idAlert = Date.now();
-                                let alert = {
-                                    id: idAlert,
-                                    text: t("errorLocations"),
-                                    img: "./images/red.svg",
-                                    color: "#FFEDF1"
-                                };
-                                dispatch(addAlert(alert));
-                                setTimeout(() => {
-                                    dispatch(delAlert(idAlert));
-                                }, 5000);
-                            }
-
-                        } else {
+                        if (res.data.address["ISO3166-2-lvl4"] === locationCode) {
+                            setSearchLocationAddress(fullAddress)
                             setSearchLocationAddress(fullAddress)
                             setSelected({lat, lng})
                             setCenter({lat, lng});
                             setValue(address, false);
                             clearSuggestions();
-                            setLocationCode(res.data.address["ISO3166-2-lvl4"])
+                        } else {
+                            setSearchLocationAddress("")
+                            setSelected(null)
+                            let idAlert = Date.now();
+                            let alert = {
+                                id: idAlert,
+                                text: t("errorLocations"),
+                                img: "./images/red.svg",
+                                color: "#FFEDF1"
+                            };
+                            dispatch(addAlert(alert));
+                            errorAudio()
+                            setTimeout(() => {
+                                dispatch(delAlert(idAlert));
+                            }, 5000);
                         }
 
                     } else {
-                        let idAlert = Date.now();
-                        let alert = {
-                            id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
-                        };
-                        dispatch(addAlert(alert));
-                        setTimeout(() => {
-                            dispatch(delAlert(idAlert));
-                        }, 5000);
-                        setSearchLocationAddress("")
-                        setSelected(null)
+                        setSearchLocationAddress(fullAddress)
+                        setSelected({lat, lng})
+                        setCenter({lat, lng});
+                        setValue(address, false);
+                        clearSuggestions();
+                        setLocationCode(res.data.address["ISO3166-2-lvl4"])
                     }
                 }
 
@@ -488,86 +470,60 @@ const PostOrder = () => {
             ${neighbourhood ? neighbourhood + "," : ""} ${county ? county + "," : ""} ${road ? road : ""}`
 
             if (direction === "OUT") {
-                if (res.data.address.country_code === "uz") {
+                if (locationToAddress || locationFromAddress) {
 
-                    if (locationToAddress || locationFromAddress) {
+                    if (res.data.address["ISO3166-2-lvl4"] !== locationCode && res.data.address.country_code === countryCode) {
 
-                        if (res.data.address["ISO3166-2-lvl4"] !== locationCode) {
-
-                            setSearchLocationAddress(fullAddress)
-                            setSelected(locMy)
-                        } else {
-                            setSearchLocationAddress("")
-                            setSelected(null)
-                            let idAlert = Date.now();
-                            let alert = {
-                                id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
-                            };
-                            dispatch(addAlert(alert));
-                            setTimeout(() => {
-                                dispatch(delAlert(idAlert));
-                            }, 5000);
-
-                        }
-
-                    } else {
                         setSearchLocationAddress(fullAddress)
                         setSelected(locMy)
-                        setLocationCode(res.data.address["ISO3166-2-lvl4"])
+                    } else {
+                        setSearchLocationAddress("")
+                        setSelected(null)
+                        let idAlert = Date.now();
+                        let alert = {
+                            id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
+                        };
+                        dispatch(addAlert(alert));
+                        errorAudio()
+                        setTimeout(() => {
+                            dispatch(delAlert(idAlert));
+                        }, 5000);
+
                     }
 
                 } else {
-                    let idAlert = Date.now();
-                    let alert = {
-                        id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
-                    };
-                    dispatch(addAlert(alert));
-                    setTimeout(() => {
-                        dispatch(delAlert(idAlert));
-                    }, 5000);
-                    setSearchLocationAddress("")
-                    setSelected(null)
+                    setCountryCode(res.data.address.country_code)
+                    setSearchLocationAddress(fullAddress)
+                    setSelected(locMy)
+                    setLocationCode(res.data.address["ISO3166-2-lvl4"])
                 }
             }
 
             if (direction === "IN") {
-                if (res.data.address.country_code === "uz") {
-                    if (locationToAddress || locationFromAddress) {
+                if (locationToAddress || locationFromAddress) {
 
-                        if (res.data.address["ISO3166-2-lvl4"] === locationCode) {
-                            setSearchLocationAddress(fullAddress)
-                            setSelected(locMy)
-                        } else {
-                            setSearchLocationAddress("")
-                            setSelected(null)
-                            let idAlert = Date.now();
-                            let alert = {
-                                id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
-                            };
-                            dispatch(addAlert(alert));
-                            setTimeout(() => {
-                                dispatch(delAlert(idAlert));
-                            }, 5000);
-
-                        }
-
-                    } else {
+                    if (res.data.address["ISO3166-2-lvl4"] === locationCode) {
                         setSearchLocationAddress(fullAddress)
                         setSelected(locMy)
-                        setLocationCode(res.data.address["ISO3166-2-lvl4"])
+                    } else {
+                        setSearchLocationAddress("")
+                        setSelected(null)
+                        let idAlert = Date.now();
+                        let alert = {
+                            id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
+                        };
+                        dispatch(addAlert(alert));
+                        errorAudio()
+                        setTimeout(() => {
+                            dispatch(delAlert(idAlert));
+                        }, 5000);
+
                     }
 
                 } else {
-                    let idAlert = Date.now();
-                    let alert = {
-                        id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
-                    };
-                    dispatch(addAlert(alert));
-                    setTimeout(() => {
-                        dispatch(delAlert(idAlert));
-                    }, 5000);
-                    setSearchLocationAddress("")
-                    setSelected(null)
+                    setSearchLocationAddress(fullAddress)
+                    setSelected(locMy)
+                    setLocationCode(res.data.address["ISO3166-2-lvl4"])
                 }
             }
 
@@ -585,6 +541,7 @@ const PostOrder = () => {
                             id: idAlert, text: t("errorLocations"), img: "./images/red.svg", color: "#FFEDF1"
                         };
                         dispatch(addAlert(alert));
+                        errorAudio()
                         setTimeout(() => {
                             dispatch(delAlert(idAlert));
                         }, 5000);
@@ -1274,21 +1231,21 @@ const PostOrder = () => {
                                     <div className="name">
                                         {t("infoTruck1")}:
                                     </div>
-                                    <div className="num">{infoTruck.widht}</div>
+                                    <div className="num">{infoTruck.widht/100} {t("infoWaits6")}</div>
                                 </div>
 
                                 <div className="text">
                                     <div className="name">
                                         {t("infoTruck2")}:
                                     </div>
-                                    <div className="num">{infoTruck.breadth}</div>
+                                    <div className="num">{infoTruck.breadth/100} {t("infoWaits6")}</div>
                                 </div>
 
                                 <div className="text">
                                     <div className="name">
                                         {t("infoTruck3")}:
                                     </div>
-                                    <div className="num">{infoTruck.height}</div>
+                                    <div className="num">{infoTruck.height/100} {t("infoWaits6")}</div>
                                 </div>
 
                                 <div className="text">
@@ -1296,8 +1253,9 @@ const PostOrder = () => {
                                         {t("infoTruck4")}:
                                     </div>
                                     <div className="num">
-                                        {!infoTruck.name === "Мини" || !infoTruck.name === "Авто" || !infoTruck.name === "Мулти" ?
-                                            infoTruck.cargo_weight / 1000 : infoTruck.cargo_weight}
+                                        { infoTruck.name === "Мини" || infoTruck.name === "Авто" || infoTruck.name === "Мулти" ?
+                                            <>{infoTruck.cargo_weight} {t("infoWaits2")}</>  :  <>{infoTruck.cargo_weight / 1000} {t("infoWaits4")}</> }
+
                                     </div>
                                 </div>
 
