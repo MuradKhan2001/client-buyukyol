@@ -135,5 +135,6 @@
   "net": "Internet is down!",
   "geoLocationError": "Please, enable your geolocation",
   "comment": "Comment...",
-  "errorLocations": "The address does not match the tariff!"
+  "errorLocations": "The address does not match the tariff!",
+  "errorLocations2": "Dastlab olib ketish manzilini kiriting!"
 }

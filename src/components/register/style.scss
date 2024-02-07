@@ -251,7 +251,6 @@ $color: #047766;
       .checkbox-wrapper-13 {
         margin-right: 10px;
       }
-
       @supports (-webkit-appearance: none) or (-moz-appearance: none) {
         .checkbox-wrapper-13 input[type=checkbox] {
           --active: #047766;
@@ -340,11 +339,9 @@ $color: #047766;
           --r: 43deg;
         }
       }
-
       .checkbox-wrapper-13 * {
         box-sizing: inherit;
       }
-
       .checkbox-wrapper-13 *:before,
       .checkbox-wrapper-13 *:after {
         box-sizing: inherit;

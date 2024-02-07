@@ -134,5 +134,6 @@
   "net": "Интернет не работает!",
   "geoLocationError": "Пожалуйста, включите геолокацию",
   "comment": "Комментарий...",
-  "errorLocations": "Выбранный адрес не соответствует определению!"
+  "errorLocations": "Выбранный адрес не соответствует определению!",
+  "errorLocations2": "Dastlab olib ketish manzilini kiriting!"
 }

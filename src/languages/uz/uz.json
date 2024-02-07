@@ -62,6 +62,7 @@
   "button5": "Kirish",
   "button6": "Ro'yxatdan o'tish",
   "button7": "Orqaga",
+  "button8": "Qayta yuklash",
   "title1": "Tasdiqlash kodini kiriting",
   "title2": "Kodni qayta yuborish",
   "prfile": "Profilim",
@@ -90,6 +91,7 @@
   "alert8": "Haydovchi buyurtmani qabul qildi!",
   "alert9": "Buyurtmangiz yuklandi!",
   "alert10": "Buyurtma yakunlandi!",
+  "alert13": "Buyurtmangiz qaytda yuklandi!",
   "raidDriver": "Haydovchini baholang",
   "raidDriverText": "Baholandi!",
   "changeNumber": "Nomerni qayta kiritish",
@@ -132,5 +134,8 @@
   "net": "Internet kuchsiz!",
   "geoLocationError": "Iltimos, geolakatsiyangizni yoqing!",
   "comment": "Izoh...",
-  "errorLocations": "Tanlangan manzil ta'rifga mos emas!"
+  "errorLocations": "Tanlangan manzil ta'rifga mos emas!",
+  "errorLocations2": "Dastlab olib ketish manzilini kiriting!",
+  "reasonOrder": "Bekor qilish sababi",
+  "negotiable": "Kelishuv asosida"
 }

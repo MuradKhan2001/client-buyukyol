@@ -112,6 +112,20 @@ const App = () => {
                         dispatch(getOrders());
                     }
 
+                    if (data.message.status === "activated") {
+                        let idAlert = Date.now();
+                        let alert = {
+                            id: idAlert, text: t("alert13"), img: "./images/green.svg", color: "#EDFFFA"
+                        };
+                        dispatch(addAlert(alert));
+                        successAudio()
+                        setTimeout(() => {
+                            dispatch(delAlert(idAlert));
+                        }, 5000);
+                        dispatch(getOrders());
+                        dispatch(hideModal({show: false}))
+                    }
+
                     if (data.message.status === "canceled") {
                         let idAlert = Date.now();
                         let alert = {

@@ -4,7 +4,7 @@ import Loader from "../loader/Loader";
 import {useTranslation} from "react-i18next";
 import {useSelector, useDispatch} from "react-redux";
 import {showModals} from "../../redux/ModalContent";
-import {getOrders} from "../../redux/Orders";
+import axios from "axios";
 
 
 const History = () => {
@@ -30,10 +30,24 @@ const History = () => {
             name: t("cargoLabel4")
         }
     ]
-    const ordersList = useSelector((store) => store.Orders.data)
+    const [ordersList, setOrdersList] = useState([])
+    const [loader, setLoader] = useState(true)
 
     useEffect(() => {
-        dispatch(getOrders())
+        axios.get(`${baseUrl}api/my-orders/`, {
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("token")}`
+            }
+        }).then((response) => {
+            setOrdersList(response.data);
+            setLoader(false)
+        }).catch((error) => {
+            if (error.response.statusText == "Unauthorized") {
+                window.location.pathname = "/";
+                localStorage.removeItem("token");
+                localStorage.removeItem("userId");
+            }
+        });
     }, [])
 
     const showModalContent = (order) => {
@@ -42,7 +56,7 @@ const History = () => {
 
     return <div className="history-container">
         {
-            ordersList ? !ordersList.length > 0 ? <Loader/> :
+            ordersList ? loader ? <Loader/> :
                 <>
                     <div className="title-history">
                         {t("nav-history")}
@@ -69,6 +83,7 @@ const History = () => {
                             ordersList.map((item, index) => {
                                 if (activeTab === item.status)
                                     return <div key={index} className="order">
+
                                         <div className="top-side-order">
                                             <div className="date">
                                                 {item.ordered_time.slice(0, 10)}, &nbsp;
@@ -82,7 +97,6 @@ const History = () => {
                                                 {activeTab === "Rejected" && t("cargoLabel4")}
                                             </div>
                                         </div>
-
                                         <div className="cards">
                                             <div onClick={() => showModalContent(item)} className="bottom-side-order">
 
@@ -160,7 +174,7 @@ const History = () => {
                             })
                         }
                     </div>
-                </> :""
+                </> : ""
         }
 
     </div>

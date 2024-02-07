@@ -117,6 +117,13 @@ const Modal = () => {
         dispatch(hideModal({show: false}));
     };
 
+    const reloadOrder = (id) => {
+        let reloadList = {
+            command: 'activate_order', order_id: id
+        }
+        webSocked.send(JSON.stringify(reloadList));
+    }
+
     return (
         <CSSTransition
             in={modalContent.show || Raiddriver.length > 0}
@@ -202,14 +209,19 @@ const Modal = () => {
                             <div className="info">
                                 <div className="label-info"> {t("info10")}</div>
                                 <div className="value-info">
-                                    {modalContent.order.payment_type}
+                                    {modalContent.order.payment_type == "1" ? t("payment1") : ""}
+                                    {modalContent.order.payment_type == "2" ? t("payment2") : ""}
+                                    {modalContent.order.payment_type == "3" ? t("payment3") : ""}
                                 </div>
                             </div>
 
                             <div className="info">
                                 <div className="label-info"> {t("info8")}</div>
                                 <div className="value-info">
-                                    {modalContent.order.price} {modalContent.order.currency}
+                                    {modalContent.order.negotiable ? t("negotiable") :
+                                        <>
+                                            {modalContent.order.price} {modalContent.order.currency}
+                                        </>}
                                 </div>
                             </div>
 
@@ -224,8 +236,13 @@ const Modal = () => {
                             <div className="info">
                                 <div className="label-info"> {t("info4")}</div>
                                 <div className="value-info">
-                                    {" "}
-                                    {modalContent.order.capacity} {modalContent.order.unit}
+                                    {modalContent.order.capacity}
+                                    {modalContent.order.unit == "1" ? t("infoWaits1") : ""}
+                                    {modalContent.order.unit == "2" ? t("infoWaits2") : ""}
+                                    {modalContent.order.unit == "3" ? t("infoWaits3") : ""}
+                                    {modalContent.order.unit == "4" ? t("infoWaits4") : ""}
+                                    {modalContent.order.unit == "5" ? t("infoWaits5") : ""}
+                                    {modalContent.order.unit == "6" ? t("infoWaits6") : ""}
                                 </div>
                             </div>
 
@@ -324,16 +341,24 @@ const Modal = () => {
                             )}
 
                             {modalContent.order.rejected_reason ? (
-                                <div className="cancel-reason">
-                                    {modalContent.order.rejected_reason}
+                                <div className="info">
+                                    <div className="reason-title">{t("reasonOrder")}:</div>
+                                    <div className="value-info-reason">
+                                        {modalContent.order.rejected_reason}
+                                    </div>
                                 </div>
-                            ) : modalContent.order.status === "Delivered" ? (
-                                ""
-                            ) : (
+                            ) : ""}
+
+                            {modalContent.order.status === "Delivered" || modalContent.order.status === "Rejected" ? "" :
                                 <div onClick={showCancel} className="cancel-order">
                                     {t("button3")}
-                                </div>
-                            )}
+                                </div>}
+
+                            {modalContent.order.status === "Rejected" ?
+                                <div onClick={() => reloadOrder(modalContent.order.id)} className="reload-order">
+                                    {t("button8")}
+                                </div> : ""}
+
                         </div>
                     )}
 
