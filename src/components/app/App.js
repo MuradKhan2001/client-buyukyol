@@ -49,7 +49,13 @@ const App = () => {
             let idAlertError = Date.now();
 
             websocket.onclose = () => {
-                window.location.reload()
+                let alert = {
+                    id: idAlertError, text: t("net"), img: "./images/red.svg", color: "#FFEDF1"
+                };
+                dispatch(addAlert(alert));
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000)
             }
 
             websocket.onerror = (event) => {
@@ -59,7 +65,7 @@ const App = () => {
                 dispatch(addAlert(alert));
                 setTimeout(() => {
                     window.location.reload()
-                }, 1000)
+                }, 2000)
             };
 
             websocket.onopen = () => {
