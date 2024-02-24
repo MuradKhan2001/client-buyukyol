@@ -25,6 +25,7 @@ const MapBoxMobile = () => {
     const drivers = useSelector((store) => store.DriversList.data);
     const Activedrivers = useSelector((store) => store.ActiveDriversList.data);
 
+    
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
             const {latitude, longitude} = position.coords;
