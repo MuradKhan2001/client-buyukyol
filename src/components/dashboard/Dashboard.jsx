@@ -70,7 +70,7 @@ const Dashboard = () => {
             <div className="desktop-dashboard-container">
                 <div className="left-side">
                     <div className="logo-box">
-                        <img onClick={() => navigate("/")} className="desctop-logo" src="./images/logo.png" alt=""/>
+                        <img onClick={() => navigate("/")} className="desctop-logo" src="./images/logo-dashboard.png" alt=""/>
                         <img onClick={() => navigate("/")} className="mobile-logo" src="./images/logo-green.png"
                              alt=""/>
                         <div className="name">{t("text-main")}</div>
