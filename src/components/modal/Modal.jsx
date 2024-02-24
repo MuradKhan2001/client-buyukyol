@@ -11,6 +11,7 @@ import {webSockedContext} from "../app/App";
 import {getOrders} from "../../redux/Orders";
 import {addRaidDriver} from "../../redux/RaidDriver";
 import {delAlert, addAlert} from "../../redux/AlertsBox";
+import i18next from "i18next";
 
 const Modal = () => {
     const baseUrl = useSelector((store) => store.baseUrl.data);
@@ -257,18 +258,11 @@ const Modal = () => {
                                         ? modalContent.order.car_category.max_weight
                                         : ""}{" "}
                                     {t("infoWaits4")},
-                                    {modalContent.order.car_category.name === "Мини" &&
-                                        t("tariff1")}
-                                    {modalContent.order.car_category.name === "Енгил" &&
-                                        t("tariff2")}
-                                    {modalContent.order.car_category.name === "Ўрта" &&
-                                        t("tariff3")}
-                                    {modalContent.order.car_category.name === "Оғир" &&
-                                        t("tariff4")}
-                                    {modalContent.order.car_category.name === "Ўта оғир" &&
-                                        t("tariff5")}
-                                    {modalContent.order.car_category.name === "Авто Ташувчи" &&
-                                        t("tariff6")}
+
+                                    {i18next.language === "uz" ?  modalContent.order.car_category.name : ""}
+                                    {i18next.language === "ru" ?  modalContent.order.car_category.name_ru : ""}
+                                    {i18next.language === "en" ?  modalContent.order.car_category.name_en : ""}
+
                                 </div>
                             </div>
 

@@ -38,7 +38,7 @@ const MapBoxMobile = () => {
                 },
             })
             .then((response) => {
-                setUser(response);
+                setUser(response.data);
             })
             .catch((error) => {
                 if (error.response.statusText == "Unauthorized") {

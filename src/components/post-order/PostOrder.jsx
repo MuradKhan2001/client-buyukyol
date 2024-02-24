@@ -66,6 +66,7 @@ const PostOrder = () => {
     const [selected, setSelected] = useState(null);
     const [validateLocationFrom, setValidateLocationFrom] = useState(false);
     const [validateLocationTo, setValidateLocationTo] = useState(false);
+    const [validateСapacity, setValidateСapacity] = useState("");
 
     const validate = values => {
         const errors = {};
@@ -82,6 +83,10 @@ const PostOrder = () => {
             errors.capacity = t("validate2");
         } else if (isNaN(Number(values.capacity)) || Number(values.capacity) < 0) {
             errors.capacity = t("validate3");
+        } else if (validateСapacity*1000 < Number(values.capacity) && unit === "1"){
+            errors.capacity = t("validate12");
+        } else if (validateСapacity < Number(values.capacity) && unit === "4"){
+            errors.capacity = t("validate12");
         }
 
         if (!values.price && direction === "Abroad") {
@@ -760,7 +765,7 @@ const PostOrder = () => {
                         </div>
                     </div>}
 
-                    {modalShow.status === "currency" && <div className="form-orders">
+                    {modalShow.status === "currency" && <div className="form-orders-currency">
                         <div className="cancel-btn">
                             <img onClick={() => showModalForm("", false)} src="./images/x.png" alt=""/>
                         </div>
@@ -769,7 +774,7 @@ const PostOrder = () => {
                             {t("title3")}
                         </div>
 
-                        <div className="form-order-info">
+                        <div className="form-order-info-currency">
 
                             <label htmlFor="currency1">
                                 <input
@@ -787,6 +792,87 @@ const PostOrder = () => {
                                     id="currency2" type="radio"
                                     value="USD"/>
                                 <div>USD</div>
+                            </label>
+
+                            <label htmlFor="currency3">
+                                <input
+                                    name="currency"
+                                    onChange={(e) => setCurrency(e.target.value)}
+                                    id="currency3" type="radio"
+                                    value="RUB"/>
+                                <div>RUB</div>
+                            </label>
+
+                            <label htmlFor="currency4">
+                                <input
+                                    name="currency"
+                                    onChange={(e) => setCurrency(e.target.value)}
+                                    id="currency4" type="radio"
+                                    value="EUR"/>
+                                <div>EUR</div>
+                            </label>
+
+                            <label htmlFor="currency5">
+                                <input
+                                    name="currency"
+                                    onChange={(e) => setCurrency(e.target.value)}
+                                    id="currency5" type="radio"
+                                    value="KZT"/>
+                                <div>KZT</div>
+                            </label>
+
+                            <label htmlFor="currency6">
+                                <input
+                                    name="currency"
+                                    onChange={(e) => setCurrency(e.target.value)}
+                                    id="currency6" type="radio"
+                                    value="KGS"/>
+                                <div>KGS</div>
+                            </label>
+
+                            <label htmlFor="currency7">
+                                <input
+                                    name="currency"
+                                    onChange={(e) => setCurrency(e.target.value)}
+                                    id="currency7" type="radio"
+                                    value="TJS"/>
+                                <div>TJS</div>
+                            </label>
+
+                            <label htmlFor="currency8">
+                                <input
+                                    name="currency"
+                                    onChange={(e) => setCurrency(e.target.value)}
+                                    id="currency8" type="radio"
+                                    value="TRY"/>
+                                <div>TRY</div>
+                            </label>
+
+                            <label htmlFor="currency9">
+                                <input
+                                    name="currency"
+                                    onChange={(e) => setCurrency(e.target.value)}
+                                    id="currency9" type="radio"
+                                    value="AZN"/>
+                                <div>AZN</div>
+                            </label>
+
+                            <label htmlFor="currency10">
+                                <input
+                                    name="currency"
+                                    onChange={(e) => setCurrency(e.target.value)}
+                                    id="currency10" type="radio"
+                                    value="CNY"/>
+                                <div>CNY</div>
+                            </label>
+
+                            <label htmlFor="currency11">
+                                <input
+                                    name="currency"
+                                    onChange={(e) => setCurrency(e.target.value)}
+                                    id="currency11" type="radio"
+                                    value="IRR"/>
+                                <div>IRR</div>
                             </label>
 
                             <div onClick={() => {
@@ -887,12 +973,11 @@ const PostOrder = () => {
                                                 {item.min_weight} - {item.max_weight} {t("infoWaits4")},
                                             </> : ""}
 
-                                            {item.name === "Мини" && t("tariff1")}
-                                            {item.name === "Енгил" && t("tariff2")}
-                                            {item.name === "Ўрта" && t("tariff3")}
-                                            {item.name === "Оғир" && t("tariff4")}
-                                            {item.name === "Ўта оғир" && t("tariff5")}
-                                            {item.name === "Авто Ташувчи" && t("tariff6")}
+                                            {i18next.language === "uz" ?  item.name : ""}
+                                            {i18next.language === "ru" ?  item.name_ru : ""}
+                                             {i18next.language === "en" ?  item.name_en : ""}
+
+                                
                                         </div>
                                     }
                                 })}
@@ -1009,12 +1094,9 @@ const PostOrder = () => {
                 <div className="line"></div>
                 {categories.map((item, index) => {
                     if (item.id === category) return <div key={index} className="direction-item">
-                        {item.name === "Мини" && t("tariff1")}
-                        {item.name === "Енгил" && t("tariff2")}
-                        {item.name === "Ўрта" && t("tariff3")}
-                        {item.name === "Оғир" && t("tariff4")}
-                        {item.name === "Ўта оғир" && t("tariff5")}
-                        {item.name === "Авто Ташувчи" && t("tariff6")}
+                        {i18next.language === "uz" ?  item.name : ""}
+                        {i18next.language === "ru" ?  item.name_ru : ""}
+                        {i18next.language === "en" ?  item.name_en : ""}
                         {item.id !== 9 && <>
                             , &nbsp; {item.min_weight} - {item.max_weight} {t("infoWaits4")}
                         </>}
@@ -1086,6 +1168,7 @@ const PostOrder = () => {
                                 setTimeout(() => {
                                     ref.current?.scrollIntoView({behavior: 'smooth'});
                                 }, 500);
+                                setValidateСapacity(item.max_weight)
                             }} key={index}
                                         className={`tarif ${category === item.id ? "active-tarif" : ""}`}>
                                 <div className="photo">
@@ -1093,12 +1176,10 @@ const PostOrder = () => {
                                 </div>
                                 <div className="text">
                                     <div className="name">
-                                        {item.name === "Мини" && t("tariff1")}
-                                        {item.name === "Енгил" && t("tariff2")}
-                                        {item.name === "Ўрта" && t("tariff3")}
-                                        {item.name === "Оғир" && t("tariff4")}
-                                        {item.name === "Ўта оғир" && t("tariff5")}
-                                        {item.name === "Авто Ташувчи" && t("tariff6")}
+                                    {i18next.language === "uz" ?  item.name : ""}
+                                    {i18next.language === "ru" ?  item.name_ru : ""}
+                                    {i18next.language === "en" ?  item.name_en : ""}
+                                    
                                     </div>
                                     <div className="count">
                                         {item.id !== 9 && <>
@@ -1131,7 +1212,9 @@ const PostOrder = () => {
                                     <img src={`${baseUrl}${item.car_image}`} alt=""/>
                                 </div>
                                 <div className="name">
-                                    {item.name}
+                                    {i18next.language === "uz" ?  item.name : ""}
+                                    {i18next.language === "ru" ?  item.name_ru : ""}
+                                    {i18next.language === "en" ?  item.name_en : ""}
                                 </div>
                             </div>
                         })}
@@ -1167,7 +1250,7 @@ const PostOrder = () => {
                             {t("infoTruck4")}:
                         </div>
                         <div className="num">
-                            {infoTruck.name === "Мини" || infoTruck.name === "Авто" || infoTruck.name === "Мулти" ? <>{infoTruck.cargo_weight} {t("infoWaits2")}</> : <>{infoTruck.cargo_weight / 1000} {t("infoWaits4")}</>}
+                            {infoTruck.name === "Mini" || infoTruck.name === "Avto" || infoTruck.name === "Multi" ? <>{infoTruck.cargo_weight} {t("infoWaits2")}</> : <>{infoTruck.cargo_weight / 1000} {t("infoWaits4")}</>}
 
                         </div>
                     </div>

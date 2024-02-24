@@ -44,6 +44,7 @@ const DashboardMobile = () => {
 
             <div className={`menu-berger ${nav ? "show-menu" : ""}`}>
 
+                <div className="left-menu-box">
                 <div className="header-menu">
                     <div className="close-menu">
                         <img onClick={() => setNav(prevState => false)} src="./images/xx.png" alt=""/>
@@ -72,7 +73,6 @@ const DashboardMobile = () => {
                             <img src="./images/left.png" alt=""/>
                         </div>
                     </div>
-
 
                     <div onClick={() => {
                         navigate("/profile")
@@ -126,6 +126,12 @@ const DashboardMobile = () => {
                     </div>
 
                 </div>
+                </div>
+
+                <div onClick={() => setNav(prevState => false)} className="right-menu-box">
+                
+                </div>
+
             </div>
 
             {/*<div className="footer-side">*/}

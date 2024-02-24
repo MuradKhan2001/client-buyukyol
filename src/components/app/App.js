@@ -90,6 +90,7 @@ const App = () => {
             websocket.onmessage = (event) => {
 
                 const data = JSON.parse(event.data);
+                
                 if (!("status" in data.message)) {
                     dispatch(filterDriver(data.message));
                     dispatch(filterRaidDriver(data.message));
