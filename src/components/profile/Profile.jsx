@@ -47,7 +47,8 @@ const Profile = () => {
                 <img src="./images/user.png" alt="user"/>
             </div>
             <div className="text">
-                <div className="name">{user.first_name && user.first_name} {user.last_name && user.last_name}</div>
+                <div className="name">{user.first_name && user.first_name} {user.last_name && user.last_name} <img 
+                 onClick={()=> dispatch(showModals({show: true, status: "edit-user",user}))} src="./images/pencil.png" alt="" /></div>
                 <div className="phone">{user.phone && user.phone}</div>
             </div>
         </div>

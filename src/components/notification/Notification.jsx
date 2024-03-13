@@ -40,11 +40,14 @@ const Notification = () => {
                     </div>
                     <div className="date">{item.time.slice(0, 10)}</div>
                     <div className="news-title">
-                        {item.title}
+                        {i18next.language === "uz" && item.title}
+                        {i18next.language === "ru" && item.title_ru}
+                        {i18next.language === "en" && item.title_en}
                     </div>
                     <div className="news-des">
                         {i18next.language === "uz" && item.description}
                         {i18next.language === "ru" && item.description_ru}
+                        {i18next.language === "en" && item.description_en}
                     </div>
                 </div>
             })}

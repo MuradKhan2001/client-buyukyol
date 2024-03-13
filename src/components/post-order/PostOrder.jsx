@@ -80,9 +80,9 @@ const PostOrder = () => {
         if (!values.capacity) {
             errors.capacity = 'Required';
         } else if (values.capacity.length > 5) {
-            errors.capacity = t("validate2");
+            errors.capacity = "Required";
         } else if (isNaN(Number(values.capacity)) || Number(values.capacity) < 0) {
-            errors.capacity = t("validate3");
+            errors.capacity = "Required";
         } else if (validateСapacity*1000 < Number(values.capacity) && unit === "1"){
             errors.capacity = t("validate12");
         } else if (validateСapacity < Number(values.capacity) && unit === "4"){
@@ -94,18 +94,18 @@ const PostOrder = () => {
         } else if (isNaN(Number(values.price))) {
             errors.price = t("validate4");
         } else if (values.price.length >= 10) {
-            errors.price = t("validate5");
+            errors.price = "Required";
         } else if (Number(values.price) < 0) {
-            errors.price = t("validate6");
+            errors.price = "Required";
         }
 
         if (isNaN(Number(values.number_cars))) {
-            errors.number_cars = t("validate7");
+            errors.number_cars = "Required";
         } else if (Number(values.number_cars) > 20) {
             errors.number_cars = t("validate8");
         }
         if (Number(values.number_cars) < 0) {
-            errors.number_cars = t("validate9");
+            errors.number_cars = "Required";
         }
 
 
@@ -114,7 +114,7 @@ const PostOrder = () => {
         } else if (Number(values.price) <= Number(values.wait_cost) && direction === "Abroad") {
             errors.wait_cost = t("validate10");
         } else if (Number(values.wait_cost) < 0) {
-            errors.wait_cost = t("validate6");
+            errors.wait_cost = "Required";
         }
 
         if (isNaN(Number(values.avans))) {
@@ -122,7 +122,7 @@ const PostOrder = () => {
         } else if (Number(values.price) <= Number(values.avans) && direction === "Abroad") {
             errors.avans = t("validate11");
         } else if (Number(values.avans) < 0) {
-            errors.avans = t("validate6");
+            errors.avans = "Required";
         }
 
         return errors;
@@ -261,7 +261,8 @@ const PostOrder = () => {
                     setCountryCode(res.data.address.country_code)
                     setSearchLocationAddress(fullAddress)
                     setSelected(locMy)
-                    setLocationCode(res.data.address["ISO3166-2-lvl4"])
+                    let code = res.data.address["ISO3166-2-lvl4"]  == 'UZ-TO' ? "UZ-TK" : res.data.address["ISO3166-2-lvl4"]
+                    setLocationCode(code)
 
                     cargo.address_to = ''
                     setLocationToAddress('')
@@ -293,7 +294,8 @@ const PostOrder = () => {
                             }, 5000);
                         }
                     } else if (direction === "IN") {
-                        if (res.data.address["ISO3166-2-lvl4"] === locationCode) {
+                        let code = res.data.address["ISO3166-2-lvl4"]  == 'UZ-TO' ? "UZ-TK" : res.data.address["ISO3166-2-lvl4"]
+                        if (code === locationCode) {
                             setSearchLocationAddress(fullAddress)
                             setSelected(locMy)
                         } else {
@@ -356,6 +358,7 @@ const PostOrder = () => {
 
 
     const getAddressLocation = () => {
+
         if (locationFrom) {
             if (searchLocationAddress && selected) {
                 cargo.address_from = searchLocationAddress
@@ -413,8 +416,8 @@ const PostOrder = () => {
             }
             webSocked.send(JSON.stringify(distance));
         }
-    }
 
+    }
 
     const ClicklLocation = (e) => {
         let latitude = e.latLng.lat()
@@ -443,8 +446,9 @@ const PostOrder = () => {
                 setCountryCode(res.data.address.country_code)
                 setSearchLocationAddress(fullAddress)
                 setSelected(locMy)
-                setLocationCode(res.data.address["ISO3166-2-lvl4"])
-
+                let code = res.data.address["ISO3166-2-lvl4"]  == 'UZ-TO' ? "UZ-TK" : res.data.address["ISO3166-2-lvl4"]
+                setLocationCode(code)
+                
                 cargo.address_to = ''
                 setLocationToAddress('')
                 cargo.latitude_to = ''
@@ -469,7 +473,8 @@ const PostOrder = () => {
                         }, 5000);
                     }
                 } else if (direction === "IN") {
-                    if (res.data.address["ISO3166-2-lvl4"] === locationCode) {
+                    let code = res.data.address["ISO3166-2-lvl4"]  == 'UZ-TO' ? "UZ-TK" : res.data.address["ISO3166-2-lvl4"]
+                    if (code === locationCode) {
                         setSearchLocationAddress(fullAddress)
                         setSelected(locMy)
                     } else {
@@ -509,7 +514,6 @@ const PostOrder = () => {
         })
 
     }
-
 
     const {isLoaded} = useLoadScript({
         googleMapsApiKey: GOOGLE_MAPS_API_KEY, libraries: libraries, language: i18next.language
@@ -1351,7 +1355,7 @@ const PostOrder = () => {
                             {t("info7")}
                         </div>
                         <div className="count">
-                            {distance} km
+                            {distance} {t("km")}
                         </div>
                     </div>}
 

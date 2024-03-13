@@ -67,7 +67,6 @@ const Register = () => {
             phone,
             user_type: "Client"
         };
-
         axios.post(`${baseUrl}api/register/`, user).then((response) => {
 
             if (response.data.user) {

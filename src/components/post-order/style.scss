@@ -323,7 +323,6 @@ $color: #047766;
 
           .label-info {
             width: 40%;
-
             font-weight: 600;
             color: $color;
             text-transform: uppercase;
@@ -1785,11 +1784,18 @@ $color: #047766;
             justify-content: space-between;
             margin-top: 15px;
             font-size: 14px;
+           
+            .label-info {
+              text-transform: none!important;
+            }
           }
 
           .info {
             margin-top: 15px;
             font-size: 14px;
+            .label-info {
+              text-transform: none!important;
+            }
           }
 
           .buttons {

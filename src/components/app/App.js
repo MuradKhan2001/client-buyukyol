@@ -37,50 +37,84 @@ const App = () => {
         new Audio(error).play()
     }
 
+    // useEffect(() => {
+    //     if (!localStorage.getItem("token")) return () => {}
+
+    //     navigator.geolocation.getCurrentPosition((position) => {
+    //         const {latitude, longitude} = position.coords;
+    //         const location = `${latitude}/${longitude}`;
+    //         const websocket = new W3CWebSocket(`wss://api.buyukyol.uz/ws/orders/${location}/?token=${localStorage.getItem("token")}`);
+    //         setSockedContext(websocket);
+    //         let idAlertError = Date.now();
+
+    //         websocket.onclose = () => {
+    //             let alert = {
+    //                 id: idAlertError, text: t("net"), img: "./images/red.svg", color: "#FFEDF1"
+    //             };
+    //             dispatch(addAlert(alert));
+    //             setTimeout(() => {
+    //                 window.location.reload()
+    //             }, 2000)
+    //         }
+
+    //         websocket.onerror = (event) => {
+    //             let alert = {
+    //                 id: idAlertError, text: t("net"), img: "./images/red.svg", color: "#FFEDF1"
+    //             };
+    //             dispatch(addAlert(alert));
+    //             setTimeout(() => {
+    //                 window.location.reload()
+    //             }, 2000)
+    //         };
+
+    //         websocket.onopen = () => {
+    //             dispatch(delAlert(idAlertError));
+    //         }
+
+    //     }, (error) => {
+    //         let idAlertError = Date.now();
+    //         let alert = {
+    //             id: idAlertError, text: t("geoLocationError"), img: "./images/yellow.svg", color: "#FFFAEA"
+    //         };
+    //         dispatch(addAlert(alert));
+    //     });
+
+    // }, []);
+
     useEffect(() => {
-        if (!localStorage.getItem("token")) return () => {
-        }
+        if (!localStorage.getItem("token")) return () => {}
 
-        navigator.geolocation.getCurrentPosition((position) => {
-            const {latitude, longitude} = position.coords;
-            const location = `${latitude}/${longitude}`;
-            const websocket = new W3CWebSocket(`wss://api.buyukyol.uz/ws/orders/${location}/?token=${localStorage.getItem("token")}`);
-            setSockedContext(websocket);
-            let idAlertError = Date.now();
+        const websocket = new W3CWebSocket(`wss://api.buyukyol.uz/ws/orders/?token=${localStorage.getItem("token")}`);
 
-            websocket.onclose = () => {
-                let alert = {
-                    id: idAlertError, text: t("net"), img: "./images/red.svg", color: "#FFEDF1"
-                };
-                dispatch(addAlert(alert));
-                setTimeout(() => {
-                    window.location.reload()
-                }, 2000)
-            }
+        setSockedContext(websocket);
 
-            websocket.onerror = (event) => {
-                let alert = {
-                    id: idAlertError, text: t("net"), img: "./images/red.svg", color: "#FFEDF1"
-                };
-                dispatch(addAlert(alert));
-                setTimeout(() => {
-                    window.location.reload()
-                }, 2000)
-            };
+        let idAlertError = Date.now();
 
-            websocket.onopen = () => {
-                dispatch(delAlert(idAlertError));
-            }
-
-        }, (error) => {
-            let idAlertError = Date.now();
+        websocket.onclose = () => {
             let alert = {
-                id: idAlertError, text: t("geoLocationError"), img: "./images/yellow.svg", color: "#FFFAEA"
+                id: idAlertError, text: t("net"), img: "./images/red.svg", color: "#FFEDF1"
             };
             dispatch(addAlert(alert));
-        });
+            setTimeout(() => {
+                window.location.reload()
+            }, 2000)
+        }
 
+        websocket.onerror = (event) => {
+            let alert = {
+                id: idAlertError, text: t("net"), img: "./images/red.svg", color: "#FFEDF1"
+            };
+            dispatch(addAlert(alert));
+            setTimeout(() => {
+                window.location.reload()
+            }, 2000)
+        };
+
+        websocket.onopen = () => {
+            dispatch(delAlert(idAlertError));
+        }
     }, []);
+    
 
     useEffect(() => {
 

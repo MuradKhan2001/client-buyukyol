@@ -37,6 +37,11 @@ $color: #047766;
       .name {
         font-weight: bold;
         color: #002B48;
+        img{
+          margin-left: 10px;
+          cursor: pointer;
+          width: 20px;
+        }
       }
 
       .phone {

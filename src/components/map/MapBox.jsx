@@ -90,10 +90,7 @@ const MapBox = () => {
         <div className="map-box-desktop">
 
             <div className="header">
-                <div
-                    onClick={() => dispatch(showModals({show: true, status: "active-driver"}))}
-                    className="title"
-                >
+                <div className="title">
                     {t("nav-home")}
                 </div>
 

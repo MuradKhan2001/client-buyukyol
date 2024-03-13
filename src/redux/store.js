@@ -7,6 +7,7 @@ import DriversList from "./driversList";
 import Distance from "./distance";
 import Price from "./Price";
 import RaidDriver from "./RaidDriver";
+import User from "./User";
 import ActiveDriversList from "./ActiveDriversList";
 
 export const store = configureStore({
@@ -20,5 +21,6 @@ export const store = configureStore({
         Price,
         RaidDriver,
         ActiveDriversList,
+        User
     }
 })
