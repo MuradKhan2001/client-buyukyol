@@ -98,7 +98,7 @@
   "changeNumber":"Re-enter number",
   "changeNumber2":"Re-enter data",
   "download":"Upload",
-  "timeCargo2":"Order completed time",
+  "timeCargo2":"Order completed time:",
   "post-order":"Place an order",
   "news":"News",
   "share":"Share",
@@ -133,5 +133,8 @@
   "reasonOrder":"Reason for cancellation",
   "negotiable":"By agreement",
   "edit-user":"Edit",
-  "order-id":"Order id:"
+  "order-id":"Order id:",
+  "no-user":"This number is not registered!",
+  "oferta": "By registering, you agree to the platform's terms of use.",
+  "oferta-text":"Terms of use"
 }

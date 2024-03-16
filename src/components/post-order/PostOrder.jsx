@@ -84,9 +84,9 @@ const PostOrder = () => {
         } else if (isNaN(Number(values.capacity)) || Number(values.capacity) < 0) {
             errors.capacity = "Required";
         } else if (validateСapacity*1000 < Number(values.capacity) && unit === "1"){
-            errors.capacity = t("validate12");
+            errors.capacity = "Required";
         } else if (validateСapacity < Number(values.capacity) && unit === "4"){
-            errors.capacity = t("validate12");
+            errors.capacity = "Required";
         }
 
         if (!values.price && direction === "Abroad") {

@@ -92,7 +92,7 @@
   "changeNumber": "Raqamni qayta kiritish",
   "changeNumber2": "Ma'lumotlarni qayta kiritish",
   "download": "Yuklash",
-  "timeCargo2": "Buyurtma yakunlangan vaqt",
+  "timeCargo2": "Buyurtma yakunlangan vaqt:",
   "post-order": "Buyurtma berish",
   "news": "Yangiliklar",
   "share": "Ulashish",
@@ -127,5 +127,8 @@
   "reasonOrder": "Bekor qilish sababi",
   "negotiable": "Kelishuv asosida",
   "edit-user":"Tahrirlash",
-  "order-id":"Buyurtma raqami:"
+  "order-id":"Buyurtma raqami:",
+  "no-user":"Bu raqam ro'yxatdan o'tmagan!",
+  "oferta": "Ro'yxatdan o'tish orqali platformadan foydalanish shartlariga rozilik bildirgan bo'lasiz!",
+  "oferta-text":"Oferta shartlari"
 }
