@@ -232,11 +232,11 @@ const App = () => {
                     if (data.message.status === "location") {
                         dispatch(addActiveDriver(data.message.driver));
                     }
-
-                    if (data.message.status === "location_online") {
-                        dispatch(addOnlineDriver(data.message.driver[0]));
+                    
+                    if (data.message.status === "location_online" && data.message.driver.length > 0) {
+                        dispatch(addOnlineDriver(data.message.driver[0]));   
                     }
-                }
+                }   
 
                 if (data.message.status === false) {
                     if (data.message === "invalid token") {
