@@ -206,7 +206,7 @@ const Register = () => {
             />
           </div>
           <label htmlFor="c1-13">
-              {t("oferta")}
+              {t("oferta")} &nbsp;
             <a href="https://buyukyol.uz/agreement" target="_blank">
               {t("oferta-text")}
             </a>

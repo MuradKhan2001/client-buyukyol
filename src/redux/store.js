@@ -9,6 +9,7 @@ import Price from "./Price";
 import RaidDriver from "./RaidDriver";
 import User from "./User";
 import ActiveDriversList from "./ActiveDriversList";
+import OnlineDriversList from "./OnlineDrivers";
 
 export const store = configureStore({
     reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
         Price,
         RaidDriver,
         ActiveDriversList,
-        User
+        User,
+        OnlineDriversList
     }
 })

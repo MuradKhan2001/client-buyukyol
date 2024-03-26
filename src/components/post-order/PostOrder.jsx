@@ -685,14 +685,14 @@ const PostOrder = () => {
                                 <div>{t("infoWaits2")}</div>
                             </label>
 
-                            <label htmlFor="unit3">
+                            {/* <label htmlFor="unit3">
                                 <input
                                     name="unit"
                                     onChange={(e) => setUnit(e.target.value)}
                                     id="unit3" type="radio"
                                     value="3"/>
                                 <div>{t("infoWaits3")}</div>
-                            </label>
+                            </label> */}
 
                             <label htmlFor="unit4">
                                 <input
@@ -703,14 +703,14 @@ const PostOrder = () => {
                                 <div>{t("infoWaits4")}</div>
                             </label>
 
-                            <label htmlFor="unit5">
+                            {/* <label htmlFor="unit5">
                                 <input
                                     name="unit"
                                     onChange={(e) => setUnit(e.target.value)}
                                     id="unit5" type="radio"
                                     value="5"/>
                                 <div>{t("infoWaits5")}</div>
-                            </label>
+                            </label> */}
 
                             <label htmlFor="unit6">
                                 <input
@@ -924,7 +924,7 @@ const PostOrder = () => {
                         <div className="info">
                             <div className="label-info">  {t("info7")}</div>
                             <div className="value-info">
-                                {direction !== "Abroad" ? price.distance : distance} km
+                                {direction !== "Abroad" ? price.distance : distance} {t("km")}
                             </div>
                         </div>
 
@@ -942,6 +942,7 @@ const PostOrder = () => {
                             <div className="value-info">
                                 {negotiable ? t("negotiable") : <>
                                     {cargoInfo.price ? cargoInfo.price : price.price}
+                                    &nbsp;
                                     {cargo.currency}
                                 </>}
 
@@ -950,12 +951,14 @@ const PostOrder = () => {
 
                         <div className="info">
                             <div className="label-info"> {t("info3")}</div>
-                            <div className="value-info"> {cargoInfo.number_cars}</div>
+                            <div className="value-info"> {cargoInfo.number_cars} {t("infoWaits2")}</div>
                         </div>
 
                         <div className="info">
                             <div className="label-info"> {t("info4")}</div>
-                            <div className="value-info"> {cargoInfo.capacity}
+                            <div className="value-info"> 
+                                {cargoInfo.capacity}
+                                &nbsp;
                                 {cargo.unit == "1" ? t("infoWaits1") : ""}
                                 {cargo.unit == "2" ? t("infoWaits2") : ""}
                                 {cargo.unit == "3" ? t("infoWaits3") : ""}
@@ -972,10 +975,12 @@ const PostOrder = () => {
                                 {categories.map((item, index) => {
                                     if (item.id === cargo.car_category) {
                                         return <div key={index}>
+                                            
 
-                                            {item.name !== "Авто Ташувчи" ? <>
+                                            {item.name !== 9 ? <>
                                                 {item.min_weight} - {item.max_weight} {t("infoWaits4")},
                                             </> : ""}
+                                            &nbsp;
 
                                             {i18next.language === "uz" ?  item.name : ""}
                                             {i18next.language === "ru" ?  item.name_ru : ""}

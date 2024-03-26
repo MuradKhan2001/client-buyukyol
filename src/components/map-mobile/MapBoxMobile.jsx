@@ -24,6 +24,7 @@ const MapBoxMobile = () => {
     const activeOrders = useSelector((store) => store.Orders.activeOrders);
     const drivers = useSelector((store) => store.DriversList.data);
     const Activedrivers = useSelector((store) => store.ActiveDriversList.data);
+    const Onlinedrivers = useSelector((store) => store.OnlineDriversList.data);
 
     
     useEffect(() => {
@@ -80,8 +81,12 @@ const MapBoxMobile = () => {
         }));
     };
 
-    const truckIcon = {
-        url: "./images/location-pin-truck.png", scaledSize: {width: 60, height: 60},
+    const truckIconOnline = {
+        url: "./images/truck4.png", scaledSize: {width: 50, height: 45},
+    };
+
+    const truckIconActive = {
+        url: "./images/truck3.png", scaledSize: {width: 70, height: 65},
     };
 
     if (!isLoaded) return <Loader/>;
@@ -123,17 +128,30 @@ const MapBoxMobile = () => {
             </div>
             
             {Activedrivers.length >= 0 ? (<>
-                {Activedrivers.map((item) => {
-                    return (<Marker
-                        key={item.driver}
-                        icon={truckIcon}
-                        position={{
-                            lat: Number(item.latitude), lng: Number(item.longitude),
-                        }}
-                        onClick={() => dispatch(showModals({show: true, status: "active-driver", item}))}
-                    />);
-                })}
-            </>) : ("")}
+                    {Activedrivers.map((item) => {
+                        return (<Marker
+                            key={item.driver}
+                            icon={truckIconActive}
+                            position={{
+                                lat: Number(item.latitude), lng: Number(item.longitude),
+                            }}
+                            onClick={() => dispatch(showModals({show: true, status: "active-driver", item}))}
+                        />);
+                    })}
+                </>) : ("")}
+
+            {Onlinedrivers.length >= 0 ? (<>
+                    {Onlinedrivers.map((item) => {
+                        console.log(item[0])
+                        return (<Marker
+                            key={item.driver}
+                            icon={truckIconOnline}
+                            position={{
+                                lat: Number(item.latitude), lng: Number(item.longitude),
+                            }}
+                        />);
+                    })}
+                </>) : ("")}
 
             <div className="bottom-btn">
                 <div onClick={postOrder} className="post-order">

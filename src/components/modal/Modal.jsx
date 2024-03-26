@@ -256,7 +256,7 @@ const Modal = () => {
                 <div className="label-info"> {t("info7")}</div>
                 <div className="value-info">
                   {" "}
-                  {modalContent.order.distance} km
+                  {modalContent.order.distance} {t("km")}
                 </div>
               </div>
 
@@ -286,7 +286,7 @@ const Modal = () => {
                 <div className="label-info"> {t("info3")}</div>
                 <div className="value-info">
                   {" "}
-                  {modalContent.order.number_cars}
+                  {modalContent.order.number_cars}   {t("infoWaits2")}
                 </div>
               </div>
 
@@ -294,6 +294,7 @@ const Modal = () => {
                 <div className="label-info"> {t("info4")}</div>
                 <div className="value-info">
                   {modalContent.order.capacity}
+                  &nbsp;
                   {modalContent.order.unit == "1" ? t("infoWaits1") : ""}
                   {modalContent.order.unit == "2" ? t("infoWaits2") : ""}
                   {modalContent.order.unit == "3" ? t("infoWaits3") : ""}
@@ -306,14 +307,20 @@ const Modal = () => {
               <div className="info">
                 <div className="label-info">{t("info5")}</div>
                 <div className="value-info">
-                  {modalContent.order.car_category.min_weight
-                    ? modalContent.order.car_category.min_weight
-                    : ""}
-                  -
-                  {modalContent.order.car_category.max_weight
-                    ? modalContent.order.car_category.max_weight
-                    : ""}{" "}
-                  {t("infoWaits4")},
+
+                  {modalContent.order.car_category.name !== "Avto tashuvchi" && 
+                   <>
+                    {modalContent.order.car_category.min_weight
+                     ? modalContent.order.car_category.min_weight
+                     : ""}
+                   -
+                    {modalContent.order.car_category.max_weight
+                     ? modalContent.order.car_category.max_weight
+                     : ""}{" "}
+
+                    {t("infoWaits4")}, &nbsp;
+                   </>}
+
                   {i18next.language === "uz"
                     ? modalContent.order.car_category.name
                     : ""}

@@ -12,6 +12,7 @@ import {getPrice} from "../../redux/Price";
 import {getOrders} from "../../redux/Orders";
 import {hideModal} from "../../redux/ModalContent";
 import {addActiveDriver, updateActiveDriver} from "../../redux/ActiveDriversList";
+import {addOnlineDriver, updateOnlineDriver} from "../../redux/OnlineDrivers";
 import {useTranslation} from "react-i18next";
 import success from "./sound/success.mp3"
 import error from "./sound/error.mp3"
@@ -230,6 +231,10 @@ const App = () => {
 
                     if (data.message.status === "location") {
                         dispatch(addActiveDriver(data.message.driver));
+                    }
+
+                    if (data.message.status === "location_online") {
+                        dispatch(addOnlineDriver(data.message.driver[0]));
                     }
                 }
 
