@@ -12,7 +12,7 @@ import {getPrice} from "../../redux/Price";
 import {getOrders} from "../../redux/Orders";
 import {hideModal} from "../../redux/ModalContent";
 import {addActiveDriver, updateActiveDriver} from "../../redux/ActiveDriversList";
-import {addOnlineDriver, updateOnlineDriver} from "../../redux/OnlineDrivers";
+import {addOnlineDriver, cleaarOnlineDriver} from "../../redux/OnlineDrivers";
 import {useTranslation} from "react-i18next";
 import success from "./sound/success.mp3"
 import error from "./sound/error.mp3"
@@ -171,10 +171,10 @@ const App = () => {
                     if (data.message.status === "canceled") {
                         let idAlert = Date.now();
                         let alert = {
-                            id: idAlert, text: t("alert2"), img: "./images/red.svg", color: "#FFEDF1"
+                            id: idAlert, text: t("alert2"), img: "./images/green.svg", color: "#EDFFFA"
                         };
                         dispatch(addAlert(alert));
-                        errorAudio()
+                        successAudio()
                         setTimeout(() => {
                             dispatch(delAlert(idAlert));
                         }, 5000);
@@ -231,6 +231,7 @@ const App = () => {
 
                     if (data.message.status === "location") {
                         dispatch(addActiveDriver(data.message.driver));
+                        dispatch(cleaarOnlineDriver());
                     }
                     
                     if (data.message.status === "location_online" && data.message.driver.length > 0) {

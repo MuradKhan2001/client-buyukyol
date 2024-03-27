@@ -120,7 +120,7 @@ const History = () => {
 
                                             {
                                                 item.status === "Delivering" ?
-                                                    <a href={`tel:${item.phone}`} className="bottom-side-driver">
+                                                    <a href={`tel:${item.driver.phone}`} className="bottom-side-driver">
                                                     
                                                         <div className="photo">
                                                             <img src={baseUrl + item.driver.image} alt=""/>
@@ -152,7 +152,6 @@ const History = () => {
                                                     </a> : ""
                                             }
                                         </div>
-
                                     </div>
                             })
                         }

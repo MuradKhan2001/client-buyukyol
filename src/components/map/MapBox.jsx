@@ -194,7 +194,7 @@ const MapBox = () => {
             ""
           )} */}
 
-          {Onlinedrivers.length >= 0 ? (
+          {Onlinedrivers.length > 0 ? (
             <>
               <MarkerClusterer gridSize={60}>
                 {(clusterer) =>
@@ -216,7 +216,7 @@ const MapBox = () => {
             ""
           )}
 
-          {Activedrivers.length >= 0 ? (
+          {Activedrivers.length > 0 ? (
             <>
               <MarkerClusterer gridSize={60}>
                 {(clusterer) =>
@@ -246,8 +246,6 @@ const MapBox = () => {
           ) : (
             ""
           )}
-
-          
         </GoogleMap>
       </div>
 

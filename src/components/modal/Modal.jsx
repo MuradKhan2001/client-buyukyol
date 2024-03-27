@@ -12,6 +12,7 @@ import { getOrders } from "../../redux/Orders";
 import { addRaidDriver } from "../../redux/RaidDriver";
 import { delAlert, addAlert } from "../../redux/AlertsBox";
 import i18next from "i18next";
+import error from "./sound/error.mp3"
 
 const Modal = () => {
   const baseUrl = useSelector((store) => store.baseUrl.data);
@@ -33,6 +34,11 @@ const Modal = () => {
   const [user, setUser] = useState();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const ordersList = useSelector((store) => store.Orders.data);
+
+  function errorAudio() {
+    new Audio(error).play()
+}
 
   const logOut = () => {
     localStorage.removeItem("token");
@@ -47,13 +53,32 @@ const Modal = () => {
     } else dispatch(showModals({ show: true, status: "cancel-order" }));
   };
   const delOrder = () => {
-    let order = {
-      command: "cancel_order",
-      id: cargoId,
-      reason,
-      many,
-    };
-    webSocked.send(JSON.stringify(order));
+
+    if (reason) {
+      let order = {
+        command: "cancel_order",
+        id: cargoId,
+        reason,
+        many,
+      };
+      webSocked.send(JSON.stringify(order));
+      setReason("")
+      setAdd_Reason("")
+    } else {
+      let idAlert = Date.now();
+      let alert = {
+        id: idAlert,
+        text: t("reasonAlert"),
+        img: "./images/red.svg",
+        color: "#FFEDF1",
+      };
+      dispatch(addAlert(alert));
+      errorAudio();
+      setTimeout(() => {
+        dispatch(delAlert(idAlert));
+      }, 5000);
+    }
+
   };
 
   useEffect(() => {
@@ -154,12 +179,14 @@ const Modal = () => {
         last_name: lastName,
       };
 
-      axios.patch(`${baseUrl}api/client/1/`, user, {
+      axios
+        .patch(`${baseUrl}api/client/1/`, user, {
           headers: {
             Authorization: `Token ${localStorage.getItem("token")}`,
           },
-        }).then((response) => {
-          window.location.reload()
+        })
+        .then((response) => {
+          window.location.reload();
           dispatch(hideModal({ show: false }));
         });
     } else {
@@ -286,7 +313,7 @@ const Modal = () => {
                 <div className="label-info"> {t("info3")}</div>
                 <div className="value-info">
                   {" "}
-                  {modalContent.order.number_cars}   {t("infoWaits2")}
+                  {modalContent.order.number_cars} {t("infoWaits2")}
                 </div>
               </div>
 
@@ -307,19 +334,19 @@ const Modal = () => {
               <div className="info">
                 <div className="label-info">{t("info5")}</div>
                 <div className="value-info">
-
-                  {modalContent.order.car_category.name !== "Avto tashuvchi" && 
-                   <>
-                    {modalContent.order.car_category.min_weight
-                     ? modalContent.order.car_category.min_weight
-                     : ""}
-                   -
-                    {modalContent.order.car_category.max_weight
-                     ? modalContent.order.car_category.max_weight
-                     : ""}{" "}
-
-                    {t("infoWaits4")}, &nbsp;
-                   </>}
+                  {modalContent.order.car_category.name !==
+                    "Avto tashuvchi" && (
+                    <>
+                      {modalContent.order.car_category.min_weight
+                        ? modalContent.order.car_category.min_weight
+                        : ""}
+                      -
+                      {modalContent.order.car_category.max_weight
+                        ? modalContent.order.car_category.max_weight
+                        : ""}{" "}
+                      {t("infoWaits4")}, &nbsp;
+                    </>
+                  )}
 
                   {i18next.language === "uz"
                     ? modalContent.order.car_category.name
@@ -337,7 +364,9 @@ const Modal = () => {
                 <div className="label-info"> {t("info6")}</div>
                 <div className="value-info">
                   {" "}
-                  {modalContent.order.car_body_type.name}
+                  {i18next.language === "uz" && modalContent.order.car_body_type.name}
+                  {i18next.language === "ru" && modalContent.order.car_body_type.name_ru}
+                  {i18next.language === "en" && modalContent.order.car_body_type.name_en}
                 </div>
               </div>
 
@@ -405,7 +434,15 @@ const Modal = () => {
                 <div className="info">
                   <div className="reason-title">{t("reasonOrder")}:</div>
                   <div className="value-info-reason">
-                    {modalContent.order.rejected_reason}
+                    {modalContent.order.rejected_reason === "Fikrim o'zgardi"
+                      ? t("reason1")
+                      : modalContent.order.rejected_reason ===
+                        "Xato ma'lumot kiritibman"
+                      ? t("reason2")
+                      : modalContent.order.rejected_reason ===
+                        "Haydovchi bekor qilishni so'radi"
+                      ? t("reason3")
+                      : modalContent.order.rejected_reason}
                   </div>
                 </div>
               ) : (
@@ -455,7 +492,7 @@ const Modal = () => {
                     id="reason1"
                     type="radio"
                     name="money"
-                    value={t("reason1")}
+                    value="Fikrim o'zgardi"
                   />
                   <label htmlFor="reason1">{t("reason1")}</label>
                 </div>
@@ -468,7 +505,7 @@ const Modal = () => {
                     id="reason2"
                     type="radio"
                     name="money"
-                    value={t("reason2")}
+                    value="Xato ma'lumot kiritibman"
                   />
                   <label htmlFor="reason2">{t("reason2")}</label>
                 </div>
@@ -481,7 +518,7 @@ const Modal = () => {
                     id="reason3"
                     type="radio"
                     name="money"
-                    value={t("reason3")}
+                    value="Haydovchi bekor qilishni so'radi"
                   />
                   <label htmlFor="reason3">{t("reason3")}</label>
                 </div>
@@ -572,7 +609,7 @@ const Modal = () => {
 
               <div className="title">{t("driver")}</div>
 
-              <div className="drivers-info">
+              {/* <div className="drivers-info">
                 {drivers.map((item, index) => {
                   return (
                     <a
@@ -611,6 +648,101 @@ const Modal = () => {
                       </div>
                     </a>
                   );
+                })}
+              </div> */}
+
+              <div className="drivers-info">
+                {ordersList.map((item, index) => {
+                  if (item.status === "Delivering") {
+                    return (
+                      <div key={index} className="order">
+                        <div className="top-side-order">
+                          <div className="date">
+                            {item.ordered_time.slice(0, 10)}, &nbsp;
+                            {item.ordered_time.slice(11, 16)}
+                          </div>
+                        </div>
+
+                        <div className="cards">
+                          <div
+                            onClick={() => showModalContent(item)}
+                            className="bottom-side-order"
+                          >
+                            <div className="photo">
+                              <img
+                                src={`${baseUrl}${item.car_category.image}`}
+                                alt=""
+                              />
+                            </div>
+
+                            <div className="content">
+                              <div className="title">
+                                {item.order_title
+                                  ? item.order_title
+                                  : item.type === "OUT"
+                                  ? t("direction2")
+                                  : item.type === "IN"
+                                  ? t("direction3")
+                                  : t("direction1")}
+                              </div>
+                              <div className="text">
+                                <img src="./images/location.png" alt="" />
+                                <div className="info">
+                                  <div className="label">{t("info7")}</div>
+                                  <div className="content">
+                                    {item.distance} km
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text">
+                                <img src="./images/price.png" alt="" />
+                                <div className="info">
+                                  <div className="label">{t("info14")}</div>
+                                  <div className="content">
+                                    {item.price} {item.currency}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="line"></div>
+
+                          <a
+                            href={`tel:${+item.driver.phone}`}
+                            className="bottom-side-driver"
+                          >
+                            <div className="photo">
+                              <img src={baseUrl + item.driver.image} alt="" />
+                            </div>
+
+                            <div className="content">
+                              <div className="title">{item.driver.name}</div>
+                              <div className="text">
+                                <img src="./images/truck2.png" alt="" />
+                                <div className="info">
+                                  <div className="label">
+                                    {item.driver.car_name}
+                                  </div>
+                                  <div className="content">
+                                    {item.driver.car_number}
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text">
+                                <img src="./images/phone.png" alt="" />
+                                <div className="info">
+                                  <div className="label">
+                                    {item.driver.phone}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    );
+                  }
                 })}
               </div>
             </div>

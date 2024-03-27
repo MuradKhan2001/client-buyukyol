@@ -140,7 +140,7 @@ const MapBoxMobile = () => {
           </div>
         </div>
 
-        {Onlinedrivers.length >= 0 ? (
+        {Onlinedrivers.length > 0 ? (
           <>
             <MarkerClusterer gridSize={60}>
               {(clusterer) =>
@@ -162,7 +162,7 @@ const MapBoxMobile = () => {
           ""
         )}
 
-        {Activedrivers.length >= 0 ? (
+        {Activedrivers.length > 0 ? (
           <>
             <MarkerClusterer gridSize={60}>
               {(clusterer) =>
