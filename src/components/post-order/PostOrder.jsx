@@ -48,6 +48,7 @@ const PostOrder = () => {
   const [cargoInfo, setCargoInfo] = useState({});
   const [unit, setUnit] = useState("1");
   const [payment_type, setPayment_type] = useState("1");
+  const [temprature, setTemprature] = useState("");
   const [currency, setCurrency] = useState("UZS");
   const [wait_type, setWait_type] = useState(t("waitCount1"));
 
@@ -67,6 +68,9 @@ const PostOrder = () => {
   const [validateLocationFrom, setValidateLocationFrom] = useState(false);
   const [validateLocationTo, setValidateLocationTo] = useState(false);
   const [validateСapacity, setValidateСapacity] = useState("");
+  const [carName, setCarName] = useState("");
+  const [tempratureValidate, setTempratureValidate] = useState(false);
+  
 
   const validate = (values) => {
     const errors = {};
@@ -150,6 +154,7 @@ const PostOrder = () => {
     latitude_to: "",
     longitude_to: "",
     payment_type: "1",
+    temprature: "",
     unit: "1",
     currency: "UZS",
     wait_type: t("waitCount1"),
@@ -169,20 +174,45 @@ const PostOrder = () => {
     validate,
     onSubmit: (values) => {
       if (locationFromAddress && locationToAddress) {
-        if (
-          values.start_time === "2024-01-01T00:00" ||
-          values.load_time === "2024-01-01T00:00"
-        ) {
-          values.start_time = "";
-          values.load_time = "";
-          setCargoInfo((prevState) => (prevState = values));
-        } else setCargoInfo((prevState) => (prevState = values));
-
-        showModalForm("order", true);
-
-        if (direction !== "Abroad") {
-          SendOrder("new_order");
+        
+        if(carName === "Refrigerator"){
+         
+            if (temprature){
+              if (
+                values.start_time === "2024-01-01T00:00" ||
+                values.load_time === "2024-01-01T00:00"
+              ) {
+                values.start_time = "";
+                values.load_time = "";
+                setCargoInfo((prevState) => (prevState = values));
+              } else setCargoInfo((prevState) => (prevState = values));
+      
+              showModalForm("order", true);
+      
+              if (direction !== "Abroad") {
+                SendOrder("new_order");
+              }
+            }else{
+              setTempratureValidate(true)
+            } 
+        } else{
+          
+          if (
+            values.start_time === "2024-01-01T00:00" ||
+            values.load_time === "2024-01-01T00:00"
+          ) {
+            values.start_time = "";
+            values.load_time = "";
+            setCargoInfo((prevState) => (prevState = values));
+          } else setCargoInfo((prevState) => (prevState = values));
+  
+          showModalForm("order", true);
+  
+          if (direction !== "Abroad") {
+            SendOrder("new_order");
+          }
         }
+
       } else if (locationFromAddress === "" && locationToAddress === "") {
         setValidateLocationFrom(true);
         setValidateLocationTo(true);
@@ -215,7 +245,8 @@ const PostOrder = () => {
     axios
       .get(`${baseUrl}api/car-category/${categoryId}`, {})
       .then((response) => {
-        setTrucks(response.data);
+        let re = response.data.reverse()
+        setTrucks(re);
       });
   };
 
@@ -626,7 +657,6 @@ const PostOrder = () => {
       cargo.distance = distance;
       SendOrder("new_order");
     }
-
     showModalForm("", false);
     formik.resetForm();
     setLocationFromAddress("");
@@ -637,6 +667,9 @@ const PostOrder = () => {
     setCategory("");
     setNextPage(false);
     setInfoTruck("");
+    setTempratureValidate("")
+    setTemprature("")
+
     let resetCargo = {
       command: "new_order",
       client: Number(localStorage.getItem("userId")),
@@ -652,6 +685,7 @@ const PostOrder = () => {
       latitude_to: "",
       longitude_to: "",
       payment_type: t("payment1"),
+      temprature: "",
       unit: t("infoWaits1"),
       currency: "UZS",
       wait_type: t("waitCount1"),
@@ -683,6 +717,101 @@ const PostOrder = () => {
         >
           {modalShow.status !== "getLocation" && (
             <div ref={nodeRef} className="modal-card">
+              {modalShow.status === "gradus-cars" && (
+                <div className="form-orders-temprature">
+                  <div className="cancel-btn">
+                    <img
+                      onClick={() => showModalForm("", false)}
+                      src="./images/x.png"
+                      alt=""
+                    />
+                  </div>
+
+                  <div className="title">{t("temprature")}</div>
+
+                  <div className="form-order-info">
+                    <label htmlFor="temprature_one">
+                      <input
+                        name="temprature"
+                        onChange={(e) => setTemprature(e.target.value)}
+                        id="temprature_one"
+                        type="radio"
+                        value="1"
+                      />
+                      <div>{t("temrature1")}</div>
+                    </label>
+
+                    <label htmlFor="temprature_two">
+                      <input
+                        name="temprature"
+                        onChange={(e) => setTemprature(e.target.value)}
+                        id="temprature_two"
+                        type="radio"
+                        value="2"
+                      />
+                      <div>{t("temrature2")}</div>
+                    </label>
+
+                    <label htmlFor="temprature_three">
+                      <input
+                        name="temprature"
+                        onChange={(e) => setTemprature(e.target.value)}
+                        id="temprature_three"
+                        type="radio"
+                        value="3"
+                      />
+                      <div>{t("temrature3")}</div>
+                    </label>
+
+                    <label htmlFor="temprature_four">
+                      <input
+                        name="temprature"
+                        onChange={(e) => setTemprature(e.target.value)}
+                        id="temprature_four"
+                        type="radio"
+                        value="4"
+                      />
+                      <div>{t("temrature4")}</div>
+                    </label>
+
+                    <label htmlFor="temprature_five">
+                      <input
+                        name="temprature"
+                        onChange={(e) => setTemprature(e.target.value)}
+                        id="temprature_five"
+                        type="radio"
+                        value="5"
+                      />
+                      <div>{t("temrature5")}</div>
+                    </label>
+
+                    <label htmlFor="temprature_six">
+                      <input
+                        name="temprature"
+                        onChange={(e) => setTemprature(e.target.value)}
+                        id="temprature_six"
+                        type="radio"
+                        value="6"
+                      />
+                      <div>{t("temrature6")}</div>
+                    </label>
+
+                    <div
+                      onClick={() => {
+                        if(temprature){
+                          cargo.temprature = temprature;
+                          setTempratureValidate(false)
+                          showModalForm("", false);
+                        }
+                      }}
+                      className="success-btn"
+                    >
+                      {t("button2")}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {modalShow.status === "payment-type" && (
                 <div className="form-orders">
                   <div className="cancel-btn">
@@ -731,8 +860,10 @@ const PostOrder = () => {
 
                     <div
                       onClick={() => {
-                        showModalForm("", false);
-                        cargo.payment_type = payment_type;
+                        if(payment_type){
+                          showModalForm("", false);
+                          cargo.payment_type = payment_type;
+                        }
                       }}
                       className="success-btn"
                     >
@@ -1148,18 +1279,38 @@ const PostOrder = () => {
                         if (item.id === cargo.car_body_type) {
                           return (
                             <div key={index}>
-                              {i18next.language === "uz" &&
-                                item.name}
-                              {i18next.language === "ru" &&
-                                item.name_ru}
-                              {i18next.language === "en" &&
-                                item.name_en}
+                              {i18next.language === "uz" && item.name}
+                              {i18next.language === "ru" && item.name_ru}
+                              {i18next.language === "en" && item.name_en}
                             </div>
                           );
                         }
                       })}
                     </div>
                   </div>
+
+                  {
+                    cargo.temprature ? <div className="info">
+                    <div className="label-info"> {t("temprature-name")}</div>
+                    <div className="value-info">
+                      {trucks.map((item, index) => {
+                        if (item.id === cargo.car_body_type) {
+                          return (
+                            <div key={index}>
+                              {cargo.temprature === "1" && t("temrature1")}
+                              {cargo.temprature === "2" && t("temrature2")}
+                              {cargo.temprature === "3" && t("temrature3")}
+                              {cargo.temprature === "4" && t("temrature4")}
+                              {cargo.temprature === "5" && t("temrature5")}
+                              {cargo.temprature === "6" && t("temrature6")}
+                            </div>
+                          );
+                        }
+                      })}
+                    </div>
+                  </div> :""
+                  }
+
 
                   {cargoInfo.avans ? (
                     <div className="info">
@@ -1308,7 +1459,11 @@ const PostOrder = () => {
             return (
               <div key={index}>
                 <div className="line"></div>
-                <div className="direction-item">{item.name}</div>
+                <div className="direction-item">
+                  {i18next.language === "uz" && item.name}
+                  {i18next.language === "ru" && item.name_ru}
+                  {i18next.language === "en" && item.name_en}
+                </div>
               </div>
             );
           }
@@ -1411,12 +1566,13 @@ const PostOrder = () => {
               </div>
               <div className="trucks">
                 <div className="content">
-                  {trucks.map((item, index) => {
+                  {trucks.reverse().map((item, index) => {
                     return (
                       <div
                         onClick={() => {
                           setInfoTruck((prevState) => (prevState = item));
                           cargo.car_body_type = item.id;
+                          setCarName(item.name_en);
                           setTimeout(() => {
                             ref2.current?.scrollIntoView({
                               behavior: "smooth",
@@ -1448,28 +1604,28 @@ const PostOrder = () => {
             <>
               <div ref={ref2} className="truck-information">
                 <div className="text">
-                  <div className="name">{t("infoTruck1")}:</div>
+                  <div className="name">{t("infoTruck1")}</div>
                   <div className="num">
-                    {infoTruck.widht / 100} {t("infoWaits6")}
+                    {infoTruck.widht} {t("infoWaits6")}
                   </div>
                 </div>
 
                 <div className="text">
-                  <div className="name">{t("infoTruck2")}:</div>
+                  <div className="name">{t("infoTruck2")}</div>
                   <div className="num">
-                    {infoTruck.breadth / 100} {t("infoWaits6")}
+                    {infoTruck.breadth} {t("infoWaits6")}
                   </div>
                 </div>
 
                 <div className="text">
-                  <div className="name">{t("infoTruck3")}:</div>
+                  <div className="name">{t("infoTruck3")}</div>
                   <div className="num">
-                    {infoTruck.height / 100} {t("infoWaits6")}
+                    {infoTruck.height} {t("infoWaits6")}
                   </div>
                 </div>
 
                 <div className="text">
-                  <div className="name">{t("infoTruck4")}:</div>
+                  <div className="name">{t("infoTruck4")}</div>
                   <div className="num">
                     {infoTruck.name === "Mini" ||
                     infoTruck.name === "Avto" ||
@@ -1479,7 +1635,19 @@ const PostOrder = () => {
                       </>
                     ) : (
                       <>
-                        {infoTruck.cargo_weight / 1000} {t("infoWaits4")}
+                        {categories.map((item, index) => {
+                          if (item.id === category)
+                            return (
+                              <div key={index} className="direction-item">
+                                {item.id !== 9 && (
+                                  <>
+                                    {item.min_weight} -{" "}
+                                    {item.max_weight} {t("infoWaits4")}
+                                  </>
+                                )}
+                              </div>
+                            );
+                        })}
                       </>
                     )}
                   </div>
@@ -1635,6 +1803,33 @@ const PostOrder = () => {
                   </div>
                 </div>
               </div>
+
+              {carName === "Refrigerator" && (
+                <div
+                  onClick={() => showModalForm("gradus-cars", true)}
+                  className="form-box-radio"
+                >
+                  <label htmlFor="cargo">{t("temprature")}</label>
+                  <div  className={`input-box ${
+                    tempratureValidate ? "input-box-required" : ""
+                  }`}>
+                    <div className="icon">
+                      <img src="./images/add-truck.png" alt="cargo" />
+                    </div>
+                    <div className="locitions">
+                      {temprature == "1" ? t("temrature1") : ""}
+                      {temprature == "2" ? t("temrature2") : ""}
+                      {temprature == "3" ? t("temrature3") : ""}
+                      {temprature == "4" ? t("temrature4") : ""}
+                      {temprature == "5" ? t("temrature5") : ""}
+                      {temprature == "6" ? t("temrature6") : ""}
+                    </div>
+                    <div className="icon">
+                      <img src="./images/down.png" alt="cargo" />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="right-forms">
@@ -2006,6 +2201,9 @@ const PostOrder = () => {
                 setLocationToAddress("");
                 setLocationFromAddress("");
                 setSelected(null);
+                setTemprature("")
+                formik.resetForm();
+                cargo.temprature=""
               }}
               className="cancel-btn"
             >

@@ -12,6 +12,7 @@ const DashboardMobile = () => {
     const [nav, setNav] = useState(false)
     const {t} = useTranslation();
     const baseUrl = useSelector((store) => store.baseUrl.data)
+    const [user,setUser] = useState("")
 
     useEffect(() => {
         axios.get(`${baseUrl}api/client/`, {
@@ -19,6 +20,7 @@ const DashboardMobile = () => {
                 Authorization: `Token ${localStorage.getItem("token")}`,
             },
         }).then((response) => {
+            setUser(response.data)
         }).catch((error) => {
             if (error.response.statusText == "Unauthorized") {
                 window.location.pathname = "/";
@@ -49,8 +51,17 @@ const DashboardMobile = () => {
                     <div className="close-menu">
                         <img onClick={() => setNav(prevState => false)} src="./images/xx.png" alt=""/>
                     </div>
+                    
                     <div className="logo-menu">
-                        <img src="./images/white-logo.png" alt=""/>
+                        <img src="./images/logo-dashboard2.png" alt="aa"/>
+                    </div>
+                   
+                    <div className="name">
+                        {user.first_name} &nbsp;
+                        {user.last_name}
+                    </div>
+                    <div className="title">
+                        Mijoz
                     </div>
                 </div>
 

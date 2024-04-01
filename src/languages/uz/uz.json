@@ -35,10 +35,10 @@
   "loc4": "Yuk yetkazilish manzilini xaritadan belgilang!",
   "tariff": "Tarif turlari",
   "trucks": "Yuk avtomobillari",
-  "infoTruck1": "Uzunligi",
-  "infoTruck2": "Kengligi",
-  "infoTruck3": "Balandligi",
-  "infoTruck4": "Yuk vazni",
+  "infoTruck1": "Uzunligi:",
+  "infoTruck2": "Kengligi:",
+  "infoTruck3": "Balandligi:",
+  "infoTruck4": "Yuk vazni:",
   "infoWaits1": "kg",
   "infoWaits2": "dona",
   "infoWaits3": "m3",
@@ -130,5 +130,15 @@
   "order-id":"Buyurtma raqami:",
   "no-user":"Bu raqam ro'yxatdan o'tmagan!",
   "oferta": "Ro'yxatdan o'tish orqali platformadan foydalanish shartlariga rozilik bildirgan bo'lasiz!",
-  "oferta-text":"Oferta shartlari"
+  "oferta-text":"Oferta shartlari",
+  
+  "send-sms":"Adminga yozish",
+  "temprature":"Refrijirator turini tanlang:",
+  "temprature-name":"Refrijirator turi:",
+  "temrature1":"Yangi mahsulotlar uchun ( +12 dan 0°C gacha )",
+  "temrature2":"Keng mahsulot assortimenti uchun ( -10dan +12°C gacha )",
+  "temrature3":"Chuqur muzlatishni talab qiluvchi yuklar uchun (-20 dan  +12°C gacha )",
+  "temrature4":"Haroratga sezgir tibbiy preparatlar uchun (+2°C va past)",
+  "temrature5":"Past haroratni saqlashni talab qiluvchi yuklar uchun (-10°C va past)",
+  "temrature6":"Past haroratni talab qiluvchi yuklar uchun (-20°C va past)"
 }

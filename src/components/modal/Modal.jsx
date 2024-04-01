@@ -12,7 +12,7 @@ import { getOrders } from "../../redux/Orders";
 import { addRaidDriver } from "../../redux/RaidDriver";
 import { delAlert, addAlert } from "../../redux/AlertsBox";
 import i18next from "i18next";
-import error from "./sound/error.mp3"
+import error from "./sound/error.mp3";
 
 const Modal = () => {
   const baseUrl = useSelector((store) => store.baseUrl.data);
@@ -37,8 +37,8 @@ const Modal = () => {
   const ordersList = useSelector((store) => store.Orders.data);
 
   function errorAudio() {
-    new Audio(error).play()
-}
+    new Audio(error).play();
+  }
 
   const logOut = () => {
     localStorage.removeItem("token");
@@ -53,7 +53,6 @@ const Modal = () => {
     } else dispatch(showModals({ show: true, status: "cancel-order" }));
   };
   const delOrder = () => {
-
     if (reason) {
       let order = {
         command: "cancel_order",
@@ -62,8 +61,8 @@ const Modal = () => {
         many,
       };
       webSocked.send(JSON.stringify(order));
-      setReason("")
-      setAdd_Reason("")
+      setReason("");
+      setAdd_Reason("");
     } else {
       let idAlert = Date.now();
       let alert = {
@@ -78,7 +77,6 @@ const Modal = () => {
         dispatch(delAlert(idAlert));
       }, 5000);
     }
-
   };
 
   useEffect(() => {
@@ -364,11 +362,31 @@ const Modal = () => {
                 <div className="label-info"> {t("info6")}</div>
                 <div className="value-info">
                   {" "}
-                  {i18next.language === "uz" && modalContent.order.car_body_type.name}
-                  {i18next.language === "ru" && modalContent.order.car_body_type.name_ru}
-                  {i18next.language === "en" && modalContent.order.car_body_type.name_en}
+                  {i18next.language === "uz" &&
+                    modalContent.order.car_body_type.name}
+                  {i18next.language === "ru" &&
+                    modalContent.order.car_body_type.name_ru}
+                  {i18next.language === "en" &&
+                    modalContent.order.car_body_type.name_en}
                 </div>
               </div>
+
+              {modalContent.order.temprature ? (
+                <div className="info">
+                  <div className="label-info"> {t("temprature-name")}</div>
+                  <div className="value-info">
+                    {" "}
+                    {modalContent.order.temprature === "1" && t("temrature1")}
+                    {modalContent.order.temprature === "2" && t("temrature2")}
+                    {modalContent.order.temprature === "3" && t("temrature3")}
+                    {modalContent.order.temprature === "4" && t("temrature4")}
+                    {modalContent.order.temprature === "5" && t("temrature5")}
+                    {modalContent.order.temprature === "6" && t("temrature6")}
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
 
               {modalContent.order.avans ? (
                 <div className="info">
@@ -609,48 +627,6 @@ const Modal = () => {
 
               <div className="title">{t("driver")}</div>
 
-              {/* <div className="drivers-info">
-                {drivers.map((item, index) => {
-                  return (
-                    <a
-                      href={`tel:${item.phone}`}
-                      key={index}
-                      className="bottom-side-driver"
-                    >
-                      <div className="photo">
-                        <img src={baseUrl + item.driver.image} alt="" />
-                      </div>
-
-                      <div className="content">
-                        <div className="title">
-                          {item.driver.first_name} &nbsp;
-                          {item.driver.last_name}
-                        </div>
-                        <div className="text">
-                          <img src="./images/truck2.png" alt="" />
-                          <div className="info">
-                            <div className="label">
-                              {item.driver.name ? item.driver.name : ""}
-                            </div>
-                            <div className="content">
-                              {item.driver.car_number
-                                ? item.driver.car_number
-                                : ""}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="text">
-                          <img src="./images/phone.png" alt="" />
-                          <div className="info">
-                            <div className="label">{item.driver.phone}</div>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  );
-                })}
-              </div> */}
-
               <div className="drivers-info">
                 {ordersList.map((item, index) => {
                   if (item.status === "Delivering") {
@@ -815,6 +791,59 @@ const Modal = () => {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+          )}
+
+          {modalContent.status === "contacts" && (
+            <div className="contact-list">
+              <div className="cancel-btn">
+                <img
+                  onClick={() => dispatch(hideModal({ show: false }))}
+                  src="./images/x.png"
+                  alt=""
+                />
+              </div>
+
+              <div className="title">{t("contact")}</div>
+
+              <div className="contact-info">
+                <a href="tel: +998955777971" className="contacts">
+                  <div className="icon">
+                    <img src="./images/mdi_telephone.png" alt="" />
+                  </div>
+                  <div className="text">+998 (95) 577-79-71</div>
+                </a>
+
+                <a href="tel: +998955777972" className="contacts">
+                  <div className="icon">
+                    <img src="./images/mdi_telephone.png" alt="" />
+                  </div>
+                  <div className="text">+998 (95) 577-79-72</div>
+                </a>
+
+                <a href="https://t.me/buyukyol_admin" className="contacts">
+                  <div className="icon">
+                    <img src="./images/sms.png" alt="" />
+                  </div>
+                  <div className="text">{t("send-sms")}</div>
+                </a>
+
+                <div className="social-media">
+                  <a href="https://t.me/buyukyol_uz" target="blank_"> 
+                  <img src="./images/telegram.png" alt="" /></a>
+
+                  <a href="https://www.instagram.com/buyukyol_uz/" target="blank_">
+                    <img src="./images/instagram.png" alt="" /></a>
+
+                  <a href="https://www.tiktok.com/@buyukyol_uz?_t=8l8MCjzfWdk&_r=1" target="blank_"> 
+                  <img src="./images/tiktok.png" alt="" /></a>
+
+                  <a href="https://www.youtube.com/@buyukyol_uz" target="blank_"> <img src="./images/youtube.png" alt="" /></a>
+                  
+                  <a href="https://www.facebook.com/people/Buyukyol-Logistic/pfbid09mbWmsWGkLjuLEW51AWjJz8Ue125zN5KPqRP3dtH5mTzP5V97EqB4xGTRYvYELjUl/" target="blank_">
+                    <img src="./images/facebook.png" alt="" /></a>
+                </div>
               </div>
             </div>
           )}

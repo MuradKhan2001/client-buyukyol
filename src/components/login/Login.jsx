@@ -80,7 +80,7 @@ const Login = () => {
           }, 5000);
         }
 
-        if (error.response.status === 400) {
+        if (error.response.status === 406) {
           let idAlert = Date.now();
           let alert = {
             id: idAlert,

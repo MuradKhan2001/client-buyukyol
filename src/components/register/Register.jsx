@@ -118,7 +118,8 @@ const Register = () => {
         window.location.reload();
       })
       .catch((error) => {
-        if (error.response.status === 404) {
+
+        if (error.response.status === 400) {
           let idAlert = Date.now();
           let alert = {
             id: idAlert,
@@ -131,6 +132,7 @@ const Register = () => {
             dispatch(delAlert(idAlert));
           }, 5000);
         }
+
       });
   };
 

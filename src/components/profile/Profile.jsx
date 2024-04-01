@@ -93,7 +93,7 @@ const Profile = () => {
                 </div>
             </div>
 
-            <a href="https://t.me/buyukyol_admin" target="_blank" className="send-btn">
+            <div onClick={()=> dispatch(showModals({show: true, status: "contacts"}))}  className="send-btn">
                 <div className="left">
                     <div className="icon">
                         <img src="./images/sms.png" alt="Vector"/>
@@ -105,7 +105,7 @@ const Profile = () => {
                 <div className="right">
                     <img src="./images/Stroke.png" alt="Stroke"/>
                 </div>
-            </a>
+            </div>
 
 
             <div onClick={showModalContent} className="send-btn-log-out">

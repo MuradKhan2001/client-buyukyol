@@ -198,6 +198,17 @@ $color: #047766;
         height: 45px;
         border: none;
         background-color: #F5F6F8;
+        .left {
+         
+          .icon {
+          
+            img {
+              width: 30px;
+            }
+          }
+
+         
+        }
       }
 
       .send-btn-log-out {
@@ -221,7 +232,7 @@ $color: #047766;
             margin-right: 10px;
 
             img {
-              width: 25px;
+              width: 30px;
             }
           }
 
