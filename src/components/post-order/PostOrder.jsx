@@ -245,8 +245,7 @@ const PostOrder = () => {
     axios
       .get(`${baseUrl}api/car-category/${categoryId}`, {})
       .then((response) => {
-        let re = response.data.reverse()
-        setTrucks(re);
+        setTrucks(response.data);
       });
   };
 
@@ -1566,7 +1565,7 @@ const PostOrder = () => {
               </div>
               <div className="trucks">
                 <div className="content">
-                  {trucks.reverse().map((item, index) => {
+                  {trucks.map((item, index) => {
                     return (
                       <div
                         onClick={() => {

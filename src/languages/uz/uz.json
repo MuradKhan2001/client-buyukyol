@@ -135,10 +135,10 @@
   "send-sms":"Adminga yozish",
   "temprature":"Refrijirator turini tanlang:",
   "temprature-name":"Refrijirator turi:",
-  "temrature1":"Yangi mahsulotlar uchun ( +12 dan 0°C gacha )",
-  "temrature2":"Keng mahsulot assortimenti uchun ( -10dan +12°C gacha )",
-  "temrature3":"Chuqur muzlatishni talab qiluvchi yuklar uchun (-20 dan  +12°C gacha )",
-  "temrature4":"Haroratga sezgir tibbiy preparatlar uchun (+2°C va past)",
-  "temrature5":"Past haroratni saqlashni talab qiluvchi yuklar uchun (-10°C va past)",
-  "temrature6":"Past haroratni talab qiluvchi yuklar uchun (-20°C va past)"
+  "temrature1":"Yangi (sveji) mahsulotlar uchun ( +12 dan 0°C gacha )",
+  "temrature2":"Turli xil assortimentli mahsulotlar  uchun ( -10dan +12°C gacha )",
+  "temrature3":"Chuqur muzlatilishi talab etiladigan yuklar uchun (-20 dan  +12°C gacha )",
+  "temrature4":"Haroratga ta'sirchan tibbiy preparatlar uchun (+2°C va past)",
+  "temrature5":"Sovuq haroratda saqlash talab qilinadigan yuklar uchun (-10°C va past)",
+  "temrature6":"Sovuq haroratda saqlash talab qilinadigan yuklar uchun (-20°C va past)"
 }

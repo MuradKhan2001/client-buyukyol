@@ -8,8 +8,8 @@ import {initReactI18next} from "react-i18next";
 import uz from "./languages/uz/uz.json";
 import ru from "./languages/ru/ru.json";
 import en from "./languages/en/en.json";
-import {Provider} from "react-redux"
-import {store} from "./redux/store"
+import {Provider} from "react-redux";
+import {store} from "./redux/store";
 
 const App = React.lazy(() => import('./components/app/App'));
 

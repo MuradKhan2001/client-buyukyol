@@ -2125,9 +2125,14 @@ $color: #047766;
       width: 100%;
       background-color: #F5F6F8;
       flex-wrap: wrap;
+      display: block;
+      height: auto;
+      padding-top: 10px;
+      padding-bottom: 10px;
 
       .text {
-        width: 50%;
+        margin-top: 10px;
+        width: 100%;
       }
     }
 

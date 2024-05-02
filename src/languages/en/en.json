@@ -136,5 +136,15 @@
   "order-id":"Order id:",
   "no-user":"This number is not registered!",
   "oferta": "By registering, you agree to the platform's terms of use.",
-  "oferta-text":"Terms of use"
+  "oferta-text":"Terms of use",
+
+  "send-sms":"Write to admin",
+  "temprature":"Select the type of refrigerator:",
+  "temprature-name":"Refrigerator type:",
+  "temrature1":"For new (fresh) products (from +12 to 0°C)",
+  "temrature2":"For a wide range of products (from -10 to +12°C)",
+  "temrature3":"For goods requiring deep freezing (from -20 to +12°C)",
+  "temrature4":"For temperature-sensitive medical preparations (+2°C and below)",
+  "temrature5":"For cargoes requiring cold storage (-10°C and below)",
+  "temrature6":"For cargoes requiring cold storage (-20°C and below)"
 }
