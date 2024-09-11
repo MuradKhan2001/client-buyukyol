@@ -81,7 +81,7 @@ $color: #047766;
       box-shadow: 0 33px 97px 0 #002C5714;
       border-radius: 12px;
 
-      .form-orders {  
+      .form-orders {
         width: 400px;
         padding: 20px;
 
@@ -208,7 +208,7 @@ $color: #047766;
         }
       }
 
-      .form-orders-temprature {  
+      .form-orders-temprature {
         width: 600px;
         padding: 20px;
 
@@ -335,7 +335,7 @@ $color: #047766;
         }
       }
 
-      .form-orders-currency {  
+      .form-orders-currency {
         width: 350px;
         padding: 8px;
 
@@ -669,7 +669,8 @@ $color: #047766;
       height: 3px;
       background-color: $color;
     }
-    div{
+
+    div {
       display: flex;
       align-items: center;
     }
@@ -903,6 +904,7 @@ $color: #047766;
           background-color: #F6F8FA;
           border-radius: 12px;
           @extend %d-flex;
+
           img {
             width: 90%;
           }
@@ -1043,7 +1045,7 @@ $color: #047766;
         }
 
       }
-     
+
 
       .mobile-loc {
         display: none;
@@ -1108,6 +1110,7 @@ $color: #047766;
             }
           }
         }
+
         .input-box-required {
           border: 1px solid rgba(255, 0, 0, 0.5);
         }
@@ -1292,13 +1295,15 @@ $color: #047766;
           color: #787F95;
           font-size: 14px;
           padding-left: 20px;
-          label{
+
+          label {
             margin-right: 10px;
           }
 
           .checkbox-wrapper-13 {
             margin-right: 10px;
           }
+
           @supports (-webkit-appearance: none) or (-moz-appearance: none) {
             .checkbox-wrapper-13 input[type=checkbox] {
               --active: #047766;
@@ -1387,9 +1392,11 @@ $color: #047766;
               --r: 43deg;
             }
           }
+
           .checkbox-wrapper-13 * {
             box-sizing: inherit;
           }
+
           .checkbox-wrapper-13 *:before,
           .checkbox-wrapper-13 *:after {
             box-sizing: inherit;
@@ -1435,7 +1442,6 @@ $color: #047766;
         color: #787F95;
         padding-right: 20px;
       }
-
 
       .icon {
         width: 50px;
@@ -1498,7 +1504,7 @@ $color: #047766;
 
         .input-box {
           width: 100%;
-          height: 45px;
+          height: auto;
           display: flex;
           align-items: center;
           border: 2px solid #EEF0F4;
@@ -1512,7 +1518,21 @@ $color: #047766;
             font-size: 14px;
             color: #787F95;
             width: calc(100% - 50px);
-            height: 100%;
+            height: 45px;
+            border: none;
+            padding-right: 20px;
+
+            &:focus {
+              outline: none;
+            }
+          }
+
+          textarea {
+            padding: 10px;
+            font-size: 14px;
+            color: #787F95;
+            width: 100%;
+            height: 150px;
             border: none;
             padding-right: 20px;
 
@@ -1815,6 +1835,7 @@ $color: #047766;
 
           .input-box {
             padding-left: 10px;
+
             .icon {
               width: 50px;
               @extend %d-flex;
@@ -1899,8 +1920,8 @@ $color: #047766;
           width: 100%;
           padding: 20px;
         }
-        
-        .form-orders-temprature{
+
+        .form-orders-temprature {
           width: 100%;
           padding: 10px;
         }
@@ -1920,17 +1941,18 @@ $color: #047766;
             justify-content: space-between;
             margin-top: 15px;
             font-size: 14px;
-           
+
             .label-info {
-              text-transform: none!important;
+              text-transform: none !important;
             }
           }
 
           .info {
             margin-top: 15px;
             font-size: 14px;
+
             .label-info {
-              text-transform: none!important;
+              text-transform: none !important;
             }
           }
 
@@ -2235,6 +2257,7 @@ $color: #047766;
 
               .icon {
                 margin-left: 15px;
+
                 img {
                   margin-right: 10px;
                   display: block;
