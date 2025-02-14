@@ -166,8 +166,8 @@ const PostOrder = () => {
             capacity: "",
             price: "",
             number_cars: 1,
-            load_time: "2024-01-01T00:00",
-            start_time: "2024-01-01T00:00",
+            load_time: "2025-01-01T00:00",
+            start_time: "2025-01-01T00:00",
             wait_cost: "",
             comment_to_driver: "",
             avans: "",
@@ -417,9 +417,9 @@ const PostOrder = () => {
                 <div className="address-wrapper">
                     <div className="list-address">
                         {status === "OK" &&
-                        data.map(({place_id, description}) => (
-                            <ComboboxOption key={place_id} value={description}/>
-                        ))}
+                            data.map(({place_id, description}) => (
+                                <ComboboxOption key={place_id} value={description}/>
+                            ))}
                     </div>
                 </div>
             </Combobox>
@@ -1500,7 +1500,9 @@ const PostOrder = () => {
                         </div>
 
                         <div
-                            onClick={() => getDirection("Abroad")}
+                            onClick={() => {
+                                getDirection("Abroad")
+                            }}
                             className={`direction ${
                                 direction === "Abroad" ? "direction-active" : ""
                             }`}
@@ -1519,40 +1521,113 @@ const PostOrder = () => {
                             <div className="tarifs">
                                 <div className="content">
                                     {categories.map((item, index) => {
-                                        return (
-                                            <div
-                                                onClick={() => {
-                                                    getTrucks(item.id);
-                                                    setTimeout(() => {
-                                                        ref.current?.scrollIntoView({behavior: "smooth"});
-                                                    }, 500);
-                                                    setValidateСapacity(item.max_weight);
-                                                }}
-                                                key={index}
-                                                className={`tarif ${
-                                                    category === item.id ? "active-tarif" : ""
-                                                }`}
-                                            >
-                                                <div className="photo">
-                                                    <img src={item.image} alt=""/>
-                                                </div>
-                                                <div className="text">
-                                                    <div className="name">
-                                                        {i18next.language === "uz" ? item.name : ""}
-                                                        {i18next.language === "ru" ? item.name_ru : ""}
-                                                        {i18next.language === "en" ? item.name_en : ""}
+                                        if (direction === "Abroad" && item.id !== 2 && item.id !== 4) {
+                                            return (
+                                                <div
+                                                    onClick={() => {
+                                                        getTrucks(item.id);
+                                                        setTimeout(() => {
+                                                            ref.current?.scrollIntoView({behavior: "smooth"});
+                                                        }, 500);
+                                                        setValidateСapacity(item.max_weight);
+                                                    }}
+                                                    key={index}
+                                                    className={`tarif ${
+                                                        category === item.id ? "active-tarif" : ""
+                                                    }`}
+                                                >
+                                                    <div className="photo">
+                                                        <img src={item.image} alt=""/>
                                                     </div>
-                                                    <div className="count">
-                                                        {item.id !== 9 && (
-                                                            <>
-                                                                {item.min_weight} - {item.max_weight}{" "}
-                                                                {t("infoWaits4")}
-                                                            </>
-                                                        )}
+                                                    <div className="text">
+                                                        <div className="name">
+                                                            {i18next.language === "uz" ? item.name : ""}
+                                                            {i18next.language === "ru" ? item.name_ru : ""}
+                                                            {i18next.language === "en" ? item.name_en : ""}
+                                                        </div>
+                                                        <div className="count">
+                                                            {item.id !== 9 && (
+                                                                <>
+                                                                    {item.min_weight} - {item.max_weight}{" "}
+                                                                    {t("infoWaits4")}
+                                                                </>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        );
+                                            );
+                                        }
+
+                                        if (direction !== "Abroad") {
+                                            return (
+                                                <div
+                                                    onClick={() => {
+                                                        getTrucks(item.id);
+                                                        setTimeout(() => {
+                                                            ref.current?.scrollIntoView({behavior: "smooth"});
+                                                        }, 500);
+                                                        setValidateСapacity(item.max_weight);
+                                                    }}
+                                                    key={index}
+                                                    className={`tarif ${
+                                                        category === item.id ? "active-tarif" : ""
+                                                    }`}
+                                                >
+                                                    <div className="photo">
+                                                        <img src={item.image} alt=""/>
+                                                    </div>
+                                                    <div className="text">
+                                                        <div className="name">
+                                                            {i18next.language === "uz" ? item.name : ""}
+                                                            {i18next.language === "ru" ? item.name_ru : ""}
+                                                            {i18next.language === "en" ? item.name_en : ""}
+                                                        </div>
+                                                        <div className="count">
+                                                            {item.id !== 9 && (
+                                                                <>
+                                                                    {item.min_weight} - {item.max_weight}{" "}
+                                                                    {t("infoWaits4")}
+                                                                </>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                            return (
+                                                <div
+                                                    onClick={() => {
+                                                        getTrucks(item.id);
+                                                        setTimeout(() => {
+                                                            ref.current?.scrollIntoView({behavior: "smooth"});
+                                                        }, 500);
+                                                        setValidateСapacity(item.max_weight);
+                                                    }}
+                                                    key={index}
+                                                    className={`tarif ${
+                                                        category === item.id ? "active-tarif" : ""
+                                                    }`}
+                                                >
+                                                    <div className="photo">
+                                                        <img src={item.image} alt=""/>
+                                                    </div>
+                                                    <div className="text">
+                                                        <div className="name">
+                                                            {i18next.language === "uz" ? item.name : ""}
+                                                            {i18next.language === "ru" ? item.name_ru : ""}
+                                                            {i18next.language === "en" ? item.name_en : ""}
+                                                        </div>
+                                                        <div className="count">
+                                                            {item.id !== 9 && (
+                                                                <>
+                                                                    {item.min_weight} - {item.max_weight}{" "}
+                                                                    {t("infoWaits4")}
+                                                                </>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        }
                                     })}
                                 </div>
                             </div>
@@ -1957,62 +2032,62 @@ const PostOrder = () => {
                             )}
 
                             {direction !== "Abroad" &&
-                            countryCode !== "uz" &&
-                            countryCode !== "" && (
-                                <div className="form-box-radio">
-                                    <label htmlFor="cargo">{t("info8")}</label>
+                                countryCode !== "uz" &&
+                                countryCode !== "" && (
+                                    <div className="form-box-radio">
+                                        <label htmlFor="cargo">{t("info8")}</label>
 
-                                    {formik.errors.price &&
-                                    formik.errors.price !== "Required" ? (
-                                        <div className="error">{formik.errors.price}</div>
-                                    ) : (
-                                        ""
-                                    )}
+                                        {formik.errors.price &&
+                                        formik.errors.price !== "Required" ? (
+                                            <div className="error">{formik.errors.price}</div>
+                                        ) : (
+                                            ""
+                                        )}
 
-                                    <div className="check-box-negotiable">
-                                        <label htmlFor="c1-13">{t("negotiable")}:</label>
+                                        <div className="check-box-negotiable">
+                                            <label htmlFor="c1-13">{t("negotiable")}:</label>
 
-                                        <div className="checkbox-wrapper-13">
-                                            <input
-                                                onClick={() => {
-                                                    setNegotiable(!negotiable);
-                                                    cargo.negotiable = !cargo.negotiable;
-                                                }}
-                                                id="c1-13"
-                                                type="checkbox"
-                                            />
+                                            <div className="checkbox-wrapper-13">
+                                                <input
+                                                    onClick={() => {
+                                                        setNegotiable(!negotiable);
+                                                        cargo.negotiable = !cargo.negotiable;
+                                                    }}
+                                                    id="c1-13"
+                                                    type="checkbox"
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div
-                                        className={`input-box ${
-                                            formik.errors.price === "Required"
-                                                ? "input-box-required"
-                                                : ""
-                                        }`}
-                                    >
-                                        <div className="icon">
-                                            <img src="./images/pay.png" alt="cargo"/>
-                                        </div>
-                                        <input
-                                            disabled={negotiable}
-                                            onChange={formik.handleChange}
-                                            value={formik.values.price}
-                                            name="price"
-                                            type="text"
-                                        />
-
                                         <div
-                                            onClick={() =>
-                                                !negotiable ? showModalForm("currency", true) : ""
-                                            }
-                                            className="icon-right"
+                                            className={`input-box ${
+                                                formik.errors.price === "Required"
+                                                    ? "input-box-required"
+                                                    : ""
+                                            }`}
                                         >
-                                            <div className="text">{currency}</div>
-                                            <img src="./images/down.png" alt="cargo"/>
+                                            <div className="icon">
+                                                <img src="./images/pay.png" alt="cargo"/>
+                                            </div>
+                                            <input
+                                                disabled={negotiable}
+                                                onChange={formik.handleChange}
+                                                value={formik.values.price}
+                                                name="price"
+                                                type="text"
+                                            />
+
+                                            <div
+                                                onClick={() =>
+                                                    !negotiable ? showModalForm("currency", true) : ""
+                                                }
+                                                className="icon-right"
+                                            >
+                                                <div className="text">{currency}</div>
+                                                <img src="./images/down.png" alt="cargo"/>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
                         </div>
                     </div>
 

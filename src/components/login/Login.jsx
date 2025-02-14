@@ -244,6 +244,7 @@ const Login = () => {
                   onChange={getCodeValue}
                 />
               </div>
+
               <button
                 disabled={code.trim().length < 5}
                 onClick={CheckCode}
@@ -253,6 +254,7 @@ const Login = () => {
               >
                 {t("button5")}
               </button>
+
             </>
           )}
         </div>

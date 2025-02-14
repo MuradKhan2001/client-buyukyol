@@ -43,6 +43,7 @@ const MapBoxMobile = () => {
         setUser(response.data);
       })
       .catch((error) => {
+        console.log(error.response)
         if (error.response.statusText == "Unauthorized") {
           window.location.pathname = "/";
           localStorage.removeItem("token");

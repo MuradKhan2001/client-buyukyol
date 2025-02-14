@@ -36,7 +36,7 @@ $color: #047766;
   height: 100vh;
   overflow-y: auto;
   position: relative;
-  
+
 
   .desktop-dashboard-container {
     @extend %d-flex;
@@ -215,6 +215,10 @@ $color: #047766;
             border-radius: 50%;
             border: 1px solid #EEF0F4;
             position: relative;
+
+            img {
+              width: 60%;
+            }
 
             .count {
               @extend %d-flex;

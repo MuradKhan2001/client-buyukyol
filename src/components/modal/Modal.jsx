@@ -232,279 +232,286 @@ const Modal = () => {
           )}
 
           {modalContent.status === "order" && modalContent.order && (
-            <div className="show-order">
-              <div className="cancel-btn">
-                <img
-                  onClick={() => dispatch(hideModal({ show: false }))}
-                  src="./images/x.png"
-                  alt=""
-                />
-              </div>
-              <div className="title">{t("moreInfo")}</div>
-
-              <div className="info-direction">
-                <div className="label-info">{t("info1")}</div>
-                <div className="value-info">
-                  {modalContent.order.type === "OUT" ? t("direction2") : ""}
-                  {modalContent.order.type === "IN" ? t("direction3") : ""}
-                  {modalContent.order.type === "Abroad" ? t("direction1") : ""}
+              <div className="show-order">
+                <div className="cancel-btn">
+                  <img
+                      onClick={() => dispatch(hideModal({show: false}))}
+                      src="./images/x.png"
+                      alt=""
+                  />
                 </div>
-              </div>
+                <div className="title">{t("moreInfo")}</div>
 
-              <div className="info">
-                <div className="label-info">{t("order-id")}</div>
-                <div className="value-info"> {modalContent.order.id}</div>
-              </div>
-
-              <div className="info">
-                <div className="label-info">{t("loc1")}</div>
-                <div className="value-info">
-                  {" "}
-                  {modalContent.order.address_from}
-                </div>
-              </div>
-
-              <div className="info">
-                <div className="label-info">{t("loc3")}</div>
-                <div className="value-info">
-                  {" "}
-                  {modalContent.order.address_to}
-                </div>
-              </div>
-
-              <div className="info">
-                <div className="label-info"> {t("info2")}</div>
-                <div className="value-info"> {modalContent.order.cargo}</div>
-              </div>
-
-              <div className="info">
-                <div className="label-info"> {t("info7")}</div>
-                <div className="value-info">
-                  {" "}
-                  {modalContent.order.distance} {t("km")}
-                </div>
-              </div>
-
-              <div className="info">
-                <div className="label-info"> {t("info10")}</div>
-                <div className="value-info">
-                  {modalContent.order.payment_type == "1" ? t("payment1") : ""}
-                  {modalContent.order.payment_type == "2" ? t("payment2") : ""}
-                  {modalContent.order.payment_type == "3" ? t("payment3") : ""}
-                </div>
-              </div>
-
-              <div className="info">
-                <div className="label-info"> {t("info8")}</div>
-                <div className="value-info">
-                  {modalContent.order.negotiable ? (
-                    t("negotiable")
-                  ) : (
-                    <>
-                      {modalContent.order.price} {modalContent.order.currency}
-                    </>
-                  )}
-                </div>
-              </div>
-
-              <div className="info">
-                <div className="label-info"> {t("info3")}</div>
-                <div className="value-info">
-                  {" "}
-                  {modalContent.order.number_cars} {t("infoWaits2")}
-                </div>
-              </div>
-
-              <div className="info">
-                <div className="label-info"> {t("info4")}</div>
-                <div className="value-info">
-                  {modalContent.order.capacity}
-                  &nbsp;
-                  {modalContent.order.unit == "1" ? t("infoWaits1") : ""}
-                  {modalContent.order.unit == "2" ? t("infoWaits2") : ""}
-                  {modalContent.order.unit == "3" ? t("infoWaits3") : ""}
-                  {modalContent.order.unit == "4" ? t("infoWaits4") : ""}
-                  {modalContent.order.unit == "5" ? t("infoWaits5") : ""}
-                  {modalContent.order.unit == "6" ? t("infoWaits6") : ""}
-                </div>
-              </div>
-
-              <div className="info">
-                <div className="label-info">{t("info5")}</div>
-                <div className="value-info">
-                  {modalContent.order.car_category.name !==
-                    "Avto tashuvchi" && (
-                    <>
-                      {modalContent.order.car_category.min_weight
-                        ? modalContent.order.car_category.min_weight
-                        : ""}
-                      -
-                      {modalContent.order.car_category.max_weight
-                        ? modalContent.order.car_category.max_weight
-                        : ""}{" "}
-                      {t("infoWaits4")}, &nbsp;
-                    </>
-                  )}
-
-                  {i18next.language === "uz"
-                    ? modalContent.order.car_category.name
-                    : ""}
-                  {i18next.language === "ru"
-                    ? modalContent.order.car_category.name_ru
-                    : ""}
-                  {i18next.language === "en"
-                    ? modalContent.order.car_category.name_en
-                    : ""}
-                </div>
-              </div>
-
-              <div className="info">
-                <div className="label-info"> {t("info6")}</div>
-                <div className="value-info">
-                  {" "}
-                  {i18next.language === "uz" &&
-                    modalContent.order.car_body_type.name}
-                  {i18next.language === "ru" &&
-                    modalContent.order.car_body_type.name_ru}
-                  {i18next.language === "en" &&
-                    modalContent.order.car_body_type.name_en}
-                </div>
-              </div>
-
-              {modalContent.order.temprature ? (
-                <div className="info">
-                  <div className="label-info"> {t("temprature-name")}</div>
-                  <div className="value-info">
-                    {" "}
-                    {modalContent.order.temprature === "1" && t("temrature1")}
-                    {modalContent.order.temprature === "2" && t("temrature2")}
-                    {modalContent.order.temprature === "3" && t("temrature3")}
-                    {modalContent.order.temprature === "4" && t("temrature4")}
-                    {modalContent.order.temprature === "5" && t("temrature5")}
-                    {modalContent.order.temprature === "6" && t("temrature6")}
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {modalContent.order.avans ? (
-                <div className="info">
-                  <div className="label-info"> {t("info9")}</div>
-                  <div className="value-info">
-                    {" "}
-                    {modalContent.order.avans} {modalContent.order.currency}
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {modalContent.order.wait_cost ? (
-                <div className="info">
-                  <div className="label-info"> {t("info11")}</div>
-
-                  <div className="value-info">
-                    {modalContent.order.wait_cost} {modalContent.order.currency}
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {modalContent.order.load_time ? (
-                <div className="info">
-                  <div className="label-info"> {t("info12")}</div>
-                  <div className="value-info">
-                    {modalContent.order.load_time.slice(0, 10)},
-                    {modalContent.order.load_time.slice(11, 16)}
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {modalContent.order.start_time ? (
-                <div className="info">
-                  <div className="label-info"> {t("info13")}</div>
-                  <div className="value-info">
-                    {modalContent.order.start_time.slice(0, 10)},
-                    {modalContent.order.start_time.slice(11, 16)}
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {modalContent.order.status === "Delivered" ? (
                 <div className="info-direction">
-                  <div className="label-info"> {t("timeCargo2")}</div>
+                  <div className="label-info">{t("info1")}</div>
                   <div className="value-info">
-                    {modalContent.order.ordered_time.slice(0, 10)},
-                    {modalContent.order.ordered_time.slice(11, 16)}
+                    {modalContent.order.type === "OUT" ? t("direction2") : ""}
+                    {modalContent.order.type === "IN" ? t("direction3") : ""}
+                    {modalContent.order.type === "Abroad" ? t("direction1") : ""}
                   </div>
                 </div>
-              ) : (
-                ""
-              )}
 
-              {modalContent.order.rejected_reason ? (
                 <div className="info">
-                  <div className="reason-title">{t("reasonOrder")}:</div>
-                  <div className="value-info-reason">
-                    {modalContent.order.rejected_reason === "Fikrim o'zgardi"
-                      ? t("reason1")
-                      : modalContent.order.rejected_reason ===
-                        "Xato ma'lumot kiritibman"
-                      ? t("reason2")
-                      : modalContent.order.rejected_reason ===
-                        "Haydovchi bekor qilishni so'radi"
-                      ? t("reason3")
-                      : modalContent.order.rejected_reason}
+                  <div className="label-info">{t("order-id")}</div>
+                  <div className="value-info"> {modalContent.order.id}</div>
+                </div>
+
+                <div className="info">
+                  <div className="label-info">{t("loc1")}</div>
+                  <div className="value-info">
+                    {" "}
+                    {modalContent.order.address_from}
                   </div>
                 </div>
-              ) : (
-                ""
-              )}
 
-              {modalContent.order.status === "Delivered" ||
-              modalContent.order.status === "Rejected" ? (
-                ""
-              ) : (
-                <div onClick={showCancel} className="cancel-order">
-                  {t("button3")}
+                <div className="info">
+                  <div className="label-info">{t("loc3")}</div>
+                  <div className="value-info">
+                    {" "}
+                    {modalContent.order.address_to}
+                  </div>
                 </div>
-              )}
 
-              {modalContent.order.status === "Rejected" ? (
-                <div
-                  onClick={() => reloadOrder(modalContent.order.id)}
-                  className="reload-order"
-                >
-                  {t("button8")}
+                <div className="info">
+                  <div className="label-info"> {t("info2")}</div>
+                  <div className="value-info"> {modalContent.order.cargo}</div>
                 </div>
-              ) : (
-                ""
-              )}
-            </div>
+
+                <div className="info">
+                  <div className="label-info"> {t("info7")}</div>
+                  <div className="value-info">
+                    {" "}
+                    {modalContent.order.distance} {t("km")}
+                  </div>
+                </div>
+
+                <div className="info">
+                  <div className="label-info"> {t("info10")}</div>
+                  <div className="value-info">
+                    {modalContent.order.payment_type == "1" ? t("payment1") : ""}
+                    {modalContent.order.payment_type == "2" ? t("payment2") : ""}
+                    {modalContent.order.payment_type == "3" ? t("payment3") : ""}
+                  </div>
+                </div>
+
+                <div className="info">
+                  <div className="label-info"> {t("info8")}</div>
+                  <div className="value-info">
+                    {modalContent.order.negotiable ? (
+                        t("negotiable")
+                    ) : (
+                        <>
+                          {modalContent.order.price} {modalContent.order.currency}
+                        </>
+                    )}
+                  </div>
+                </div>
+
+                <div className="info">
+                  <div className="label-info"> {t("info3")}</div>
+                  <div className="value-info">
+                    {" "}
+                    {modalContent.order.number_cars} {t("infoWaits2")}
+                  </div>
+                </div>
+
+                <div className="info">
+                  <div className="label-info"> {t("info4")}</div>
+                  <div className="value-info">
+                    {modalContent.order.capacity}
+                    &nbsp;
+                    {modalContent.order.unit == "1" ? t("infoWaits1") : ""}
+                    {modalContent.order.unit == "2" ? t("infoWaits2") : ""}
+                    {modalContent.order.unit == "3" ? t("infoWaits3") : ""}
+                    {modalContent.order.unit == "4" ? t("infoWaits4") : ""}
+                    {modalContent.order.unit == "5" ? t("infoWaits5") : ""}
+                    {modalContent.order.unit == "6" ? t("infoWaits6") : ""}
+                  </div>
+                </div>
+
+                <div className="info">
+                  <div className="label-info">{t("info5")}</div>
+                  <div className="value-info">
+                    {modalContent.order.car_category.name !==
+                        "Avto tashuvchi" && (
+                            <>
+                              {modalContent.order.car_category.min_weight
+                                  ? modalContent.order.car_category.min_weight
+                                  : ""}
+                              -
+                              {modalContent.order.car_category.max_weight
+                                  ? modalContent.order.car_category.max_weight
+                                  : ""}{" "}
+                              {t("infoWaits4")}, &nbsp;
+                            </>
+                        )}
+
+                    {i18next.language === "uz"
+                        ? modalContent.order.car_category.name
+                        : ""}
+                    {i18next.language === "ru"
+                        ? modalContent.order.car_category.name_ru
+                        : ""}
+                    {i18next.language === "en"
+                        ? modalContent.order.car_category.name_en
+                        : ""}
+                  </div>
+                </div>
+
+                <div className="info">
+                  <div className="label-info"> {t("info6")}</div>
+                  <div className="value-info">
+                    {" "}
+                    {i18next.language === "uz" &&
+                        modalContent.order.car_body_type.name}
+                    {i18next.language === "ru" &&
+                        modalContent.order.car_body_type.name_ru}
+                    {i18next.language === "en" &&
+                        modalContent.order.car_body_type.name_en}
+                  </div>
+                </div>
+
+                {modalContent.order.temprature ? (
+                    <div className="info">
+                      <div className="label-info"> {t("temprature-name")}</div>
+                      <div className="value-info">
+                        {" "}
+                        {modalContent.order.temprature === "1" && t("temrature1")}
+                        {modalContent.order.temprature === "2" && t("temrature2")}
+                        {modalContent.order.temprature === "3" && t("temrature3")}
+                        {modalContent.order.temprature === "4" && t("temrature4")}
+                        {modalContent.order.temprature === "5" && t("temrature5")}
+                        {modalContent.order.temprature === "6" && t("temrature6")}
+                      </div>
+                    </div>
+                ) : (
+                    ""
+                )}
+
+                {modalContent.order.comment_to_driver && <div className="info">
+                  <div className="label-info">{t("info17")}</div>
+                  <div className="value-info">
+                    {modalContent.order.comment_to_driver}
+                  </div>
+                </div>}
+
+                {modalContent.order.avans ? (
+                    <div className="info">
+                      <div className="label-info"> {t("info9")}</div>
+                      <div className="value-info">
+                        {" "}
+                        {modalContent.order.avans} {modalContent.order.currency}
+                      </div>
+                    </div>
+                ) : (
+                    ""
+                )}
+
+                {modalContent.order.wait_cost ? (
+                    <div className="info">
+                      <div className="label-info"> {t("info11")}</div>
+
+                      <div className="value-info">
+                        {modalContent.order.wait_cost} {modalContent.order.currency}
+                      </div>
+                    </div>
+                ) : (
+                    ""
+                )}
+
+                {modalContent.order.load_time ? (
+                    <div className="info">
+                      <div className="label-info"> {t("info12")}</div>
+                      <div className="value-info">
+                        {modalContent.order.load_time.slice(0, 10)},
+                        {modalContent.order.load_time.slice(11, 16)}
+                      </div>
+                    </div>
+                ) : (
+                    ""
+                )}
+
+                {modalContent.order.start_time ? (
+                    <div className="info">
+                      <div className="label-info"> {t("info13")}</div>
+                      <div className="value-info">
+                        {modalContent.order.start_time.slice(0, 10)},
+                        {modalContent.order.start_time.slice(11, 16)}
+                      </div>
+                    </div>
+                ) : (
+                    ""
+                )}
+
+                {modalContent.order.status === "Delivered" ? (
+                    <div className="info-direction">
+                      <div className="label-info"> {t("timeCargo2")}</div>
+                      <div className="value-info">
+                        {modalContent.order.ordered_time.slice(0, 10)},
+                        {modalContent.order.ordered_time.slice(11, 16)}
+                      </div>
+                    </div>
+                ) : (
+                    ""
+                )}
+
+                {modalContent.order.rejected_reason ? (
+                    <div className="info">
+                      <div className="reason-title">{t("reasonOrder")}:</div>
+                      <div className="value-info-reason">
+                        {modalContent.order.rejected_reason === "Fikrim o'zgardi"
+                            ? t("reason1")
+                            : modalContent.order.rejected_reason ===
+                            "Xato ma'lumot kiritibman"
+                                ? t("reason2")
+                                : modalContent.order.rejected_reason ===
+                                "Haydovchi bekor qilishni so'radi"
+                                    ? t("reason3")
+                                    : modalContent.order.rejected_reason}
+                      </div>
+                    </div>
+                ) : (
+                    ""
+                )}
+
+                {modalContent.order.status === "Delivered" ||
+                modalContent.order.status === "Rejected" ? (
+                    ""
+                ) : (
+                    <div onClick={showCancel} className="cancel-order">
+                      {t("button3")}
+                    </div>
+                )}
+
+                {modalContent.order.status === "Rejected" ? (
+                    <div
+                        onClick={() => reloadOrder(modalContent.order.id)}
+                        className="reload-order"
+                    >
+                      {t("button8")}
+                    </div>
+                ) : (
+                    ""
+                )}
+              </div>
           )}
 
           {modalContent.status === "cancel-order" && (
-            <div className="cancel-order">
-              <div className="cancel-btn">
-                <img
-                  onClick={() => dispatch(hideModal({ show: false }))}
-                  src="./images/x.png"
-                  alt=""
-                />
-              </div>
+              <div className="cancel-order">
+                <div className="cancel-btn">
+                  <img
+                      onClick={() => dispatch(hideModal({show: false}))}
+                      src="./images/x.png"
+                      alt=""
+                  />
+                </div>
 
-              <div className="title">{t("reasonText")}</div>
+                <div className="title">{t("reasonText")}</div>
 
-              <div className="cancel-order-info">
-                <div>
-                  <input
-                    onChange={(e) => {
+                <div className="cancel-order-info">
+                  <div>
+                    <input
+                        onChange={(e) => {
                       setReason(e.target.value);
                     }}
                     id="reason1"
