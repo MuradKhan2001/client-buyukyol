@@ -38,9 +38,9 @@ const App = () => {
         new Audio(error).play()
     }
 
-
     useEffect(() => {
-        if (!localStorage.getItem("token")) return () => {}
+        if (!localStorage.getItem("token")) return () => {
+        }
 
         const websocket = new W3CWebSocket(`wss://api.buyukyol.uz/ws/orders/?token=${localStorage.getItem("token")}`);
 
@@ -73,17 +73,16 @@ const App = () => {
         }
 
     }, []);
-    
+
 
     useEffect(() => {
-
         setSockedContext(websocket => {
             if (!websocket) return null
 
             websocket.onmessage = (event) => {
 
                 const data = JSON.parse(event.data);
-                
+
                 if (!("status" in data.message)) {
                     dispatch(filterDriver(data.message));
                     dispatch(filterRaidDriver(data.message));
@@ -191,14 +190,14 @@ const App = () => {
                         dispatch(addActiveDriver(data.message.driver));
                         dispatch(cleaarOnlineDriver());
                     }
-                    
+
                     if (data.message.status === "location_online" && data.message.driver.length > 0) {
-                        dispatch(addOnlineDriver(data.message.driver[0]));   
+                        dispatch(addOnlineDriver(data.message.driver[0]));
                     }
-                }   
+                }
 
                 if (data.message.status === false) {
-                    if (data.message === "invalid token") {
+                    if (error.response.status == 401) {
                         window.location.pathname = "/";
                         localStorage.removeItem("token");
                         localStorage.removeItem("userId");

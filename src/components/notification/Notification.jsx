@@ -20,7 +20,7 @@ const Notification = () => {
         }).then((response) => {
             setNewsList(response.data)
         }).catch((error) => {
-            if (error.response.statusText == "Unauthorized") {
+            if (error.response.status == 401) {
                 window.location.pathname = "/";
                 localStorage.removeItem("token");
                 localStorage.removeItem("userId");
