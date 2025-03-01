@@ -157,16 +157,16 @@ const Login = () => {
       </div>
       <div className="right">
         <div className="language-box">
-          {language.map(({ code, name, country_code }) => (
-            <div
-              key={country_code}
-              onClick={() => changeLanguage(code)}
-              className={`language ${
-                i18next.language === code ? "active" : ""
-              }`}
-            >
-              {name}
-            </div>
+          {language.map(({code, name, country_code}) => (
+              <div
+                  key={country_code}
+                  onClick={() => changeLanguage(code)}
+                  className={`language ${
+                      i18next.language === code ? "active" : ""
+                  }`}
+              >
+                {name}
+              </div>
           ))}
         </div>
 
@@ -178,84 +178,84 @@ const Login = () => {
               {t("logintext")}
             </label>
             <PhoneInput
-              id="phone"
-              international
-              defaultCountry="UZ"
-              value={phone}
-              onChange={setPhone}
+                id="phone"
+                international
+                defaultCountry="UZ"
+                value={phone}
+                onChange={setPhone}
             />
           </div>
 
           {checkCode ? (
-            <button
-              disabled={
-                phone === "" ||
-                phone === undefined ||
-                seconds > 0 ||
-                minutes > 0
-              }
-              onClick={HandleLogin}
-              className={
-                seconds > 0 ||
-                minutes > 0 ||
-                phone === "" ||
-                phone === undefined
-                  ? "login-btn-disablet"
-                  : "login-btn"
-              }
-            >
-              {t("logintext4")}
-            </button>
+              <button
+                  disabled={
+                      phone === "" ||
+                      phone === undefined ||
+                      seconds > 0 ||
+                      minutes > 0
+                  }
+                  onClick={HandleLogin}
+                  className={
+                    seconds > 0 ||
+                    minutes > 0 ||
+                    phone === "" ||
+                    phone === undefined
+                        ? "login-btn-disablet"
+                        : "login-btn"
+                  }
+              >
+                {t("logintext4")}
+              </button>
           ) : (
-            <button
-              disabled={phone === "" || phone === undefined}
-              onClick={HandleLogin}
-              className={
-                phone === "" || phone === undefined
-                  ? "login-btn-disablet"
-                  : "login-btn"
-              }
-            >
-              {t("logintext3")}
-            </button>
+              <button
+                  disabled={phone === "" || phone === undefined}
+                  onClick={HandleLogin}
+                  className={
+                    phone === "" || phone === undefined
+                        ? "login-btn-disablet"
+                        : "login-btn"
+                  }
+              >
+                {t("logintext3")}
+              </button>
           )}
         </div>
 
         {checkCode && (
-          <div className="coundown">
-            <div className="count">
-              <img src="./images/time.png" alt="" />
-              {minutes < 10 ? `0${minutes}` : minutes}:
-              {seconds < 10 ? `0${seconds}` : seconds}
+            <div className="coundown">
+              <div className="count">
+                <img src="./images/time.png" alt=""/>
+                {minutes < 10 ? `0${minutes}` : minutes}:
+                {seconds < 10 ? `0${seconds}` : seconds}
+              </div>
             </div>
-          </div>
         )}
 
         <div className="form-verify">
           {checkCode && (
-            <>
-              <div className="inputs-verify-code">
-                <label htmlFor="phone" className="label-form">
-                  {t("logintext")}
-                </label>
-                <AuthCode
-                  allowedCharacters="numeric"
-                  length="5"
-                  onChange={getCodeValue}
-                />
-              </div>
+              <>
+                <div className="inputs-verify-code">
+                  <label htmlFor="phone" className="label-form">
+                    {t("logintext")}
+                  </label>
+                  <AuthCode
+                      allowedCharacters="numeric"
+                      length="5"
+                      onChange={getCodeValue}
+                  />
+                </div>
 
-              <button
-                disabled={code.trim().length < 5}
-                onClick={CheckCode}
-                className={
-                  code.trim().length < 5 ? "login-btn-disablet" : "login-btn"
-                }
-              >
-                {t("button5")}
-              </button>
+                <button
+                    disabled={code.trim().length < 5}
+                    onClick={CheckCode}
+                    className={
+                      code.trim().length < 5 ? "login-btn-disablet" : "login-btn"
+                    }
+                >
+                  {t("button5")}
+                </button>
 
-            </>
+              </>
           )}
         </div>
 
@@ -263,6 +263,34 @@ const Login = () => {
           <div className="label-text">{t("registertext1")}</div>
           <span onClick={() => navigate("/register")}>{t("button6")}</span>
         </div>
+
+        <div className="button-box">
+          <a href="https://play.google.com/store/apps/details?id=uz.buyukyol.client&pli=1"
+             target="_blank">
+            <button>
+              <div className="icon">
+                <img src="./images/androit.png" alt=""/>
+              </div>
+              <div className="text">
+                <div className="text-top"> GET IN ON</div>
+                <div className="text-bottom"> Google Play</div>
+              </div>
+            </button>
+          </a>
+
+          <a href="https://apps.apple.com/uz/app/buyuk-yol-mijoz/id6479218904" target="_blank">
+            <button>
+              <div className="icon">
+                <img src="./images/ios.png" alt=""/>
+              </div>
+              <div className="text">
+                <div className="text-top"> Download on the</div>
+                <div className="text-bottom">App Store</div>
+              </div>
+            </button>
+          </a>
+        </div>
+
       </div>
     </div>
   );
