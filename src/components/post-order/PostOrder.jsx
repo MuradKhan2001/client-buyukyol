@@ -190,7 +190,7 @@ const PostOrder = () => {
 
                         showModalForm("order", true);
 
-                        if (direction !== "Abroad") {
+                        if (direction === "IN") {
                             SendOrder("new_order");
                         }
                     } else {
@@ -209,7 +209,7 @@ const PostOrder = () => {
 
                     showModalForm("order", true);
 
-                    if (direction !== "Abroad") {
+                    if (direction === "IN") {
                         SendOrder("new_order");
                     }
                 }
@@ -479,7 +479,7 @@ const PostOrder = () => {
             }
         }
 
-        if (cargo.address_from && cargo.address_to && direction === "Abroad") {
+        if (cargo.address_from && cargo.address_to && direction !== "IN") {
             let distance = {
                 command: "getdistance",
                 latitude_from: cargo.latitude_from,
@@ -625,6 +625,7 @@ const PostOrder = () => {
         if (webSocked) {
             if (command === "new_order") {
                 webSocked.send(JSON.stringify(cargoInfoAll));
+                console.log(cargoInfoAll);
             } else if (command === "cancel_order") {
                 let order = {
                     command: command,
@@ -651,7 +652,7 @@ const PostOrder = () => {
     };
 
     const ConfirmOrder = () => {
-        if (direction !== "Abroad") {
+        if (direction === "IN") {
             SendOrder("confirm_order");
         } else {
             cargo.distance = distance;
@@ -694,7 +695,7 @@ const PostOrder = () => {
     };
 
     const CancelOrder = () => {
-        direction !== "Abroad"
+        direction === "IN"
             ? SendOrder("cancel_order")
             : showModalForm("", false);
         showModalForm("", false);
@@ -1195,7 +1196,7 @@ const PostOrder = () => {
                                     <div className="info">
                                         <div className="label-info"> {t("info7")}</div>
                                         <div className="value-info">
-                                            {direction !== "Abroad" ? price.distance : distance}{" "}
+                                            {direction === "IN" ? price.distance : distance}{" "}
                                             {t("km")}
                                         </div>
                                     </div>
@@ -1850,7 +1851,7 @@ const PostOrder = () => {
                                 </div>
                             </div>
 
-                            {direction === "Abroad" && distance && (
+                            {direction !== "IN" && distance && (
                                 <div className="distance">
                                     <div className="label-distance">{t("info7")}</div>
                                     <div className="count">
@@ -1993,7 +1994,7 @@ const PostOrder = () => {
                                 </div>
                             </div>
 
-                            {direction === "Abroad" && (
+                            {direction !== "IN" && (
                                 <div className="form-box-radio">
                                     <label htmlFor="cargo">{t("info8")}</label>
 
@@ -2031,7 +2032,7 @@ const PostOrder = () => {
                                 </div>
                             )}
 
-                            {direction !== "Abroad" &&
+                            {direction === "IN"  &&
                                 countryCode !== "uz" &&
                                 countryCode !== "" && (
                                     <div className="form-box-radio">
